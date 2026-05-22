@@ -55,18 +55,24 @@ Customer-concentration edges are explicitly disclosed in 10-Ks (>~10% of revenue
 ## Architecture Summary
 
 ```
-User → Frontend (Next.js) → FastAPI → Agent Orchestration Layer
-                                            ↓           ↓           ↓
-                                    Postgres (XBRL)  pgvector   Edge table (Stage 2)
-                                            ↑
-                                    Data Pipeline (EDGAR ETL)
+User → Frontend (Streamlit) → FastAPI → Agent Orchestration Layer
+                                              ↓           ↓           ↓
+                                      Postgres (XBRL)  pgvector   Edge table (Stage 2)
+                                              ↑
+                                      Data Pipeline (EDGAR ETL)
 ```
 
 ### Agent Tools
-- `query_financials(company, metric, period)` → Postgres XBRL numbers
-- `compute(expr)` → code execution, never model-computed
-- `retrieve_text(query, company)` → hybrid retrieval + rerank
+- `query_financials(ticker, metric, fiscal_year)` → Postgres XBRL numbers ✅ built
+- `compute(expression, variables)` → sandboxed eval, never model-computed ✅ built
+- `retrieve_text(query, ticker)` → BM25 + dense retrieval (in progress)
 - `graph_query(...)` → graph traversal (Stage 2 only)
+
+### Database Tables (all in PostgreSQL)
+- `companies` — ticker, name, CIK
+- `financial_facts` — XBRL numbers (ticker, label, value, period, accn)
+- `filings` — 10-K metadata (accn, ticker, filed_date, doc_url)
+- `text_chunks` — 10-K body text cut into ~500 token chunks
 
 ---
 
@@ -84,7 +90,7 @@ User → Frontend (Next.js) → FastAPI → Agent Orchestration Layer
 | Eval / Observability | Custom harness + Langfuse |
 | Graph (Stage 2) | Postgres edge table + SQL (no Neo4j unless learning graph DBs) |
 | API | FastAPI |
-| Frontend | Next.js / React (fallback: Streamlit) |
+| Frontend | Streamlit (current), Next.js / React (later) |
 | Deploy | Docker + Render/Railway/Fly |
 
 ---
@@ -136,20 +142,26 @@ The headline result (Stage 2): baseline naive-RAG vs graph-augmented agent on Ti
 ## Milestone Checklist
 
 ### Week 0
-- [ ] Repo, Python env, CI skeleton
-- [ ] EDGAR API + XBRL companyfacts API working
-- [ ] Lock company cluster
+- [x] Repo, Python env, CI skeleton
+- [x] EDGAR API + XBRL companyfacts API working
+- [x] Lock company cluster (AAPL + SWKS / QRVO / CRUS / GLW / AVGO)
 
 ### Weeks 1–2 (Walking Skeleton)
-- [ ] Ingest one company, one 10-K (body + XBRL)
-- [ ] Postgres + pgvector set up
-- [ ] Naive single-doc RAG answers one Tier-1 question
-- [ ] Minimal FastAPI + minimal frontend (answer + one citation)
+- [x] Ingest one company, one 10-K XBRL (financial_facts table, 2211 rows for AAPL)
+- [x] Postgres set up (pgvector deferred — not needed for Tier-1)
+- [x] query_financials + compute tools built and tested
+- [x] Agent main loop (Claude tool use, hand-written)
+- [x] FastAPI /ask + /health endpoints
+- [x] Streamlit frontend (answer + citations + reasoning steps)
+- [ ] End-to-end agent test (blocked: need Anthropic API Key)
 
 ### Weeks 3–4 (Data Pipeline)
-- [ ] Batch-ingest full cluster; incremental updates, dedup, idempotency
-- [ ] Normalize XBRL financials into SQL
-- [ ] Hybrid retrieval (BM25 + dense) + rerank
+- [x] Batch-ingest full cluster XBRL (10,075 facts across 6 companies)
+- [x] XBRL financials normalized into SQL (financial_facts table)
+- [x] 10-K body text downloaded, sectioned, chunked (969 chunks, 18 filings)
+- [x] text_chunks + filings tables in Postgres
+- [ ] BM25 retrieval (retrieve_text tool) — next up
+- [ ] Dense retrieval + pgvector — after BM25 working
 - [ ] Tier-1 eval runs automatically
 
 ### Weeks 5–7 (Agent + Tools — Signature 1)
