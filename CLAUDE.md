@@ -65,7 +65,7 @@ User → Frontend (Streamlit) → FastAPI → Agent Orchestration Layer
 ### Agent Tools
 - `query_financials(ticker, metric, fiscal_year)` → Postgres XBRL numbers ✅ built
 - `compute(expression, variables)` → sandboxed eval, never model-computed ✅ built
-- `retrieve_text(query, ticker)` → BM25 + dense retrieval (in progress)
+- `retrieve_text(query, ticker)` → BM25 retrieval ✅ built (dense/pgvector deferred — pgvector not available on PostgreSQL 17 Windows)
 - `graph_query(...)` → graph traversal (Stage 2 only)
 
 ### Database Tables (all in PostgreSQL)
@@ -148,25 +148,25 @@ The headline result (Stage 2): baseline naive-RAG vs graph-augmented agent on Ti
 
 ### Weeks 1–2 (Walking Skeleton)
 - [x] Ingest one company, one 10-K XBRL (financial_facts table, 2211 rows for AAPL)
-- [x] Postgres set up (pgvector deferred — not needed for Tier-1)
+- [x] Postgres set up (pgvector deferred — not available for PostgreSQL 17 on Windows)
 - [x] query_financials + compute tools built and tested
 - [x] Agent main loop (Claude tool use, hand-written)
 - [x] FastAPI /ask + /health endpoints
 - [x] Streamlit frontend (answer + citations + reasoning steps)
-- [ ] End-to-end agent test (blocked: need Anthropic API Key)
+- [x] End-to-end agent test confirmed working — Tier-1 queries return verified numbers + correct SEC .htm citation URLs
 
 ### Weeks 3–4 (Data Pipeline)
 - [x] Batch-ingest full cluster XBRL (10,075 facts across 6 companies)
 - [x] XBRL financials normalized into SQL (financial_facts table)
 - [x] 10-K body text downloaded, sectioned, chunked (969 chunks, 18 filings)
 - [x] text_chunks + filings tables in Postgres
-- [ ] BM25 retrieval (retrieve_text tool) — next up
-- [ ] Dense retrieval + pgvector — after BM25 working
+- [x] BM25 retrieval built and wired into retrieve_text agent tool
+- [ ] Dense retrieval + pgvector — blocked (pgvector not available on PostgreSQL 17 Windows; install on Linux deploy)
 - [ ] Tier-1 eval runs automatically
 
 ### Weeks 5–7 (Agent + Tools — Signature 1)
+- [x] Tools: `query_financials` / `compute` / `retrieve_text` all wired into agent loop
 - [ ] Query decomposition / planning loop
-- [ ] Tools: `query_financials` / `compute` / `retrieve_text`
 - [ ] Cross-doc synthesis + citation tracking
 - [ ] Tier-2 working; "numbers from data only" enforced
 
