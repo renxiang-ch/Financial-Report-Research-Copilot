@@ -18,6 +18,9 @@ dependencies = [
     "fastapi>=0.111",
     "uvicorn[standard]>=0.30",
     "rank-bm25>=0.2",
+    "tiktoken>=0.7",
+    "beautifulsoup4>=4.12",
+    "sentence-transformers>=3.0",
     "langfuse>=2.0",
 ]
 

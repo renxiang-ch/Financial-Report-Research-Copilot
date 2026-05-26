@@ -1,6 +1,9 @@
 """Database schema definitions and table creation."""
 
 CREATE_TABLES_SQL = """
+-- pgvector extension (required for dense retrieval)
+CREATE EXTENSION IF NOT EXISTS vector;
+
 -- Companies in our cluster
 CREATE TABLE IF NOT EXISTS companies (
     ticker      TEXT PRIMARY KEY,
@@ -47,15 +50,35 @@ CREATE TABLE IF NOT EXISTS text_chunks (
     chunk_index INT NOT NULL,
     text        TEXT NOT NULL,
     token_count INT,
+    embedding   vector(384),        -- text-embedding-3-small; NULL until embed_chunks runs
     UNIQUE (accn, chunk_index)
 );
 
 CREATE INDEX IF NOT EXISTS idx_chunks_ticker ON text_chunks (ticker);
 CREATE INDEX IF NOT EXISTS idx_chunks_accn   ON text_chunks (accn);
+-- HNSW index for fast approximate nearest-neighbour search (cosine distance)
+CREATE INDEX IF NOT EXISTS idx_chunks_embedding ON text_chunks
+    USING hnsw (embedding vector_cosine_ops)
+    WITH (m = 16, ef_construction = 64);
+"""
+
+# Idempotent migration for databases created before pgvector was added.
+MIGRATE_ADD_EMBEDDING_SQL = """
+ALTER TABLE text_chunks ADD COLUMN IF NOT EXISTS embedding vector(384);
+CREATE INDEX IF NOT EXISTS idx_chunks_embedding ON text_chunks
+    USING hnsw (embedding vector_cosine_ops)
+    WITH (m = 16, ef_construction = 64);
 """
 
 
 def create_tables(conn) -> None:
     with conn.cursor() as cur:
         cur.execute(CREATE_TABLES_SQL)
+    conn.commit()
+
+
+def migrate_add_embedding(conn) -> None:
+    """Add embedding column + HNSW index to existing databases. Safe to re-run."""
+    with conn.cursor() as cur:
+        cur.execute(MIGRATE_ADD_EMBEDDING_SQL)
     conn.commit()

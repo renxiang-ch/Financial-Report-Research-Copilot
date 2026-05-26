@@ -63,16 +63,17 @@ User → Frontend (Streamlit) → FastAPI → Agent Orchestration Layer
 ```
 
 ### Agent Tools
+- `list_metrics(ticker)` → available metrics + year ranges for a company ✅ built
 - `query_financials(ticker, metric, fiscal_year)` → Postgres XBRL numbers ✅ built
 - `compute(expression, variables)` → sandboxed eval, never model-computed ✅ built
-- `retrieve_text(query, ticker)` → BM25 retrieval ✅ built (dense/pgvector deferred — pgvector not available on PostgreSQL 17 Windows)
+- `retrieve_text(query, ticker)` → hybrid BM25 + pgvector retrieval (RRF fusion) ✅ built
 - `graph_query(...)` → graph traversal (Stage 2 only)
 
-### Database Tables (all in PostgreSQL)
+### Database Tables (all in PostgreSQL 18)
 - `companies` — ticker, name, CIK
-- `financial_facts` — XBRL numbers (ticker, label, value, period, accn)
-- `filings` — 10-K metadata (accn, ticker, filed_date, doc_url)
-- `text_chunks` — 10-K body text cut into ~500 token chunks
+- `financial_facts` — XBRL numbers (ticker, label, value, period, accn) — 7,368 rows
+- `filings` — 10-K metadata (accn, ticker, filed_date, doc_url) — 18 filings
+- `text_chunks` — 10-K body text ~500 token chunks + `embedding vector(384)` — 969 rows, all embedded
 
 ---
 
@@ -80,14 +81,14 @@ User → Frontend (Streamlit) → FastAPI → Agent Orchestration Layer
 
 | Layer | Choice |
 |---|---|
-| Language | Python |
+| Language | Python 3.14 |
 | Ingestion | EDGAR REST API + XBRL companyfacts/frames API |
-| Storage | PostgreSQL + pgvector |
-| Embeddings | text-embedding-3 or bge/e5 |
-| Retrieval | Hybrid BM25 + dense + reranker (good enough, not deep) |
-| LLM | Claude or GPT via API |
-| Agent | Hand-written loop (preferred) or LangGraph |
-| Eval / Observability | Custom harness + Langfuse |
+| Storage | PostgreSQL 18 (Postgres.app on Mac) + pgvector 0.8.2 |
+| Embeddings | `BAAI/bge-small-en-v1.5` via sentence-transformers (local, 384 dims, no API key) |
+| Retrieval | Hybrid BM25 + pgvector dense, fused with RRF (k=60) |
+| LLM | Claude Sonnet 4.6 (agent), Claude Haiku 4.5 (LLM-judge in eval) |
+| Agent | Hand-written loop, 4 tools, multi-step system prompt |
+| Eval / Observability | Custom harness (numeric + citation + LLM-judge) + Langfuse (wired, not yet active) |
 | Graph (Stage 2) | Postgres edge table + SQL (no Neo4j unless learning graph DBs) |
 | API | FastAPI |
 | Frontend | Streamlit (current), Next.js / React (later) |
@@ -156,23 +157,39 @@ The headline result (Stage 2): baseline naive-RAG vs graph-augmented agent on Ti
 - [x] End-to-end agent test confirmed working — Tier-1 queries return verified numbers + correct SEC .htm citation URLs
 
 ### Weeks 3–4 (Data Pipeline)
-- [x] Batch-ingest full cluster XBRL (10,075 facts across 6 companies)
+- [x] Batch-ingest full cluster XBRL (7,368 facts across 6 companies)
 - [x] XBRL financials normalized into SQL (financial_facts table)
 - [x] 10-K body text downloaded, sectioned, chunked (969 chunks, 18 filings)
 - [x] text_chunks + filings tables in Postgres
 - [x] BM25 retrieval built and wired into retrieve_text agent tool
-- [ ] Dense retrieval + pgvector — blocked (pgvector not available on PostgreSQL 17 Windows; install on Linux deploy)
-- [ ] Tier-1 eval runs automatically
+- [x] Dense retrieval + pgvector — **unblocked on Mac (Postgres.app 18 + pgvector 0.8.2)**
+  - Embedding model: `BAAI/bge-small-en-v1.5` (384 dims, local, no API key)
+  - HNSW index on text_chunks.embedding, all 969 chunks embedded
+  - Hybrid retrieval (BM25 + dense, RRF fusion) wired into retrieve_text tool
+- [ ] Tier-1 eval runs automatically (harness built, pending first run with API key)
 
 ### Weeks 5–7 (Agent + Tools — Signature 1)
 - [x] Tools: `query_financials` / `compute` / `retrieve_text` all wired into agent loop
-- [ ] Query decomposition / planning loop
-- [ ] Cross-doc synthesis + citation tracking
-- [ ] Tier-2 working; "numbers from data only" enforced
+- [x] `list_metrics(ticker)` tool added — agent can discover available metrics + year ranges before querying
+- [x] Multi-step system prompt — explicit decomposition rules for ratios, YoY, cross-company
+- [x] Token usage tracking added to agent return value
+- [x] Model updated to `claude-sonnet-4-6`, max_tokens raised to 2048
+- [x] Circuit breaker — `for _ in range(MAX_ROUNDS=10)...else` pattern; returns error message if loop exhausts without a final answer
+- [ ] Cross-doc synthesis + citation tracking (Tier-2 end-to-end not yet eval-verified)
+- [ ] Tier-2 eval score established
 
 ### Weeks 6–8 (Eval & Observability — Signature 2)
-- [ ] Eval harness + Tier 1–2 set built
-- [ ] Auto-scoring + traces + cost/latency
+- [x] Eval dataset built — `data/eval_set.json`, 59 questions:
+  - 29 Tier-1 numeric (direct XBRL lookup, ground truth from DB)
+  - 17 Tier-2 numeric (ratios + YoY, computed from DB)
+  - 8 retrieval qualitative (golden citation + golden answer, LLM-judge scoring)
+  - 5 unanswerable (refusal correctness)
+- [x] Eval harness built — `src/copilot/eval/harness.py`
+  - Numeric: value extraction + tolerance match (±0.5%, SI-scale aware)
+  - Retrieval: citation hit-check + LLM-judge (Haiku, 0–3 score)
+  - Refusal: phrase-based detection
+  - Reports: accuracy by tier, citation %, avg judge score, latency, cost
+- [ ] First eval run + baseline score established (blocked on ANTHROPIC_API_KEY)
 - [ ] Iterate agent against eval results
 - [ ] **Stage 1 milestone: complete, deployable agentic QA copilot**
 

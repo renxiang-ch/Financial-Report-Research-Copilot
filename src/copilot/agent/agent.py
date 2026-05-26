@@ -9,16 +9,33 @@ import json
 
 import anthropic
 
-from copilot.agent.tools import compute, query_financials, retrieve_text
+from copilot.agent.tools import compute, list_metrics, query_financials, retrieve_text
 from copilot.config import settings
 
 # Tool schemas passed to Claude
 TOOL_SCHEMAS = [
     {
+        "name": "list_metrics",
+        "description": (
+            "List all available financial metrics and fiscal years for a company. "
+            "Call this when you are unsure what data exists, or to confirm year coverage "
+            "before making a multi-step query."
+        ),
+        "input_schema": {
+            "type": "object",
+            "properties": {
+                "ticker": {"type": "string", "description": "Stock ticker e.g. AAPL"},
+            },
+            "required": ["ticker"],
+        },
+    },
+    {
         "name": "query_financials",
         "description": (
-            "Query a financial metric for a company from the database. "
-            "Use this for any numeric financial data — never guess numbers."
+            "Fetch one financial metric for one company for one fiscal year from the database. "
+            "IMPORTANT: call this once per data point — for multi-datapoint questions "
+            "(ratios, YoY comparisons, cross-company) you MUST call it multiple times. "
+            "Never guess or reuse a number across questions."
         ),
         "input_schema": {
             "type": "object",
@@ -36,11 +53,38 @@ TOOL_SCHEMAS = [
         },
     },
     {
+        "name": "compute",
+        "description": (
+            "Evaluate an arithmetic expression with named variables. "
+            "Call this AFTER all needed query_financials calls are done. "
+            "Never do arithmetic in your head — always use this tool."
+        ),
+        "input_schema": {
+            "type": "object",
+            "properties": {
+                "expression": {
+                    "type": "string",
+                    "description": (
+                        "Python arithmetic expression. Examples: "
+                        "'gross_profit / revenue * 100' for margin, "
+                        "'(new - old) / old * 100' for YoY growth."
+                    ),
+                },
+                "variables": {
+                    "type": "object",
+                    "description": "Dict mapping variable names to numeric values from query_financials.",
+                },
+            },
+            "required": ["expression", "variables"],
+        },
+    },
+    {
         "name": "retrieve_text",
         "description": (
-            "Search 10-K filing text using BM25 for qualitative questions "
-            "(why, how, risk factors, MD&A commentary, business description). "
-            "Never use this for numeric data — use query_financials for numbers."
+            "Search 10-K filing text for qualitative questions: risk factors, MD&A commentary, "
+            "business description, competitive position, strategy. "
+            "Use this for 'why', 'how', 'what does the company say about' questions. "
+            "Never use for numeric data — use query_financials for numbers."
         ),
         "input_schema": {
             "type": "object",
@@ -52,27 +96,14 @@ TOOL_SCHEMAS = [
             "required": ["query"],
         },
     },
-    {
-        "name": "compute",
-        "description": (
-            "Evaluate an arithmetic expression using variables from query_financials results. "
-            "Always use this for calculations — never compute in your head."
-        ),
-        "input_schema": {
-            "type": "object",
-            "properties": {
-                "expression": {"type": "string", "description": "Python arithmetic expression e.g. 'gross_profit / revenue * 100'"},
-                "variables": {"type": "object", "description": "Dict of variable name → numeric value"},
-            },
-            "required": ["expression", "variables"],
-        },
-    },
 ]
 
 
 def _run_tool(name: str, inputs: dict) -> str:
     if name == "query_financials":
         result = query_financials(**inputs)
+    elif name == "list_metrics":
+        result = list_metrics(**inputs)
     elif name == "compute":
         result = compute(**inputs)
     elif name == "retrieve_text":
@@ -89,30 +120,64 @@ def ask(question: str) -> dict:
     """
     client = anthropic.Anthropic(api_key=settings.anthropic_api_key)
 
-    system = (
-        "You are a financial research assistant. "
-        "You answer questions about SEC filings using tools to fetch exact numbers from a database. "
-        "Rules:\n"
-        "1. ALWAYS use query_financials for any number — never state a number from memory.\n"
-        "2. ALWAYS use compute for any calculation — never do arithmetic yourself.\n"
-        "3. Cite every number with its accession number from the tool result.\n"
-        "4. If the tool returns found=false, say you cannot determine the answer.\n"
-        "5. Be concise. State the number, its period, and the citation."
-    )
+    system = """You are a financial research assistant that answers analyst questions over SEC 10-K filings.
+You have tools to fetch exact numbers from a database and search filing text. Never state numbers from memory.
+
+## Core rules
+1. Every number must come from query_financials — never recall or guess figures.
+2. Every calculation must use compute — never do arithmetic in your head.
+3. Cite every number with its accession number from the tool result.
+4. If query_financials returns found=false, say you cannot determine that value.
+
+## Multi-step questions — follow this pattern exactly
+
+Before calling any tool, identify ALL data points needed:
+
+| Question type         | Required calls                                              |
+|-----------------------|-------------------------------------------------------------|
+| Margin (gross/op/net) | query_financials ×2 (numerator + denominator) → compute     |
+| YoY growth            | query_financials ×2 (year N and year N-1) → compute         |
+| Cross-company compare | query_financials ×N (one per company per metric) → compute  |
+| Trend (3 years)       | query_financials ×3 → present each with citation            |
+
+Example for gross margin:
+  Step 1: query_financials(AAPL, GrossProfit, 2024)
+  Step 2: query_financials(AAPL, Revenue, 2024)
+  Step 3: compute("gross_profit / revenue * 100", {gross_profit: <val1>, revenue: <val2>})
+
+Example for YoY revenue growth:
+  Step 1: query_financials(AAPL, Revenue, 2024)
+  Step 2: query_financials(AAPL, Revenue, 2023)
+  Step 3: compute("(new - old) / old * 100", {new: <val1>, old: <val2>})
+
+## Qualitative questions
+Use retrieve_text for risk factors, MD&A commentary, business descriptions, competitive position.
+Do not mix numeric and text retrieval unless the question explicitly asks for both.
+
+## Output format
+State the result clearly with: value, fiscal year/period, and SEC citation (accession number).
+If a value cannot be determined, say so explicitly — never fabricate."""
 
     messages = [{"role": "user", "content": question}]
     steps = []
     citations = []
+    total_input_tokens = 0
+    total_output_tokens = 0
 
-    # Agentic loop — keep going until Claude stops calling tools
-    while True:
+    # Tier-2 questions need at most ~6 tool calls; 10 rounds is a safe ceiling.
+    MAX_ROUNDS = 10
+
+    for _ in range(MAX_ROUNDS):
         response = client.messages.create(
-            model="claude-opus-4-5",
-            max_tokens=1024,
+            model="claude-sonnet-4-6",
+            max_tokens=2048,
             system=system,
             tools=TOOL_SCHEMAS,
             messages=messages,
         )
+
+        total_input_tokens  += response.usage.input_tokens
+        total_output_tokens += response.usage.output_tokens
 
         # Collect tool calls and text in this turn
         tool_results = []
@@ -140,17 +205,27 @@ def ask(question: str) -> dict:
                     "content": result_str,
                 })
 
-        # If Claude made tool calls, feed results back and continue
-        if tool_results:
-            messages.append({"role": "assistant", "content": response.content})
-            messages.append({"role": "user", "content": tool_results})
-            continue
+        # No tool calls — Claude is done
+        if not tool_results:
+            break
 
-        # No more tool calls — we have the final answer
-        break
+        # Feed results back and continue
+        messages.append({"role": "assistant", "content": response.content})
+        messages.append({"role": "user", "content": tool_results})
+
+    else:
+        # Loop exhausted MAX_ROUNDS without a final answer
+        answer_text = (
+            f"[Circuit breaker] Could not produce a final answer within {MAX_ROUNDS} "
+            "tool-call rounds. Partial steps are recorded."
+        )
 
     return {
         "answer": answer_text,
         "steps": steps,
         "citations": citations,
+        "usage": {
+            "input_tokens":  total_input_tokens,
+            "output_tokens": total_output_tokens,
+        },
     }

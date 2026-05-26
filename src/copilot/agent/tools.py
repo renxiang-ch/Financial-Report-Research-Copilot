@@ -1,6 +1,6 @@
-"""Agent tools — query_financials, compute, retrieve_text."""
+"""Agent tools — query_financials, list_metrics, compute, retrieve_text."""
 
-from copilot.retrieval.bm25 import retrieve_text as _bm25_retrieve
+from copilot.retrieval.hybrid import retrieve_hybrid as _retrieve
 from copilot.storage.db import get_conn
 
 
@@ -68,13 +68,55 @@ def query_financials(ticker: str, metric: str, fiscal_year: int | None = None, f
     }
 
 
+def list_metrics(ticker: str) -> dict:
+    """
+    Return all available metrics and fiscal years for a company.
+    Call this first when unsure what data exists, or before a multi-step question
+    to confirm which years are available.
+    """
+    conn = get_conn()
+    try:
+        with conn.cursor() as cur:
+            cur.execute(
+                """
+                SELECT label, form, MIN(fiscal_year) as min_fy, MAX(fiscal_year) as max_fy,
+                       COUNT(DISTINCT fiscal_year) as n_years
+                FROM financial_facts
+                WHERE ticker = %s AND fiscal_year IS NOT NULL
+                GROUP BY label, form
+                ORDER BY form, label
+                """,
+                (ticker.upper(),),
+            )
+            rows = cur.fetchall()
+    finally:
+        conn.close()
+
+    if not rows:
+        return {"found": False, "ticker": ticker}
+
+    return {
+        "found": True,
+        "ticker": ticker.upper(),
+        "metrics": [
+            {
+                "metric": row["label"],
+                "form": row["form"],
+                "years_available": f"{row['min_fy']}–{row['max_fy']}",
+                "n_years": row["n_years"],
+            }
+            for row in rows
+        ],
+    }
+
+
 def retrieve_text(query: str, ticker: str | None = None, k: int = 5) -> dict:
     """
-    Search 10-K text chunks using BM25.
+    Search 10-K text chunks using hybrid BM25 + dense retrieval (RRF fusion).
     Use for qualitative questions (why, how, risk factors, MD&A commentary).
     Never use for numeric data — use query_financials instead.
     """
-    results = _bm25_retrieve(query, ticker=ticker, k=k)
+    results = _retrieve(query, ticker=ticker, k=k)
     if not results:
         return {"found": False, "query": query, "ticker": ticker}
     return {
