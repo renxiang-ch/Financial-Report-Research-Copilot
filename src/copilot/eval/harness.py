@@ -20,13 +20,11 @@ import re
 import time
 from pathlib import Path
 
-import anthropic
+from openai import OpenAI
 
-# ── scoring helpers ───────────────────────────────────────────────────────────
-
-# Rough cost for claude-opus-4-5 (adjust if model changes)
-_INPUT_COST_PER_M  = 15.0   # USD per 1M input tokens
-_OUTPUT_COST_PER_M = 75.0   # USD per 1M output tokens
+# gpt-4o-mini pricing
+_INPUT_COST_PER_M  = 0.15   # USD per 1M input tokens
+_OUTPUT_COST_PER_M = 0.60   # USD per 1M output tokens
 
 
 def _extract_number(text: str) -> float | None:
@@ -113,20 +111,20 @@ def _check_citation(agent_citations: list[str], golden_citations: list[dict]) ->
     return False
 
 
-_judge_client: anthropic.Anthropic | None = None
+_judge_client: OpenAI | None = None
 
 def _llm_judge(question: str, golden_answer: str, agent_answer: str) -> dict:
     """
-    Use a separate Claude call to score agent_answer vs golden_answer.
+    Use gpt-4o-mini to score agent_answer vs golden_answer.
     Returns {"score": 0-3, "reason": str}
     Score: 3=fully correct, 2=mostly correct, 1=partial, 0=wrong/fabricated
     """
     global _judge_client
     from copilot.config import settings
-    if not settings.anthropic_api_key:
+    if not settings.openai_api_key:
         return {"score": -1, "reason": "no API key"}
     if _judge_client is None:
-        _judge_client = anthropic.Anthropic(api_key=settings.anthropic_api_key)
+        _judge_client = OpenAI(api_key=settings.openai_api_key)
 
     prompt = f"""You are evaluating a financial research assistant's answer to this question:
 "{question}"
@@ -146,13 +144,13 @@ Score the generated answer on a scale of 0-3:
 Respond with ONLY valid JSON, no explanation outside the JSON:
 {{"score": <0|1|2|3>, "reason": "<one concise sentence>"}}"""
 
-    response = _judge_client.messages.create(
-        model="claude-haiku-4-5-20251001",
+    response = _judge_client.chat.completions.create(
+        model="gpt-4o-mini",
         max_tokens=128,
         messages=[{"role": "user", "content": prompt}],
     )
     try:
-        return json.loads(response.content[0].text.strip())
+        return json.loads(response.choices[0].message.content.strip())
     except Exception:
         return {"score": -1, "reason": "parse error"}
 

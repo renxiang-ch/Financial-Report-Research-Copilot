@@ -83,16 +83,53 @@ User → Frontend (Streamlit) → FastAPI → Agent Orchestration Layer
 |---|---|
 | Language | Python 3.14 |
 | Ingestion | EDGAR REST API + XBRL companyfacts/frames API |
-| Storage | PostgreSQL 18 (Postgres.app on Mac) + pgvector 0.8.2 |
+| Storage | PostgreSQL + pgvector 0.8.2 |
 | Embeddings | `BAAI/bge-small-en-v1.5` via sentence-transformers (local, 384 dims, no API key) |
 | Retrieval | Hybrid BM25 + pgvector dense, fused with RRF (k=60) |
-| LLM | Claude Sonnet 4.6 (agent), Claude Haiku 4.5 (LLM-judge in eval) |
+| LLM | **gpt-4o-mini** (agent + eval judge) via OpenAI API |
 | Agent | Hand-written loop, 4 tools, multi-step system prompt |
 | Eval / Observability | Custom harness (numeric + citation + LLM-judge) + Langfuse (wired, not yet active) |
 | Graph (Stage 2) | Postgres edge table + SQL (no Neo4j unless learning graph DBs) |
 | API | FastAPI |
 | Frontend | Streamlit (current), Next.js / React (later) |
 | Deploy | Docker + Render/Railway/Fly |
+
+---
+
+## Device Configuration
+
+Two development machines share this repo. **Do not confuse their setups.**
+
+### Mac (primary)
+- **OS:** macOS
+- **PostgreSQL:** 18 via Postgres.app
+- **pgvector:** 0.8.2 (built-in with Postgres.app)
+- **Python:** 3.14 via pyenv or system
+- **Start app:** `./start.sh` (or equivalent)
+- **DB name:** `financial_copilot`
+
+### Windows (secondary)
+- **OS:** Windows 11
+- **PostgreSQL:** 17.10 (installed via EDB installer, path: `C:\Program Files\PostgreSQL\17`)
+- **pgvector:** 0.8.2 — built from source using Visual Studio Build Tools 2026 (`C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools`), DLL copied manually to `C:\Program Files\PostgreSQL\17\lib\`
+- **Python:** 3.14 via `.venv` in project root
+- **Start app:** `.\start.ps1` in PowerShell (must run from project directory)
+- **DB name:** `financial_copilot`
+- **psql PATH:** `C:\Program Files\PostgreSQL\17\bin` added to user PATH
+
+### Shared .env (never committed)
+Both machines need a `.env` file in the project root with:
+```
+ANTHROPIC_API_KEY=...       # kept for reference, agent now uses OpenAI
+OPENAI_API_KEY=...          # used by agent (gpt-4o-mini) + eval judge
+DATABASE_URL=postgresql://postgres:<password>@localhost:5432/financial_copilot
+```
+config.py resolves `.env` via absolute path from `__file__`, so it works regardless of working directory.
+
+### Database state (both machines in sync)
+- 969 text chunks — all embedded with `BAAI/bge-small-en-v1.5` (run `python -m copilot.pipeline.embed_chunks` if cloning fresh)
+- 10,075 financial facts across 6 companies
+- 18 filings (6 companies × 3 years)
 
 ---
 
@@ -173,7 +210,7 @@ The headline result (Stage 2): baseline naive-RAG vs graph-augmented agent on Ti
 - [x] `list_metrics(ticker)` tool added — agent can discover available metrics + year ranges before querying
 - [x] Multi-step system prompt — explicit decomposition rules for ratios, YoY, cross-company
 - [x] Token usage tracking added to agent return value
-- [x] Model updated to `claude-sonnet-4-6`, max_tokens raised to 2048
+- [x] Model switched to `gpt-4o-mini` (OpenAI) — agent + eval judge both use OpenAI API
 - [x] Circuit breaker — `for _ in range(MAX_ROUNDS=10)...else` pattern; returns error message if loop exhausts without a final answer
 - [ ] Cross-doc synthesis + citation tracking (Tier-2 end-to-end not yet eval-verified)
 - [ ] Tier-2 eval score established
@@ -189,7 +226,7 @@ The headline result (Stage 2): baseline naive-RAG vs graph-augmented agent on Ti
   - Retrieval: citation hit-check + LLM-judge (Haiku, 0–3 score)
   - Refusal: phrase-based detection
   - Reports: accuracy by tier, citation %, avg judge score, latency, cost
-- [ ] First eval run + baseline score established (blocked on ANTHROPIC_API_KEY)
+- [ ] First eval run + baseline score established (OpenAI key configured, ready to run)
 - [ ] Iterate agent against eval results
 - [ ] **Stage 1 milestone: complete, deployable agentic QA copilot**
 

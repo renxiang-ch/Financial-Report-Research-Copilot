@@ -55,6 +55,8 @@ if st.button("Ask", type="primary", use_container_width=True) and question:
             for step in data["steps"]:
                 tool = step["tool"]
                 inp = step["input"]
+                out = step.get("output", {})
+
                 if tool == "query_financials":
                     st.markdown(
                         f"🔍 **query_financials** — "
@@ -62,6 +64,14 @@ if st.button("Ask", type="primary", use_container_width=True) and question:
                     )
                 elif tool == "compute":
                     st.markdown(f"🧮 **compute** — `{inp.get('expression')}`")
+                elif tool == "retrieve_text":
+                    st.markdown(f"📄 **retrieve_text** — `{inp.get('query')}` (ticker: `{inp.get('ticker', 'all')}`)")
+                    results = out.get("results", [])
+                    if results:
+                        for i, r in enumerate(results, 1):
+                            st.markdown(f"**Chunk {i}** · `{r.get('ticker')}` · {r.get('section')} · score: `{r.get('score', 0):.3f}`")
+                            st.text(r.get("text", "")[:500])
+                            st.divider()
                 else:
                     st.markdown(f"⚙️ **{tool}** — `{inp}`")
 

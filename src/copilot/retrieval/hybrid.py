@@ -29,7 +29,7 @@ def _rrf_merge(
     meta: dict[str, dict] = {}
 
     def key(r: dict) -> str:
-        return f"{r['accn']}::{r['section']}::{r['text'][:80]}"
+        return f"{r.get('ticker','')}::{r.get('section','')}::{r['text'][:80]}"
 
     for rank, result in enumerate(bm25_results, start=1):
         k_ = key(result)
