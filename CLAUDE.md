@@ -71,9 +71,13 @@ User → Frontend (Streamlit) → FastAPI → Agent Orchestration Layer
 
 ### Database Tables (all in PostgreSQL 18)
 - `companies` — ticker, name, CIK
-- `financial_facts` — XBRL numbers (ticker, label, value, period, accn) — 7,368 rows
+- `financial_facts` — XBRL numbers (ticker, label, value, period, accn) — **10,075 rows**
 - `filings` — 10-K metadata (accn, ticker, filed_date, doc_url) — 18 filings
 - `text_chunks` — 10-K body text ~500 token chunks + `embedding vector(384)` — 969 rows, all embedded
+
+### financial_facts: available metrics (10 labels)
+Revenue, COGS, GrossProfit, OperatingIncome, NetIncome, EPS_Basic, EPS_Diluted, R&D, TotalAssets, LongTermDebt
+— **Not available:** Free Cash Flow, Shareholders' Equity, geographic revenue splits, dividend yield
 
 ---
 
@@ -116,6 +120,8 @@ Two development machines share this repo. **Do not confuse their setups.**
 - **Start app:** `.\start.ps1` in PowerShell (must run from project directory)
 - **DB name:** `financial_copilot`
 - **psql PATH:** `C:\Program Files\PostgreSQL\17\bin` added to user PATH
+- **Run eval (Windows):** `$env:PYTHONUTF8="1"; uv run --active python -m copilot.eval.harness --out data/eval_results_baseline.json`
+  — `PYTHONUTF8=1` required to avoid cp1252 encode errors on Windows terminal
 
 ### Shared .env (never committed)
 Both machines need a `.env` file in the project root with:
@@ -128,8 +134,9 @@ config.py resolves `.env` via absolute path from `__file__`, so it works regardl
 
 ### Database state (both machines in sync)
 - 969 text chunks — all embedded with `BAAI/bge-small-en-v1.5` (run `python -m copilot.pipeline.embed_chunks` if cloning fresh)
-- 10,075 financial facts across 6 companies
+- 10,075 financial facts across 6 companies, 10 metrics
 - 18 filings (6 companies × 3 years)
+- Note: DB contains some FY2025 filings (SWKS, QRVO) fetched automatically — eval questions use FY2024
 
 ---
 
@@ -145,12 +152,58 @@ config.py resolves `.env` via absolute path from `__file__`, so it works regardl
 
 ## Evaluation Harness (Signature 2 — start Week 5–6)
 
-Metrics:
-- Numeric accuracy (exact / tolerance match)
-- Citation precision / recall
-- Faithfulness (LLM-judge: no fabrication)
-- Refusal correctness (unanswerable questions must be refused)
-- Latency & cost per question
+### Eval Dataset — `data/eval_set.json` (v1.3, 33 questions)
+- **10 Tier-1** numeric: direct XBRL lookup, 1 tool call each (covers all 6 companies)
+- **10 Tier-2** numeric: ratios + YoY, multi-step (3 margins + 2 margins other cos + 5 YoY)
+  - Each Tier-2 question has `input_values` (raw values needed) + `formula`
+- **8 retrieval** qualitative: `golden_citations` with `key_phrase` for chunk-level hit detection
+- **5 unanswerable**: FCF, China revenue %, D/E ratio, TSMC, dividend yield
+
+All 20 numeric expected_values verified against live DB. Retrieval golden_answers quote actual text chunks.
+
+### Harness Scoring
+- **Numeric:** `_extract_number()` from answer text + SI-scale aware tolerance (±0.5%)
+- **Tier-2 extra:** `_check_input_values()` verifies agent fetched correct raw values from DB
+- **Retrieval:** `_check_key_phrase()` scans `retrieve_text` output chunks for `key_phrase`; LLM judge (0–3); correct = hit ∩ judge≥2
+- **Refusal:** keyword detection ("cannot determine", "not available", etc.)
+- **tool_trace:** human-readable per-question trace saved to results JSON and printed to console
+
+### Baseline Results (v1.3, first run, 2026-05-26)
+| Metric | Score |
+|---|---|
+| Tier-1 accuracy | **100%** (10/10) |
+| Tier-2 accuracy | **80%** (8/10) |
+| Tier-2 input fetch | 100% |
+| Retrieval passage hit | 50% (4/8) |
+| Avg judge score | 2.5/3 |
+| Refusal accuracy | 80% (4/5) |
+| **Overall** | **78.8%** |
+| Cost | $0.02 / 33 questions |
+| Avg latency | 3.96s / question |
+
+### v2 Results (2026-05-26) — after negative extraction + FCF refusal fixes
+| Metric | Score | Delta |
+|---|---|---|
+| Tier-1 accuracy | **100%** (10/10) | — |
+| Tier-2 accuracy | **100%** (10/10) | +20% |
+| Tier-2 input fetch | 100% | — |
+| Retrieval passage hit | 62.5% (5/8) | +12.5% |
+| Avg judge score | 2.62/3 | +0.12 |
+| Refusal accuracy | **100%** (5/5) | +20% |
+| **Overall** | **90.9%** | +12.1% |
+| Cost | $0.018 / 33 questions | |
+| Avg latency | 3.26s / question | |
+Results saved: `data/eval_results_v2.json`
+
+### Fixes Applied (v2)
+1. **Negative YoY extraction fixed** — harness now reads result from `compute` step output dict first; falls back to text extraction. Captures -2.8005 correctly.
+2. **FCF refusal fixed** — system prompt now explicitly lists the 10 available metrics and forbids proxy approximations for unavailable metrics.
+
+### Remaining Retrieval Misses (3/8)
+All three have judge=2/3 (agent answer is correct qualitatively, but exact key_phrase not in top-5 chunks):
+- `ret_aapl_product_categories` — retrieves Risk Factors instead of Business section
+- `ret_qrvo_customer_risk` — correct section (Risk Factors) but key_phrase chunk ranks below top-5
+- `ret_glw_business_segments` — retrieves MD&A instead of Business section
 
 **Eval set is frozen.** Run regression on every change.
 
@@ -212,22 +265,30 @@ The headline result (Stage 2): baseline naive-RAG vs graph-augmented agent on Ti
 - [x] Token usage tracking added to agent return value
 - [x] Model switched to `gpt-4o-mini` (OpenAI) — agent + eval judge both use OpenAI API
 - [x] Circuit breaker — `for _ in range(MAX_ROUNDS=10)...else` pattern; returns error message if loop exhausts without a final answer
-- [ ] Cross-doc synthesis + citation tracking (Tier-2 end-to-end not yet eval-verified)
-- [ ] Tier-2 eval score established
+- [x] Cross-doc synthesis + citation tracking — Tier-2 eval confirmed 100% (10/10)
+- [x] Tier-2 eval score established — 100%
 
 ### Weeks 6–8 (Eval & Observability — Signature 2)
-- [x] Eval dataset built — `data/eval_set.json`, 59 questions:
-  - 29 Tier-1 numeric (direct XBRL lookup, ground truth from DB)
-  - 17 Tier-2 numeric (ratios + YoY, computed from DB)
-  - 8 retrieval qualitative (golden citation + golden answer, LLM-judge scoring)
+- [x] Eval dataset built — `data/eval_set.json` v1.3, **33 questions**:
+  - 10 Tier-1 numeric (direct XBRL lookup, all 6 companies, ground truth verified against DB)
+  - 10 Tier-2 numeric (ratios + YoY; each has `input_values` + `formula` fields)
+  - 8 retrieval qualitative (golden_citations with `key_phrase` for chunk-level detection)
   - 5 unanswerable (refusal correctness)
 - [x] Eval harness built — `src/copilot/eval/harness.py`
-  - Numeric: value extraction + tolerance match (±0.5%, SI-scale aware)
-  - Retrieval: citation hit-check + LLM-judge (Haiku, 0–3 score)
-  - Refusal: phrase-based detection
-  - Reports: accuracy by tier, citation %, avg judge score, latency, cost
-- [ ] First eval run + baseline score established (OpenAI key configured, ready to run)
-- [ ] Iterate agent against eval results
+  - Numeric: `_extract_number` + SI-scale tolerance (±0.5%)
+  - Tier-2 extra: `_check_input_values` — verifies agent fetched correct raw values
+  - Retrieval: `_check_key_phrase` (scans retrieve_text chunk outputs) + LLM-judge (0–3)
+  - Refusal: keyword phrase detection
+  - `tool_trace`: per-question readable trace saved to JSON + printed to console
+  - Reports: tier1/2/retrieval/refusal accuracy + passage hit + avg judge + cost + latency
+- [x] **First eval run complete — baseline established (2026-05-26)**
+  - Overall 78.8%, Tier-1 100%, Tier-2 80%, Retrieval 50%, Refusal 80%
+  - Results saved: `data/eval_results_baseline.json`
+- [x] **v2 eval run — target ≥90% achieved (2026-05-26)**
+  - Overall 90.9%, Tier-1 100%, Tier-2 100%, Retrieval 62.5%, Refusal 100%
+  - Results saved: `data/eval_results_v2.json`
+  - Fixes: harness reads compute output for negatives; system prompt forbids proxy metrics
+- [ ] Improve retrieval passage hit from 62.5% → 75%+ (3 misses: AAPL products, QRVO risk, GLW segments)
 - [ ] **Stage 1 milestone: complete, deployable agentic QA copilot**
 
 ### Weeks 8–9 (Relationship Extraction)
