@@ -32,7 +32,7 @@ question = st.text_input(
 if st.button("Ask", type="primary", use_container_width=True) and question:
     with st.spinner("Thinking..."):
         try:
-            resp = httpx.post(f"{API_URL}/ask", json={"question": question}, timeout=60)
+            resp = httpx.post(f"{API_URL}/ask", json={"question": question}, timeout=120)
             resp.raise_for_status()
             data = resp.json()
         except Exception as e:

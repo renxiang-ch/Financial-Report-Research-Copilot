@@ -8,6 +8,12 @@ from copilot.config import settings
 
 app = FastAPI(title="Financial Report Copilot", version="0.1.0")
 
+
+@app.on_event("startup")
+def _preload_embedding_model() -> None:
+    from copilot.retrieval.hybrid import retrieve_hybrid
+    retrieve_hybrid("warmup", k=1)
+
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -33,11 +39,11 @@ def health():
 
 @app.post("/ask", response_model=AnswerResponse)
 def ask(request: QuestionRequest):
-    if not settings.anthropic_api_key:
+    if not settings.openai_api_key:
         return AnswerResponse(
             answer=(
                 "API key not configured. "
-                "Add ANTHROPIC_API_KEY to .env to enable the agent. "
+                "Add OPENAI_API_KEY to .env to enable the agent. "
                 f"Your question was: '{request.question}'"
             ),
             steps=[{"tool": "mock", "input": {"question": request.question}}],

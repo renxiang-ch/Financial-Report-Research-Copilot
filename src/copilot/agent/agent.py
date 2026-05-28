@@ -6,6 +6,7 @@ and returns a cited answer. The LLM never computes numbers itself.
 """
 
 import json
+from concurrent.futures import ThreadPoolExecutor, as_completed
 
 from openai import OpenAI
 
@@ -203,19 +204,30 @@ def ask(question: str) -> dict:
         # Append assistant turn (with tool_calls)
         messages.append(msg)
 
-        # Execute each tool call and collect results
-        for tc in msg.tool_calls:
-            tool_name  = tc.function.name
-            tool_input = json.loads(tc.function.arguments)
-            steps.append({"tool": tool_name, "input": tool_input})
+        # Execute tool calls — parallel when multiple in one round
+        def _exec(tc):
+            name  = tc.function.name
+            inp   = json.loads(tc.function.arguments)
+            out   = _run_tool(name, inp)
+            return tc, name, inp, out
 
-            result_str  = _run_tool(tool_name, tool_input)
+        if len(msg.tool_calls) == 1:
+            ordered = [_exec(msg.tool_calls[0])]
+        else:
+            with ThreadPoolExecutor() as pool:
+                futures = {pool.submit(_exec, tc): tc for tc in msg.tool_calls}
+                id_order = {tc.id: i for i, tc in enumerate(msg.tool_calls)}
+                ordered = [None] * len(msg.tool_calls)
+                for future in as_completed(futures):
+                    tc, name, inp, out = future.result()
+                    ordered[id_order[tc.id]] = (tc, name, inp, out)
+
+        for tc, tool_name, tool_input, result_str in ordered:
             result_data = json.loads(result_str)
+            steps.append({"tool": tool_name, "input": tool_input, "output": result_data})
 
             if tool_name == "query_financials" and result_data.get("found"):
                 citations.append(result_data["citation"])
-
-            steps[-1]["output"] = result_data
 
             messages.append({
                 "role":         "tool",

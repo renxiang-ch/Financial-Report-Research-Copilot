@@ -71,7 +71,7 @@ User → Frontend (Streamlit) → FastAPI → Agent Orchestration Layer
 
 ### Database Tables (all in PostgreSQL 18)
 - `companies` — ticker, name, CIK
-- `financial_facts` — XBRL numbers (ticker, label, value, period, accn) — **10,075 rows**
+- `financial_facts` — XBRL numbers (ticker, label, value, period, accn) — **7,368 rows** (Windows); Mac may differ depending on ingestion runs
 - `filings` — 10-K metadata (accn, ticker, filed_date, doc_url) — 18 filings
 - `text_chunks` — 10-K body text ~500 token chunks + `embedding vector(384)` — 969 rows, all embedded
 
@@ -122,6 +122,7 @@ Two development machines share this repo. **Do not confuse their setups.**
 - **psql PATH:** `C:\Program Files\PostgreSQL\17\bin` added to user PATH
 - **Run eval (Windows):** `$env:PYTHONUTF8="1"; uv run --active python -m copilot.eval.harness --out data/eval_results_baseline.json`
   — `PYTHONUTF8=1` required to avoid cp1252 encode errors on Windows terminal
+- **start.ps1 uses `uv run`** — NOT `.venv\Scripts\uvicorn` directly; `copilot` package lives under `src/` and is only on the path when launched via `uv run`
 
 ### Shared .env (never committed)
 Both machines need a `.env` file in the project root with:
@@ -134,7 +135,7 @@ config.py resolves `.env` via absolute path from `__file__`, so it works regardl
 
 ### Database state (both machines in sync)
 - 969 text chunks — all embedded with `BAAI/bge-small-en-v1.5` (run `python -m copilot.pipeline.embed_chunks` if cloning fresh)
-- 10,075 financial facts across 6 companies, 10 metrics
+- 7,368 financial facts across 6 companies, 10 metrics (Windows machine; includes 10-K annual + 10-Q quarterly going back to 2009–2018 depending on company)
 - 18 filings (6 companies × 3 years)
 - Note: DB contains some FY2025 filings (SWKS, QRVO) fetched automatically — eval questions use FY2024
 
@@ -198,6 +199,11 @@ Results saved: `data/eval_results_v2.json`
 ### Fixes Applied (v2)
 1. **Negative YoY extraction fixed** — harness now reads result from `compute` step output dict first; falls back to text extraction. Captures -2.8005 correctly.
 2. **FCF refusal fixed** — system prompt now explicitly lists the 10 available metrics and forbids proxy approximations for unavailable metrics.
+
+### Bug Fixes (2026-05-27)
+3. **api.py mock-mode check** — was checking `anthropic_api_key` (always empty); fixed to check `openai_api_key`.
+4. **start.ps1 module path** — uvicorn launched via `.venv\Scripts\uvicorn` couldn't find `copilot` package; fixed to use `uv run uvicorn`.
+5. **frontend.py timeout** — raised from 60s → 120s to survive first-request embedding model load.
 
 ### Remaining Retrieval Misses (3/8)
 All three have judge=2/3 (agent answer is correct qualitatively, but exact key_phrase not in top-5 chunks):
@@ -267,6 +273,8 @@ The headline result (Stage 2): baseline naive-RAG vs graph-augmented agent on Ti
 - [x] Circuit breaker — `for _ in range(MAX_ROUNDS=10)...else` pattern; returns error message if loop exhausts without a final answer
 - [x] Cross-doc synthesis + citation tracking — Tier-2 eval confirmed 100% (10/10)
 - [x] Tier-2 eval score established — 100%
+- [x] Parallel tool execution — `ThreadPoolExecutor` runs multiple tool calls per round concurrently (e.g. two `query_financials` in same LLM response run simultaneously)
+- [x] Embedding model preloaded at FastAPI startup — `@app.on_event("startup")` warms `retrieve_hybrid` so first user request doesn't pay the 30-60s model load cost
 
 ### Weeks 6–8 (Eval & Observability — Signature 2)
 - [x] Eval dataset built — `data/eval_set.json` v1.3, **33 questions**:
