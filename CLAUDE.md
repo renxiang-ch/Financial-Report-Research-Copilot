@@ -319,3 +319,101 @@ The headline result (Stage 2): baseline naive-RAG vs graph-augmented agent on Ti
 - [ ] Containerize + deploy (Render/Railway/Fly)
 - [ ] Scheduled ingestion running
 - [ ] README, demo script, recorded demo
+
+---
+
+## Stage 3+ — Future Directions (post Week 12)
+
+Directions identified from team discussion (2026-05-29). Not yet scoped into sprints.
+
+### Layer Architecture Vision
+
+Upgrade from single-pass RAG to a multi-layer trusted pipeline:
+
+```
+User Question
+    ↓
+[Intent Layer]        classify question type + user role → route to tools/data
+    ↓
+[Data Layer]          XBRL + 10-K text + 8-K events + supply-chain graph
+    ↓
+[Agent Layer]         existing ReAct loop (built)
+    ↓
+[Verification ×3]     numeric check → citation check → cross-doc consistency
+    ↓
+[Confidence Layer]    score answer by source type, recency, corroboration
+    ↓
+Cited answer with confidence report + warnings
+```
+
+---
+
+### Direction 1 — Data Layer Expansion
+
+- **Scheduled ingestion**: EDGAR RSS feed triggers automatic 10-K/10-Q pull on new filings
+- **8-K real-time events**: material contracts, CEO changes, earnings warnings — tag each fact with recency
+- **Earnings call transcripts**: management forward-looking statements → text_chunks
+
+---
+
+### Direction 2 — Verification Layer (3 sub-layers)
+
+**V1 — Numeric Verification**
+Agent's stated number cross-checked against DB ground truth. Flag mismatches.
+
+**V2 — Citation Verification**
+Confirm the cited accession number's source document actually contains the stated number.
+Currently only format-validates the accession string.
+
+**V3 — Cross-document Consistency** ← highest priority, true differentiator
+Supplier 10-K and customer 10-K should corroborate each other:
+- QRVO says Apple = 46% → check if AAPL 10-K independently references QRVO
+- Both confirm → high confidence; single-source → medium; contradiction → warning
+Enabled by Stage 2 supply-chain graph. Generic RAG systems cannot do this.
+
+---
+
+### Direction 3 — Confidence & Trust Layer
+
+Every answer gets a structured confidence report:
+
+```json
+{
+  "confidence": 0.95,
+  "evidence": {
+    "source_type": "SEC 10-K",
+    "data_recency": "FY2024",
+    "corroboration": "single-source",
+    "computation": "direct_lookup"
+  },
+  "warnings": ["Apple 10-K does not independently confirm this figure"]
+}
+```
+
+Confidence factors: source type (SEC > news > inference) · recency · corroboration count · answer type (lookup vs computed vs retrieved).
+
+---
+
+### Direction 4 — Intent & User Role Layer
+
+Different personas activate different tool subsets and answer formats:
+
+| Role | Tools active | Answer focus |
+|---|---|---|
+| Investor | query_financials, compute, retrieve_text | Metrics, valuation, growth |
+| Supply chain analyst | query_financials, graph_query, retrieve_text | Dependency exposure, concentration risk |
+| Compliance | retrieve_text, graph_query | Risk disclosures, material events, exact quotes |
+
+Implemented as persona config passed into agent system prompt at request time.
+
+---
+
+### Priority Order (post Stage 2)
+
+| Priority | Direction | Rationale |
+|---|---|---|
+| P1 | V3 Cross-doc consistency | True differentiator; natural extension of Stage 2 graph |
+| P2 | Confidence layer | Low implementation cost; reinforces "verifiable" identity |
+| P3 | User role routing | High demo impact; product feel |
+| P4 | 8-K real-time data | Adds recency; meaningful engineering effort |
+| P5 | V1/V2 numeric + citation check | Straightforward but low marginal value given 100% Tier-1 accuracy |
