@@ -308,6 +308,7 @@ The headline result (Stage 2): baseline naive-RAG vs graph-augmented agent on Ti
 - [ ] `graph_query` tool added
 - [ ] Agent traverses graph + combines with numbers + text
 - [ ] Tier-3 dependency/exposure questions answerable
+- [ ] Agent outputs traversal trace (edges visited + citation per edge) for eval faithfulness scoring
 
 ### Weeks 10–11 (Vertical Eval + Ablation)
 - [ ] Tier-3 vertical eval set built
@@ -319,6 +320,135 @@ The headline result (Stage 2): baseline naive-RAG vs graph-augmented agent on Ti
 - [ ] Containerize + deploy (Render/Railway/Fly)
 - [ ] Scheduled ingestion running
 - [ ] README, demo script, recorded demo
+
+---
+
+## Stage 2 — Methodology Decisions (surveyed 2026-05-29)
+
+### 1. Relation Extraction
+
+**Problem type: Document-level RE (DocRE), not sentence-level.**
+Customer concentration disclosures routinely span multiple sentences across a section
+("Our largest customer is X. ... In FY2024, this customer accounted for Y%...").
+Cross-sentence F1 is consistently 10–15 pts lower than intra-sentence — known hard problem.
+
+**Methods surveyed:**
+
+| Method | Verdict |
+|---|---|
+| Regex / rules | Useful as pre-filter only; brittle on phrasing variants |
+| Supervised BERT-based (REBEL, ATLOP, SSAN) | ❌ Requires labeled training data — out of scope |
+| Fine-tuning (AutoRE, DocRED) | ❌ No training set; violates project constraints |
+| LLM single-pass schema-guided (FinReflectKG) | ✅ Core method |
+| LLM multi-stage / reflection (PARSE 2025) | ❌ Overkill for narrow domain |
+| Constraint decoding (Instructor / Outlines) | ✅ Enforces schema compliance at decode time |
+| "Relation as Prior" (2025 frontier) | Noted; not needed at this scale |
+
+**Chosen approach: Regex pre-filter → Schema-guided LLM extraction + constraint decoding**
+
+```
+969 text_chunks
+    ↓ regex: chunks containing "%" + "revenue" + company name → ~30 candidates
+    ↓ LLM (gpt-4o-mini) with Instructor/structured output
+    ↓ Pydantic schema validation
+→ (supplier, customer, revenue_pct, fiscal_year, accn, chunk_id)
+```
+
+**Input unit: section-level chunks (Item 1 Business, Item 1A Risk Factors), not whole document.**
+Controls prompt size; customer concentration disclosures are concentrated in these sections.
+
+**Validation: hand-labeled golden set (1-2 filings) for regression testing.**
+Known ground truth: QRVO→AAPL 46%, SWKS→AAPL 59%, CRUS→AAPL ~85%.
+Re-run extraction regression on every prompt/model change.
+
+**Key papers:**
+- REBEL (Cabot & Navigli, EMNLP 2021) — seq2seq extraction baseline
+- FinReflectKG (Arun et al. 2025) — direct reference for single-pass schema-guided extraction
+- PARSE (2025) — schema-guided reflection mechanism (noted, not adopted)
+- AutoRE (Xue et al. 2024) — modular DocRE, current SOTA direction
+
+---
+
+### 2. Graph Storage
+
+**Methods surveyed:**
+
+| Method | Verdict |
+|---|---|
+| RDF triple store (Jena, Virtuoso) | ❌ Academic standard; industry use low; SPARQL overhead |
+| Neo4j / TigerGraph (native LPG) | ❌ Overkill — new service, new query language, new ops burden |
+| Apache AGE (Postgres + Cypher) | ❌ Known write-performance issues at 10K+ edges (MERGE slowdowns); extra learning curve |
+| NetworkX (in-memory) | ✅ Visualization only |
+| **Pure SQL edge table + recursive CTE** | ✅ **Chosen** |
+
+**Chosen approach: PostgreSQL edge table**
+
+```sql
+CREATE TABLE supply_edges (
+    id              SERIAL PRIMARY KEY,
+    supplier_ticker TEXT NOT NULL,
+    customer_ticker TEXT NOT NULL,
+    revenue_pct     FLOAT,
+    fiscal_year     INT,
+    accn            TEXT,          -- SEC filing accession for citation
+    chunk_id        INT,           -- FK to text_chunks for traceability
+    extracted_at    TIMESTAMP DEFAULT NOW()
+);
+```
+
+Multi-hop traversal via `WITH RECURSIVE` SQL — sufficient for 2-3 hops across 6 companies.
+
+**Why not Neo4j / Apache AGE (principled rejection):**
+Graph has ~tens to low hundreds of edges (6 companies × 3 years). Recursive CTE handles
+2-3 hop queries trivially. Neo4j adds a new service, new query language (Cypher), and new
+ops burden with zero marginal benefit at this scale. AGE has documented write-performance
+degradation at 10K+ edges. Keeping everything in one Postgres instance preserves the
+audit story: financial_facts + text_chunks + supply_edges are all transactionally consistent,
+share one backup, and citation chains stay unified.
+
+NetworkX used only for graph visualization in README/demo (read edges table, draw, export PNG).
+
+---
+
+### 3. Graph Reasoning
+
+**Methods surveyed:**
+
+| Method | Verdict |
+|---|---|
+| KG embedding (TransE, RotatE, RGCN) | ❌ Link prediction breaks honest-refusal principle |
+| GNN-based reasoning (GCN, GAT) | ❌ Training required; overkill for 6 nodes |
+| Neurosymbolic | ❌ Out of scope |
+| Symbolic SQL query | ✅ For all numeric/traversal steps |
+| **LLM agent + graph_query tool (GraphRAG)** | ✅ **Chosen — current design is already on frontier** |
+
+**Chosen approach: Agent + `graph_query` tool (GraphRAG pattern)**
+
+Current agent design is already the GraphRAG paradigm (Edge et al., Microsoft 2024).
+Two targeted enhancements borrowed from the literature:
+
+**Enhancement 1 — StepChain-inspired problem decomposition (StepChain GraphRAG 2025):**
+Agent must decompose Tier-3 questions into explicit sub-steps before querying:
+```
+Q: "Which suppliers are most exposed if Apple cuts orders 20%?"
+Step 1: graph_query → list all direct AAPL suppliers
+Step 2: query_financials × N → each supplier's revenue
+Step 3: multiply by exposure_pct from supply_edges
+Step 4: compute impact per supplier
+Step 5: rank and cite each edge's source filing
+```
+Converts single opaque graph call into auditable reasoning chain.
+
+**Enhancement 2 — Traversal trace in agent output (for eval faithfulness):**
+Every `graph_query` response includes the edges traversed and their citations.
+Agent is required to surface this trace in its final answer.
+Eval harness checks traversal trace the same way it checks `tool_trace` for Tier-1/2.
+
+**Key papers:**
+- GraphRAG (Edge et al., Microsoft 2024, arXiv 2404.16130) — defines this generation of methods
+- StepChain GraphRAG (2025) — sub-question decomposition + BFS traversal
+- Inference-Scaled GraphRAG (2025) — sequential/parallel scaling at inference time (noted)
+- Survey: "LLMs Meet KGs for QA" (arXiv 2505.20099) — landscape map
 
 ---
 
