@@ -60,6 +60,24 @@ CREATE INDEX IF NOT EXISTS idx_chunks_accn   ON text_chunks (accn);
 CREATE INDEX IF NOT EXISTS idx_chunks_embedding ON text_chunks
     USING hnsw (embedding vector_cosine_ops)
     WITH (m = 16, ef_construction = 64);
+
+-- Supply-chain edges extracted from 10-K customer concentration disclosures (Stage 2)
+CREATE TABLE IF NOT EXISTS supply_edges (
+    id                  SERIAL PRIMARY KEY,
+    supplier_ticker     TEXT NOT NULL REFERENCES companies(ticker),
+    customer_ticker     TEXT NOT NULL,
+    revenue_pct         FLOAT,               -- % of supplier revenue from this customer
+    fiscal_year         INT,
+    disclosure_status   TEXT DEFAULT 'named', -- 'named' | 'inferred' | 'unnamed'
+    accn                TEXT,                -- SEC filing accession (citation)
+    chunk_id            INT REFERENCES text_chunks(id),
+    extracted_at        TIMESTAMPTZ DEFAULT NOW(),
+    UNIQUE (supplier_ticker, customer_ticker, fiscal_year, accn)
+);
+
+CREATE INDEX IF NOT EXISTS idx_edges_supplier ON supply_edges (supplier_ticker);
+CREATE INDEX IF NOT EXISTS idx_edges_customer ON supply_edges (customer_ticker);
+CREATE INDEX IF NOT EXISTS idx_edges_fy       ON supply_edges (fiscal_year);
 """
 
 # Idempotent migration for databases created before pgvector was added.
