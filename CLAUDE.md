@@ -339,7 +339,7 @@ Cross-sentence F1 is consistently 10–15 pts lower than intra-sentence — know
 | Regex / rules | Useful as pre-filter only; brittle on phrasing variants |
 | Supervised BERT-based (REBEL, ATLOP, SSAN) | ❌ Requires labeled training data — out of scope |
 | Fine-tuning (AutoRE, DocRED) | ❌ No training set; violates project constraints |
-| LLM single-pass schema-guided (FinReflectKG) | ✅ Core method |
+| LLM single-pass schema-guided (FinReflectKG EvalBench) | ✅ Core method — highest faithfulness score in benchmark |
 | LLM multi-stage / reflection (PARSE 2025) | ❌ Overkill for narrow domain |
 | Constraint decoding (Instructor / Outlines) | ✅ Enforces schema compliance at decode time |
 | "Relation as Prior" (2025 frontier) | Noted; not needed at this scale |
@@ -363,7 +363,7 @@ Re-run extraction regression on every prompt/model change.
 
 **Key papers:**
 - REBEL (Cabot & Navigli, EMNLP 2021) — seq2seq extraction baseline
-- FinReflectKG (Arun et al. 2025) — direct reference for single-pass schema-guided extraction
+- FinReflectKG EvalBench (Arun et al. 2025) — direct reference; single-pass chosen for highest faithfulness score in multi-dimensional benchmark
 - PARSE (2025) — schema-guided reflection mechanism (noted, not adopted)
 - AutoRE (Xue et al. 2024) — modular DocRE, current SOTA direction
 

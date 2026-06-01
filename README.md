@@ -68,9 +68,9 @@ Known ground truth for our cluster: QRVO→AAPL 46% (FY2024), SWKS→AAPL 59% (F
 
 ---
 
-#### 3. FinReflectKG (Arun et al., ACM ICAIF 2025) — *How we extract*
+#### 3. FinReflectKG — EvalBench (Arun et al., ACM ICAIF 2025) — *How we extract*
 
-Schema-guided knowledge graph construction from S&P 100 10-K filings using LLMs. Benchmarks three extraction modes — single-pass, multi-pass, and reflection-agent — across faithfulness, precision, relevance, and comprehensiveness.
+"FinReflectKG -- EvalBench: Benchmarking Financial KG with Multi-Dimensional Evaluation." Schema-guided knowledge graph construction from S&P 100 10-K filings using LLMs. Benchmarks three extraction modes — single-pass, multi-pass, and reflection-agent — across faithfulness, precision, relevance, and comprehensiveness.
 
 Our extraction pipeline adopts **schema-guided single-pass**, narrowed to customer-concentration relationships:
 
