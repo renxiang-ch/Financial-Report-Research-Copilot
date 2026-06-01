@@ -302,9 +302,14 @@ The headline result (Stage 2): baseline naive-RAG vs graph-augmented agent on Ti
 ### Weeks 8–9 (Relationship Extraction)
 - [x] Extraction schema defined — `supply_edges` table in PostgreSQL
 - [x] Extract >10% customer concentration — pipeline built and run (`src/copilot/pipeline/extract_edges.py`)
-- [x] Directed edge table with attributes + source citations — 26 edges (15 named, 11 unnamed)
+- [x] Directed edge table with attributes + source citations — 26 edges (15 named, 11 unnamed) from text_chunks
 - [x] Entity normalization — customer names unified to canonical tickers (AAPL, 005930.KS, etc.)
 - [x] Regression validation — QRVO→AAPL FY2024 46% PASS against WRDS ground truth
+- [x] WRDS Supply Chain validation — downloaded Compustat Segment data, confirmed QRVO/AVGO exact match
+- [x] Item 8 HTML pipeline — direct HTML parsing for Financial Notes (bypasses text_chunks)
+  - CRUS→AAPL now extracted: 87%/83%/79% (FY2024/2023/2022), matches WRDS exactly
+  - Added text-form percent regex ("87 percent" vs "87%") for CRUS-style disclosures
+  - CLI: `--source chunks|html|all`
 
 ### Weeks 9–10 (Graph Tool)
 - [ ] `graph_query` tool added
@@ -456,45 +461,44 @@ Eval harness checks traversal trace the same way it checks `tool_trace` for Tier
 
 ## Stage 2 — Extraction Results (2026-05-29)
 
-### supply_edges table — current state
+### supply_edges table — current state (updated 2026-05-29)
 
-**26 total edges** extracted from 969 text_chunks across 5 supplier companies.
+**Two extraction pipelines, both write to supply_edges:**
+- `--source chunks`: from text_chunks (Business/Risk Factors sections already in DB)
+- `--source html`: direct HTML parsing of Item 8 Financial Notes from EDGAR
 
-| Supplier | Customer | FY Range | revenue_pct | disclosure_status |
-|---|---|---|---|---|
-| QRVO | AAPL | 2023–2026 | 37%→46%→47%→50% | named |
-| QRVO | 005930.KS | 2023–2026 | 12%→12%→10%→10% | named |
-| SWKS | AAPL | 2021–2025 | 10% (threshold only) | named |
-| AVGO | AAPL | 2022–2023 | 20% | named |
-| QRVO/AVGO | unnamed | multiple years | varies | unnamed |
-
-**15 named edges** (usable for graph queries), **11 unnamed** (aggregate Risk Factors disclosures, no specific company).
+| Supplier | Customer | FY Range | revenue_pct | Source | WRDS match |
+|---|---|---|---|---|---|
+| QRVO | AAPL | 2023–2026 | 37%→46%→47%→50% | text_chunks (Business) | ✅ exact |
+| QRVO | 005930.KS | 2023–2026 | 12%→12%→10%→10% | text_chunks (Business) | — |
+| SWKS | AAPL | 2021–2025 | 10% (threshold only) | text_chunks (Business) | ⚠️ real=69% in XBRL |
+| AVGO | AAPL | 2022–2023 | 20% | text_chunks (Business) | ✅ exact |
+| CRUS | AAPL | 2022–2026 | 79%→83%→87%→89%→91% | HTML (Financial Notes) | ✅ exact |
+| GLW | — | — | — | — | no named disclosure |
 
 ### Disclosure patterns discovered
 
-Two consistent patterns across all filings:
-
-**Business section (Item 1) — always named, always precise:**
+**Item 1 Business section — named, precise:**
 ```
-"Apple Inc. ('Apple')...accounted for 46% and 37% of total revenue
-in fiscal years 2024 and 2023, respectively."
+"Apple Inc. ('Apple')...accounted for 46% and 37% of total revenue"  ← QRVO style, uses %
+"Apple, Inc....represented approximately 87 percent of total sales"   ← CRUS style, uses "percent"
 ```
 
-**Risk Factors (Item 1A) — always unnamed, always aggregate:**
+**Item 1A Risk Factors — unnamed, aggregate:**
 ```
 "our two largest customers accounted for approximately 58% of our net revenue"
 ```
 
-Named disclosures come exclusively from Business section. Risk Factors repeat the
-concentration risk but anonymize customers. This means: filtering to Business section
-chunks only would halve LLM calls with no precision loss.
+**Item 8 Financial Notes — named, precise (CRUS):**
+Same text as Business section, but this is where CRUS puts the specific Apple %.
+
+Named disclosures always in Business or Financial Notes. Risk Factors always unnamed.
+Two regex forms needed: `%` symbol AND text-form "percent" — companies are inconsistent.
 
 ### Known data gaps
 
-- **SWKS**: Text only says "more than ten percent" — exact ~59% is in Note 14 (financial
-  statement footnotes, not ingested). Stored as 10.0% threshold disclosure.
-- **CRUS**: Business section chunks are all headers (Item 1. Business\n\n3). ~85% Apple
-  disclosure is in Note 14. Not a pipeline failure — a data coverage gap.
+- **SWKS**: Both text and HTML say "more than ten percent" — exact ~69% is only in XBRL
+  structured data (not in any text). Stored as 10.0% threshold disclosure.
 - **GLW**: No single-customer concentration disclosure (business is more diversified).
 
 ### Entity disambiguation — current approach and limitations
