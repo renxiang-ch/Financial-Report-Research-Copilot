@@ -300,9 +300,11 @@ The headline result (Stage 2): baseline naive-RAG vs graph-augmented agent on Ti
 - [ ] **Stage 1 milestone: complete, deployable agentic QA copilot**
 
 ### Weeks 8–9 (Relationship Extraction)
-- [ ] Extraction schema defined
-- [ ] Extract >10% customer concentration + named suppliers/customers + risk-factor deps
-- [ ] Directed edge table with attributes + source citations
+- [x] Extraction schema defined — `supply_edges` table in PostgreSQL
+- [x] Extract >10% customer concentration — pipeline built and run (`src/copilot/pipeline/extract_edges.py`)
+- [x] Directed edge table with attributes + source citations — 26 edges (15 named, 11 unnamed)
+- [x] Entity normalization — customer names unified to canonical tickers (AAPL, 005930.KS, etc.)
+- [x] Regression validation — QRVO→AAPL FY2024 46% PASS against WRDS ground truth
 
 ### Weeks 9–10 (Graph Tool)
 - [ ] `graph_query` tool added
@@ -449,6 +451,84 @@ Eval harness checks traversal trace the same way it checks `tool_trace` for Tier
 - StepChain GraphRAG (2025) — sub-question decomposition + BFS traversal
 - Inference-Scaled GraphRAG (2025) — sequential/parallel scaling at inference time (noted)
 - Survey: "LLMs Meet KGs for QA" (arXiv 2505.20099) — landscape map
+
+---
+
+## Stage 2 — Extraction Results (2026-05-29)
+
+### supply_edges table — current state
+
+**26 total edges** extracted from 969 text_chunks across 5 supplier companies.
+
+| Supplier | Customer | FY Range | revenue_pct | disclosure_status |
+|---|---|---|---|---|
+| QRVO | AAPL | 2023–2026 | 37%→46%→47%→50% | named |
+| QRVO | 005930.KS | 2023–2026 | 12%→12%→10%→10% | named |
+| SWKS | AAPL | 2021–2025 | 10% (threshold only) | named |
+| AVGO | AAPL | 2022–2023 | 20% | named |
+| QRVO/AVGO | unnamed | multiple years | varies | unnamed |
+
+**15 named edges** (usable for graph queries), **11 unnamed** (aggregate Risk Factors disclosures, no specific company).
+
+### Disclosure patterns discovered
+
+Two consistent patterns across all filings:
+
+**Business section (Item 1) — always named, always precise:**
+```
+"Apple Inc. ('Apple')...accounted for 46% and 37% of total revenue
+in fiscal years 2024 and 2023, respectively."
+```
+
+**Risk Factors (Item 1A) — always unnamed, always aggregate:**
+```
+"our two largest customers accounted for approximately 58% of our net revenue"
+```
+
+Named disclosures come exclusively from Business section. Risk Factors repeat the
+concentration risk but anonymize customers. This means: filtering to Business section
+chunks only would halve LLM calls with no precision loss.
+
+### Known data gaps
+
+- **SWKS**: Text only says "more than ten percent" — exact ~59% is in Note 14 (financial
+  statement footnotes, not ingested). Stored as 10.0% threshold disclosure.
+- **CRUS**: Business section chunks are all headers (Item 1. Business\n\n3). ~85% Apple
+  disclosure is in Note 14. Not a pipeline failure — a data coverage gap.
+- **GLW**: No single-customer concentration disclosure (business is more diversified).
+
+### Entity disambiguation — current approach and limitations
+
+**Three-layer normalization:**
+
+1. **Pydantic validator** (`resolve_ticker`) — resolves `customer_ticker` field against
+   `CUSTOMER_ALIASES` dict at parse time
+2. **`_normalize_customer()`** — fallback: if ticker field empty, tries `customer_name` field
+3. **Post-hoc SQL cleanup** (`normalize_edges.py`) — handles aliases discovered after extraction
+
+**`CUSTOMER_ALIASES` (hardcoded):**
+```python
+"apple" / "apple inc" / "apple inc." → "AAPL"
+"samsung" / "samsung electronics co., ltd." → "005930.KS"
+```
+
+**Known limitation — exact string matching only:**
+New aliases not in the dict pass through unresolved. Examples that would fail:
+- `"Apple Computer"` → stored as `"APPLE COMPUTER"`
+- `"the Cupertino company"` → unresolvable
+- `"AAPL Inc."` → not in aliases
+
+**Mitigation for current scope:** 10-K language is formulaic; the 6-company cluster uses
+consistent naming. The dict covers all observed variants. If cluster expands, fix is to
+constrain LLM output to a predefined ticker list in the system prompt:
+```
+"Output customer_ticker as one of: AAPL, 005930.KS, MSFT, NVDA...
+ If no match, output empty string."
+```
+
+**Cost note:** Extraction is a one-time batch job (~$0.002 for full corpus). Per-filing
+chunk aggregation (reduce 33 calls → 8 calls) is not worth implementing at current scale;
+revisit if cluster expands to 50+ companies.
 
 ---
 
