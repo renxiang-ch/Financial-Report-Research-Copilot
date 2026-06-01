@@ -18,14 +18,138 @@ Usage:
 import argparse
 import json
 import re
+import time
 from typing import Literal
 
+import httpx
+from bs4 import BeautifulSoup
 from pydantic import BaseModel, field_validator
 from openai import OpenAI
 
 from copilot.config import settings
 from copilot.storage.db import get_conn
 from copilot.storage.schema import create_tables
+
+EDGAR_HEADERS = {"User-Agent": "financial-copilot research renxiangchao2678@gmail.com"}
+
+# Note titles that signal customer concentration disclosures
+_CONCENTRATION_NOTE_TITLES = [
+    "concentration of credit risk",
+    "major customer",
+    "significant customer",
+    "customer concentration",
+    "concentrations",
+]
+
+# ── Item 8 HTML extraction ────────────────────────────────────────────────────
+
+def _download_html(doc_url: str) -> str:
+    resp = httpx.get(doc_url, headers=EDGAR_HEADERS, timeout=60, follow_redirects=True)
+    resp.raise_for_status()
+    soup = BeautifulSoup(resp.content, "html.parser", from_encoding="utf-8")
+    for tag in soup(["script", "style", "ix:nonfraction", "ix:nonnumeric"]):
+        tag.decompose()
+    text = soup.get_text(separator="\n")
+    text = text.encode("ascii", errors="ignore").decode("ascii")
+    text = re.sub(r"\n{3,}", "\n\n", text)
+    return re.sub(r" {2,}", " ", text).strip()
+
+
+def _extract_item8_candidates(full_text: str) -> list[str]:
+    """
+    Find paragraphs containing customer concentration disclosures anywhere in the filing.
+
+    Strategy: search for paragraphs near a concentration note title, rather than
+    relying on Item 8 boundaries (which are unreliable due to Table of Contents
+    entries matching the same regex as actual section headers).
+    """
+    paragraphs = [p.strip() for p in full_text.split("\n\n") if len(p.strip()) > 40]
+
+    candidates: list[str] = []
+    capturing = False
+
+    for para in paragraphs:
+        lower = para.lower()
+
+        # Start capturing when we enter a concentration-related section
+        if any(t in lower for t in _CONCENTRATION_NOTE_TITLES):
+            capturing = True
+
+        # Stop when a clearly unrelated section header appears
+        if capturing and re.search(
+            r"\b(goodwill|income tax|stock.based compensation|debt|leases|"
+            r"pension|derivative|fair value|equity|commitments|subsequent events)\b",
+            lower,
+        ) and len(para) < 120:  # short lines are likely section headers
+            capturing = False
+
+        if capturing and _is_candidate(para):
+            candidates.append(para)
+
+    return candidates
+
+
+def run_extraction_from_html(
+    ticker_filter: str | None = None,
+    dry_run: bool = False,
+) -> None:
+    """Extract supply-chain edges from Item 8 Financial Notes in 10-K HTML filings."""
+    client = OpenAI(api_key=settings.openai_api_key)
+    conn   = get_conn()
+    _create_edges_table(conn)
+
+    # Load filings from DB (skip AAPL — it's the customer, not a supplier)
+    with conn.cursor() as cur:
+        query = "SELECT ticker, accn, fiscal_year, doc_url FROM filings WHERE ticker != 'AAPL'"
+        params: list = []
+        if ticker_filter:
+            query += " AND ticker = %s"
+            params.append(ticker_filter.upper())
+        query += " ORDER BY ticker, fiscal_year DESC"
+        cur.execute(query, params)
+        filings = cur.fetchall()
+
+    print(f"Processing {len(filings)} filings for Item 8 extraction\n")
+    total_edges = 0
+
+    for filing in filings:
+        ticker     = filing["ticker"]
+        accn       = filing["accn"]
+        fiscal_year = filing["fiscal_year"]
+        doc_url    = filing["doc_url"]
+
+        print(f"[{ticker}] FY{fiscal_year}  {accn}")
+        try:
+            html_text  = _download_html(doc_url)
+            candidates = _extract_item8_candidates(html_text)
+        except Exception as e:
+            print(f"  ERROR downloading: {e}")
+            time.sleep(1)
+            continue
+
+        if not candidates:
+            print("  → no concentration note found in Item 8")
+            time.sleep(0.5)
+            continue
+
+        print(f"  {len(candidates)} candidate paragraphs")
+        for para in candidates:
+            edges = _extract_from_chunk(client, para, ticker)
+            for edge in edges:
+                customer = _normalize_customer(edge.customer_ticker, edge.customer_name)
+                print(f"  → {ticker}→{customer}  {edge.revenue_pct}%  FY{edge.fiscal_year}  [{edge.disclosure_status}]")
+                if not dry_run:
+                    _upsert_edge(conn, ticker, edge, accn, chunk_id=None)
+                    conn.commit()
+                total_edges += 1
+
+        time.sleep(0.5)  # be polite to EDGAR
+
+    print(f"\nExtracted {total_edges} edges from Item 8.")
+    if not dry_run:
+        _run_regression(conn)
+    conn.close()
+
 
 # ── Known ground truth for regression validation ──────────────────────────────
 # Source: WRDS Supply Chain / manual verification against 10-K filings
@@ -66,6 +190,9 @@ _CONCENTRATION_PATTERNS = [
     # SWKS-style: "constituted more than ten percent of our net revenue"
     re.compile(r"constituted\s+more\s+than\s+ten\s+percent", re.IGNORECASE),
     re.compile(r"more\s+than\s+ten\s+percent\s+of\s+(our\s+)?(net\s+)?revenue", re.IGNORECASE),
+    # CRUS-style: "represented approximately 87 percent of...sales"
+    re.compile(r"\d+\s+percent\s+(of\s+)?(our\s+)?(net\s+)?(revenue|sales)", re.IGNORECASE),
+    re.compile(r"approximately\s+\d+\s+percent", re.IGNORECASE),
 ]
 
 def _is_candidate(text: str) -> bool:
@@ -184,8 +311,18 @@ def _create_edges_table(conn) -> None:
     conn.commit()
 
 
+def _normalize_customer(ticker: str, name: str) -> str:
+    """Resolve to canonical ticker — tries ticker field first, then customer_name."""
+    for candidate in (ticker, name):
+        resolved = CUSTOMER_ALIASES.get(candidate.lower().strip())
+        if resolved:
+            return resolved
+    return (ticker or name).strip()
+
+
 def _upsert_edge(conn, supplier_ticker: str, edge: EdgeCandidate,
-                 accn: str, chunk_id: int) -> bool:
+                 accn: str, chunk_id: int | None) -> bool:
+    customer = _normalize_customer(edge.customer_ticker, edge.customer_name)
     with conn.cursor() as cur:
         cur.execute("""
             INSERT INTO supply_edges
@@ -201,7 +338,7 @@ def _upsert_edge(conn, supplier_ticker: str, edge: EdgeCandidate,
             RETURNING id
         """, (
             supplier_ticker,
-            edge.customer_ticker or edge.customer_name,
+            customer,
             edge.revenue_pct,
             edge.fiscal_year,
             edge.disclosure_status,
@@ -303,10 +440,16 @@ def run_extraction(
 
 def main() -> None:
     parser = argparse.ArgumentParser()
-    parser.add_argument("--ticker",   default=None, help="Extract only for this ticker")
-    parser.add_argument("--dry-run",  action="store_true", help="Print without writing to DB")
+    parser.add_argument("--ticker",  default=None, help="Extract only for this ticker")
+    parser.add_argument("--dry-run", action="store_true", help="Print without writing to DB")
+    parser.add_argument("--source",  default="chunks", choices=["chunks", "html", "all"],
+                        help="chunks=text_chunks table (default), html=Item 8 HTML, all=both")
     args = parser.parse_args()
-    run_extraction(ticker_filter=args.ticker, dry_run=args.dry_run)
+
+    if args.source in ("chunks", "all"):
+        run_extraction(ticker_filter=args.ticker, dry_run=args.dry_run)
+    if args.source in ("html", "all"):
+        run_extraction_from_html(ticker_filter=args.ticker, dry_run=args.dry_run)
 
 
 if __name__ == "__main__":
