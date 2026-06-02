@@ -415,6 +415,34 @@ share one backup, and citation chains stay unified.
 
 NetworkX used only for graph visualization in README/demo (read edges table, draw, export PNG).
 
+**Apache AGE vs Neo4j — architectural difference:**
+Apache AGE is a PostgreSQL extension that adds Cypher syntax on top of PostgreSQL's
+row-based storage. It is NOT architecturally equivalent to Neo4j:
+- Neo4j uses **index-free adjacency**: each node stores physical pointers to neighbors,
+  multi-hop traversal is O(1) per hop regardless of graph size.
+- Apache AGE translates Cypher into SQL JOINs internally. Each hop is still a table scan.
+  It is a syntax-layer graph, not a storage-layer graph.
+AGE's appeal is "write Cypher without changing databases." Its implementation quality
+does not match this promise — MERGE performance is the visible symptom of the deeper
+architectural mismatch.
+
+**Scale thresholds for storage migration:**
+| Scale | Nodes | Recommendation |
+|---|---|---|
+| Current | 6 | SQL edge table ✅ |
+| Expanded cluster | 50–100 | SQL still sufficient |
+| Industry-wide | 500+ | SQL starts to struggle for complex multi-hop |
+| Full market | 10,000+ | Neo4j necessary |
+
+**Future expansion directions (post Stage 2):**
+Three dimensions for dataset growth:
+1. **Horizontal** — more companies: broader Apple ecosystem (TSMC, Foxconn require 20-F
+   support) or new hub (NVIDIA AI supply chain, automotive)
+2. **Vertical** — multi-tier: supplier's suppliers (2-hop relationships), forming true
+   multi-layer supply chain graph
+3. **Temporal** — more years: extend from 3–4 years to 10 years to analyze how
+   supply-chain dependencies evolve over time
+
 ---
 
 ### 3. Graph Reasoning
