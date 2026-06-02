@@ -143,60 +143,85 @@ def graph_query(
 
     Always include traversal_trace in your final answer for citation traceability.
     """
+    import re as _re
+
     conn = get_conn()
     try:
         with conn.cursor() as cur:
-            # Resolve fiscal_year
+
+            # ── Resolve fiscal_year into a SQL WHERE fragment + params ──────
+            fy_clause = ""   # extra WHERE condition for fiscal year
+            fy_params: list = []
+            fy_label  = str(fiscal_year)
+
             if fiscal_year == "latest" or fiscal_year is None:
                 cur.execute(
-                    "SELECT MAX(fiscal_year) FROM supply_edges WHERE disclosure_status = 'named'"
+                    "SELECT MAX(fiscal_year) FROM supply_edges WHERE disclosure_status='named'"
                 )
-                fy = cur.fetchone()["max"]
-            else:
-                fy = int(fiscal_year)
+                fy_single = cur.fetchone()["max"]
+                fy_clause = "AND e.fiscal_year = %s"
+                fy_params = [fy_single]
+                fy_label  = str(fy_single)
 
+            elif fiscal_year == "trend":
+                # No year filter — return all years
+                fy_clause = ""
+                fy_params = []
+                fy_label  = "all years"
+
+            elif isinstance(fiscal_year, str) and _re.match(r"\d{4}-\d{4}", fiscal_year):
+                # Range like "2022-2025"
+                y_start, y_end = fiscal_year.split("-")
+                fy_clause = "AND e.fiscal_year BETWEEN %s AND %s"
+                fy_params = [int(y_start), int(y_end)]
+                fy_label  = fiscal_year
+
+            else:
+                fy_single = int(fiscal_year)
+                fy_clause = "AND e.fiscal_year = %s"
+                fy_params = [fy_single]
+                fy_label  = str(fy_single)
+
+            # ── Build single-hop query (depth=1) ────────────────────────────
             if depth == 1:
-                # Single-hop: direct relationships only
                 if customer:
-                    cur.execute(
-                        """
-                        SELECT e.supplier_ticker, e.customer_ticker,
-                               e.revenue_pct, e.fiscal_year,
-                               e.disclosure_status, e.accn,
-                               f.doc_url
-                        FROM supply_edges e
-                        LEFT JOIN filings f ON f.accn = e.accn
-                        WHERE e.customer_ticker = %s
-                          AND e.fiscal_year = %s
-                          AND e.disclosure_status = 'named'
-                        ORDER BY e.revenue_pct DESC NULLS LAST
-                        """,
-                        (customer.upper(), fy),
-                    )
+                    ticker_clause = "e.customer_ticker = %s"
+                    ticker_param  = [customer.upper()]
                 elif supplier:
-                    cur.execute(
-                        """
-                        SELECT e.supplier_ticker, e.customer_ticker,
-                               e.revenue_pct, e.fiscal_year,
-                               e.disclosure_status, e.accn,
-                               f.doc_url
-                        FROM supply_edges e
-                        LEFT JOIN filings f ON f.accn = e.accn
-                        WHERE e.supplier_ticker = %s
-                          AND e.fiscal_year = %s
-                          AND e.disclosure_status = 'named'
-                        ORDER BY e.revenue_pct DESC NULLS LAST
-                        """,
-                        (supplier.upper(), fy),
-                    )
+                    ticker_clause = "e.supplier_ticker = %s"
+                    ticker_param  = [supplier.upper()]
                 else:
                     return {"found": False, "error": "Provide customer or supplier ticker"}
+
+                cur.execute(
+                    f"""
+                    SELECT e.supplier_ticker, e.customer_ticker,
+                           e.revenue_pct, e.fiscal_year,
+                           e.disclosure_status, e.accn,
+                           f.doc_url
+                    FROM supply_edges e
+                    LEFT JOIN filings f ON f.accn = e.accn
+                    WHERE {ticker_clause}
+                      AND e.disclosure_status = 'named'
+                      {fy_clause}
+                    ORDER BY e.fiscal_year DESC, e.revenue_pct DESC NULLS LAST
+                    """,
+                    ticker_param + fy_params,
+                )
                 rows = cur.fetchall()
+
             else:
-                # Multi-hop: recursive CTE
-                anchor = customer or supplier
+                # ── Multi-hop: recursive CTE (single year only) ─────────────
+                if not fy_params:
+                    # trend/range not supported for multi-hop; fall back to latest
+                    cur.execute(
+                        "SELECT MAX(fiscal_year) FROM supply_edges WHERE disclosure_status='named'"
+                    )
+                    fy_params = [cur.fetchone()["max"]]
+
+                anchor    = customer or supplier
                 direction = "customer_ticker" if customer else "supplier_ticker"
-                follow   = "supplier_ticker" if customer else "customer_ticker"
+                follow    = "supplier_ticker" if customer else "customer_ticker"
                 cur.execute(
                     f"""
                     WITH RECURSIVE chain AS (
@@ -212,15 +237,14 @@ def graph_query(
                                c.depth + 1
                         FROM supply_edges e
                         JOIN chain c ON e.{direction} = c.{follow}
-                        WHERE c.depth < %s
-                          AND e.disclosure_status = 'named'
+                        WHERE c.depth < %s AND e.disclosure_status = 'named'
                     )
                     SELECT DISTINCT supplier_ticker, customer_ticker,
                                     revenue_pct, fiscal_year, disclosure_status, accn, depth
                     FROM chain
-                    ORDER BY depth, revenue_pct DESC NULLS LAST
+                    ORDER BY depth, fiscal_year DESC, revenue_pct DESC NULLS LAST
                     """,
-                    (anchor.upper(), fy, depth),
+                    (anchor.upper(), fy_params[0], depth),
                 )
                 rows = cur.fetchall()
 
@@ -229,7 +253,7 @@ def graph_query(
 
     if not rows:
         hub = customer or supplier
-        return {"found": False, "hub": hub, "fiscal_year": fy, "edges": []}
+        return {"found": False, "hub": hub, "fiscal_year": fy_label, "edges": []}
 
     edges = []
     trace = []
@@ -238,24 +262,24 @@ def graph_query(
         accn    = row["accn"] or ""
         citation = f"SEC 10-K accession {accn} ({doc_url})" if accn else "accession not available"
         edge = {
-            "supplier":         row["supplier_ticker"],
-            "customer":         row["customer_ticker"],
-            "revenue_pct":      row["revenue_pct"],
-            "fiscal_year":      row["fiscal_year"],
+            "supplier":          row["supplier_ticker"],
+            "customer":          row["customer_ticker"],
+            "revenue_pct":       row["revenue_pct"],
+            "fiscal_year":       row["fiscal_year"],
             "disclosure_status": row["disclosure_status"],
-            "citation":         citation,
+            "citation":          citation,
         }
         edges.append(edge)
-        pct_str = f"{row['revenue_pct']}%" if row["revenue_pct"] else "≥10% (threshold)"
+        pct_str = f"{row['revenue_pct']}%" if row["revenue_pct"] else ">=10% (threshold)"
         trace.append(
-            f"{row['supplier_ticker']}→{row['customer_ticker']} "
+            f"{row['supplier_ticker']}->{row['customer_ticker']} "
             f"{pct_str} FY{row['fiscal_year']} [{accn}]"
         )
 
     return {
         "found":           True,
         "hub":             customer or supplier,
-        "fiscal_year":     fy,
+        "fiscal_year":     fy_label,
         "edge_count":      len(edges),
         "edges":           edges,
         "traversal_trace": trace,

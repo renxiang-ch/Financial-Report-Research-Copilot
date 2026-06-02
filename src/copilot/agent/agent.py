@@ -127,7 +127,7 @@ TOOL_SCHEMAS = [
                 "properties": {
                     "customer":    {"type": "string", "description": "Find suppliers of this customer e.g. AAPL"},
                     "supplier":    {"type": "string", "description": "Find customers of this supplier e.g. QRVO"},
-                    "fiscal_year": {"type": "string", "description": "Fiscal year e.g. 2024, or 'latest' (default)"},
+                    "fiscal_year": {"type": "string", "description": "Fiscal year: '2024' for one year, '2022-2025' for a range, 'trend' for all years, 'latest' (default)"},
                     "depth":       {"type": "integer", "description": "Hops to traverse (1=direct, 2=suppliers of suppliers)"},
                 },
             },
