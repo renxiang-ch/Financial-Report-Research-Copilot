@@ -10,7 +10,7 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 
 from openai import OpenAI
 
-from copilot.agent.tools import compute, list_metrics, query_financials, retrieve_text
+from copilot.agent.tools import compute, graph_query, list_metrics, query_financials, retrieve_text
 from copilot.config import settings
 
 MODEL = "gpt-4o-mini"
@@ -111,6 +111,28 @@ TOOL_SCHEMAS = [
             },
         },
     },
+    {
+        "type": "function",
+        "function": {
+            "name": "graph_query",
+            "description": (
+                "Query the supply-chain graph. Use for Tier-3 questions about "
+                "supplier dependencies and exposure analysis. "
+                "Examples: 'Who are Apple's suppliers?' → graph_query(customer='AAPL'). "
+                "'Who does QRVO sell to?' → graph_query(supplier='QRVO'). "
+                "Always surface the traversal_trace in your answer for citation."
+            ),
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "customer":    {"type": "string", "description": "Find suppliers of this customer e.g. AAPL"},
+                    "supplier":    {"type": "string", "description": "Find customers of this supplier e.g. QRVO"},
+                    "fiscal_year": {"type": "string", "description": "Fiscal year e.g. 2024, or 'latest' (default)"},
+                    "depth":       {"type": "integer", "description": "Hops to traverse (1=direct, 2=suppliers of suppliers)"},
+                },
+            },
+        },
+    },
 ]
 
 SYSTEM = """You are a financial research assistant that answers analyst questions over SEC 10-K filings.
@@ -131,23 +153,31 @@ You have tools to fetch exact numbers from a database and search filing text. Ne
 
 Before calling any tool, identify ALL data points needed:
 
-| Question type         | Required calls                                              |
-|-----------------------|-------------------------------------------------------------|
-| Margin (gross/op/net) | query_financials ×2 (numerator + denominator) → compute     |
-| YoY growth            | query_financials ×2 (year N and year N-1) → compute         |
-| Cross-company compare | query_financials ×N (one per company per metric) → compute  |
-| Trend (3 years)       | query_financials ×3 → present each with citation            |
+| Question type              | Required calls                                                     |
+|----------------------------|--------------------------------------------------------------------|
+| Margin (gross/op/net)      | query_financials ×2 (numerator + denominator) → compute            |
+| YoY growth                 | query_financials ×2 (year N and year N-1) → compute                |
+| Cross-company compare      | query_financials ×N (one per company per metric) → compute         |
+| Trend (3 years)            | query_financials ×3 → present each with citation                   |
+| Supplier exposure (Tier-3) | graph_query → query_financials ×N → compute ×N → rank              |
 
 Example for gross margin:
   Step 1: query_financials(AAPL, GrossProfit, 2024)
   Step 2: query_financials(AAPL, Revenue, 2024)
   Step 3: compute("gross_profit / revenue * 100", {gross_profit: <val1>, revenue: <val2>})
 
+Example for supplier exposure analysis:
+  Step 1: graph_query(customer="AAPL") → get all suppliers + revenue_pct
+  Step 2: query_financials(supplier, Revenue, year) × N → each supplier's total revenue
+  Step 3: compute("revenue * pct / 100", {...}) × N → dollar exposure per supplier
+  Step 4: rank by exposure, cite each edge's accession number from traversal_trace
+
 ## Qualitative questions
 Use retrieve_text for risk factors, MD&A commentary, business descriptions, competitive position.
 
 ## Output format
 State the result clearly with: value, fiscal year/period, and SEC citation (accession number).
+For graph queries, always include the traversal_trace (edges visited + citations).
 If a value cannot be determined, say so explicitly — never fabricate."""
 
 
@@ -160,6 +190,8 @@ def _run_tool(name: str, inputs: dict) -> str:
         result = compute(**inputs)
     elif name == "retrieve_text":
         result = retrieve_text(**inputs)
+    elif name == "graph_query":
+        result = graph_query(**inputs)
     else:
         result = {"error": f"Unknown tool: {name}"}
     return json.dumps(result)

@@ -1,4 +1,4 @@
-"""Agent tools — query_financials, list_metrics, compute, retrieve_text."""
+"""Agent tools — query_financials, list_metrics, compute, retrieve_text, graph_query."""
 
 from copilot.retrieval.hybrid import retrieve_hybrid as _retrieve
 from copilot.storage.db import get_conn
@@ -124,6 +124,141 @@ def retrieve_text(query: str, ticker: str | None = None, k: int = 5) -> dict:
         "query": query,
         "ticker": ticker,
         "results": results,
+    }
+
+
+def graph_query(
+    customer: str | None = None,
+    supplier: str | None = None,
+    fiscal_year: int | str | None = "latest",
+    depth: int = 1,
+) -> dict:
+    """
+    Query the supply-chain graph stored in supply_edges.
+
+    Use this for Tier-3 questions about supply-chain dependencies:
+    - "Who are Apple's direct suppliers?" → graph_query(customer="AAPL")
+    - "Who does QRVO sell to?"           → graph_query(supplier="QRVO")
+    - Multi-hop (depth=2)                → returns suppliers-of-suppliers
+
+    Always include traversal_trace in your final answer for citation traceability.
+    """
+    conn = get_conn()
+    try:
+        with conn.cursor() as cur:
+            # Resolve fiscal_year
+            if fiscal_year == "latest" or fiscal_year is None:
+                cur.execute(
+                    "SELECT MAX(fiscal_year) FROM supply_edges WHERE disclosure_status = 'named'"
+                )
+                fy = cur.fetchone()["max"]
+            else:
+                fy = int(fiscal_year)
+
+            if depth == 1:
+                # Single-hop: direct relationships only
+                if customer:
+                    cur.execute(
+                        """
+                        SELECT e.supplier_ticker, e.customer_ticker,
+                               e.revenue_pct, e.fiscal_year,
+                               e.disclosure_status, e.accn,
+                               f.doc_url
+                        FROM supply_edges e
+                        LEFT JOIN filings f ON f.accn = e.accn
+                        WHERE e.customer_ticker = %s
+                          AND e.fiscal_year = %s
+                          AND e.disclosure_status = 'named'
+                        ORDER BY e.revenue_pct DESC NULLS LAST
+                        """,
+                        (customer.upper(), fy),
+                    )
+                elif supplier:
+                    cur.execute(
+                        """
+                        SELECT e.supplier_ticker, e.customer_ticker,
+                               e.revenue_pct, e.fiscal_year,
+                               e.disclosure_status, e.accn,
+                               f.doc_url
+                        FROM supply_edges e
+                        LEFT JOIN filings f ON f.accn = e.accn
+                        WHERE e.supplier_ticker = %s
+                          AND e.fiscal_year = %s
+                          AND e.disclosure_status = 'named'
+                        ORDER BY e.revenue_pct DESC NULLS LAST
+                        """,
+                        (supplier.upper(), fy),
+                    )
+                else:
+                    return {"found": False, "error": "Provide customer or supplier ticker"}
+                rows = cur.fetchall()
+            else:
+                # Multi-hop: recursive CTE
+                anchor = customer or supplier
+                direction = "customer_ticker" if customer else "supplier_ticker"
+                follow   = "supplier_ticker" if customer else "customer_ticker"
+                cur.execute(
+                    f"""
+                    WITH RECURSIVE chain AS (
+                        SELECT supplier_ticker, customer_ticker,
+                               revenue_pct, fiscal_year, disclosure_status, accn, 1 AS depth
+                        FROM supply_edges
+                        WHERE {direction} = %s
+                          AND fiscal_year = %s
+                          AND disclosure_status = 'named'
+                        UNION ALL
+                        SELECT e.supplier_ticker, e.customer_ticker,
+                               e.revenue_pct, e.fiscal_year, e.disclosure_status, e.accn,
+                               c.depth + 1
+                        FROM supply_edges e
+                        JOIN chain c ON e.{direction} = c.{follow}
+                        WHERE c.depth < %s
+                          AND e.disclosure_status = 'named'
+                    )
+                    SELECT DISTINCT supplier_ticker, customer_ticker,
+                                    revenue_pct, fiscal_year, disclosure_status, accn, depth
+                    FROM chain
+                    ORDER BY depth, revenue_pct DESC NULLS LAST
+                    """,
+                    (anchor.upper(), fy, depth),
+                )
+                rows = cur.fetchall()
+
+    finally:
+        conn.close()
+
+    if not rows:
+        hub = customer or supplier
+        return {"found": False, "hub": hub, "fiscal_year": fy, "edges": []}
+
+    edges = []
+    trace = []
+    for row in rows:
+        doc_url = row.get("doc_url", "")
+        accn    = row["accn"] or ""
+        citation = f"SEC 10-K accession {accn} ({doc_url})" if accn else "accession not available"
+        edge = {
+            "supplier":         row["supplier_ticker"],
+            "customer":         row["customer_ticker"],
+            "revenue_pct":      row["revenue_pct"],
+            "fiscal_year":      row["fiscal_year"],
+            "disclosure_status": row["disclosure_status"],
+            "citation":         citation,
+        }
+        edges.append(edge)
+        pct_str = f"{row['revenue_pct']}%" if row["revenue_pct"] else "≥10% (threshold)"
+        trace.append(
+            f"{row['supplier_ticker']}→{row['customer_ticker']} "
+            f"{pct_str} FY{row['fiscal_year']} [{accn}]"
+        )
+
+    return {
+        "found":           True,
+        "hub":             customer or supplier,
+        "fiscal_year":     fy,
+        "edge_count":      len(edges),
+        "edges":           edges,
+        "traversal_trace": trace,
     }
 
 
