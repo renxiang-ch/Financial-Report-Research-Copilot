@@ -43,11 +43,36 @@ if st.button("Ask", type="primary", use_container_width=True) and question:
     st.markdown("### Answer")
     st.markdown(data["answer"])
 
-    # Citations
+    # Numeric citations (query_financials)
     if data["citations"] and data["citations"][0] != "No citations — running in mock mode":
         st.markdown("### Sources")
         for cite in data["citations"]:
             st.markdown(f"- {cite}")
+
+    # Graph citations — collapsible, with source_text per edge
+    graph_edges = []
+    for step in data.get("steps", []):
+        if step["tool"] == "graph_query":
+            for edge in step.get("output", {}).get("edges", []):
+                graph_edges.append(edge)
+
+    if graph_edges:
+        with st.expander(f"Graph citations ({len(graph_edges)} edges)"):
+            for edge in graph_edges:
+                supplier = edge.get("supplier", "")
+                customer = edge.get("customer", "")
+                fy       = edge.get("fiscal_year", "")
+                pct      = edge.get("revenue_pct")
+                threshold = edge.get("threshold_only", False)
+                accn     = edge.get("citation", "")
+                src      = edge.get("source_text", "")
+
+                pct_str = ">10% (threshold)" if threshold else (f"{pct}%" if pct else "n/a")
+                st.markdown(f"**{supplier} → {customer}** · FY{fy} · {pct_str}")
+                st.markdown(f"_{accn}_")
+                if src:
+                    st.caption(f'"{src}"')
+                st.divider()
 
     # Reasoning steps
     if data["steps"]:

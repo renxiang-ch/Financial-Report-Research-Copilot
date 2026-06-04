@@ -99,6 +99,7 @@ def run_extraction_from_html(
     _create_edges_table(conn)
 
     # Load filings from DB (skip AAPL — it's the customer, not a supplier)
+    # Change it when we expand dataset
     with conn.cursor() as cur:
         query = "SELECT ticker, accn, fiscal_year, doc_url FROM filings WHERE ticker != 'AAPL'"
         params: list = []
@@ -139,7 +140,9 @@ def run_extraction_from_html(
                 customer = _normalize_customer(edge.customer_ticker, edge.customer_name)
                 print(f"  → {ticker}→{customer}  {edge.revenue_pct}%  FY{edge.fiscal_year}  [{edge.disclosure_status}]")
                 if not dry_run:
-                    _upsert_edge(conn, ticker, edge, accn, chunk_id=None)
+                    _upsert_edge(conn, ticker, edge, accn, chunk_id=None,
+                                 source_text=edge.evidence_sentence or None,
+                                 filing_fiscal_year=fiscal_year)
                     conn.commit()
                 total_edges += 1
 
@@ -167,6 +170,8 @@ CUSTOMER_ALIASES: dict[str, str] = {
     "apple": "AAPL",
     "apple inc": "AAPL",
     "apple inc.": "AAPL",
+    "apple, inc.": "AAPL",
+    "apple, inc": "AAPL",
     "skyworks": "SWKS",
     "skyworks solutions": "SWKS",
     "qorvo": "QRVO",
@@ -199,6 +204,7 @@ def _is_candidate(text: str) -> bool:
     return any(p.search(text) for p in _CONCENTRATION_PATTERNS)
 
 
+
 # ── Pydantic output schema ────────────────────────────────────────────────────
 
 class EdgeCandidate(BaseModel):
@@ -207,6 +213,8 @@ class EdgeCandidate(BaseModel):
     revenue_pct: float
     fiscal_year: int
     disclosure_status: Literal["named", "inferred", "unnamed"]
+    threshold_only: bool = False
+    evidence_sentence: str = ""
 
     @field_validator("customer_ticker")
     @classmethod
@@ -235,8 +243,12 @@ percentage (typically ≥10%) of a company's revenue. These are required under A
 
 Rules:
 - Extract ONLY explicit disclosures, do not infer or estimate.
-- If text says "more than ten percent" or "at least 10%" with no specific number, set revenue_pct to 10.0
-  and add a note that this is a threshold-only disclosure (exact % not stated).
+- If text gives an exact percentage (e.g. "accounted for 10% of revenue", "accounted for 10% and 12%"),
+  set revenue_pct to that number and threshold_only to false — even if the number happens to be exactly 10.
+  IMPORTANT: "accounted for 10%" is an exact figure, not a threshold. threshold_only must be false.
+- If text gives only a vague lower bound with no specific number
+  (e.g. "more than ten percent", "at least 10%", "over 10%", "constituted more than ten percent"),
+  set revenue_pct to 10.0 AND threshold_only to true.
 - If no percentage or threshold is stated at all, do not extract that customer.
 
 For disclosure_status:
@@ -252,7 +264,9 @@ Return valid JSON:
       "customer_ticker": "<ticker if known, else empty string>",
       "revenue_pct": <float>,
       "fiscal_year": <int>,
-      "disclosure_status": "named" | "inferred" | "unnamed"
+      "disclosure_status": "named" | "inferred" | "unnamed",
+      "threshold_only": <true | false>,
+      "evidence_sentence": "<copy the exact sentence(s) from the text that state this percentage for this customer>"
     }
   ]
 }
@@ -301,8 +315,10 @@ def _create_edges_table(conn) -> None:
                 disclosure_status   TEXT DEFAULT 'named',
                 accn                TEXT,
                 chunk_id            INT,
+                source_text         TEXT,
+                threshold_only      BOOLEAN DEFAULT FALSE,
                 extracted_at        TIMESTAMPTZ DEFAULT NOW(),
-                UNIQUE (supplier_ticker, customer_ticker, fiscal_year, accn)
+                UNIQUE (supplier_ticker, customer_ticker, fiscal_year)
             );
             CREATE INDEX IF NOT EXISTS idx_edges_supplier ON supply_edges (supplier_ticker);
             CREATE INDEX IF NOT EXISTS idx_edges_customer ON supply_edges (customer_ticker);
@@ -321,29 +337,41 @@ def _normalize_customer(ticker: str, name: str) -> str:
 
 
 def _upsert_edge(conn, supplier_ticker: str, edge: EdgeCandidate,
-                 accn: str, chunk_id: int | None) -> bool:
+                 accn: str, chunk_id: int | None,
+                 source_text: str | None = None,
+                 filing_fiscal_year: int | None = None) -> bool:
+    """
+    filing_fiscal_year: the fiscal year of the filing being processed.
+    When edge.fiscal_year == filing_fiscal_year, this is the primary filing for that
+    relationship — accn and source_text are authoritative and always written.
+    When a later filing references prior-year data (edge.fiscal_year < filing_fiscal_year),
+    only update accn/source_text if no value exists yet (NULL guard).
+    """
     customer = _normalize_customer(edge.customer_ticker, edge.customer_name)
+    is_primary = (filing_fiscal_year is None or edge.fiscal_year == filing_fiscal_year)
     with conn.cursor() as cur:
         cur.execute("""
             INSERT INTO supply_edges
                 (supplier_ticker, customer_ticker, revenue_pct, fiscal_year,
-                 disclosure_status, accn, chunk_id)
-            VALUES (%s, %s, %s, %s, %s, %s, %s)
-            ON CONFLICT (supplier_ticker, customer_ticker, fiscal_year, accn)
+                 disclosure_status, threshold_only, accn, chunk_id, source_text)
+            VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
+            ON CONFLICT (supplier_ticker, customer_ticker, fiscal_year)
             DO UPDATE SET
                 revenue_pct       = EXCLUDED.revenue_pct,
                 disclosure_status = EXCLUDED.disclosure_status,
-                chunk_id          = EXCLUDED.chunk_id,
-                extracted_at      = NOW()
+                threshold_only    = EXCLUDED.threshold_only,
+                accn        = CASE WHEN %s OR supply_edges.accn IS NULL
+                                   THEN EXCLUDED.accn ELSE supply_edges.accn END,
+                chunk_id    = CASE WHEN %s OR supply_edges.chunk_id IS NULL
+                                   THEN EXCLUDED.chunk_id ELSE supply_edges.chunk_id END,
+                source_text = CASE WHEN %s OR supply_edges.source_text IS NULL
+                                   THEN EXCLUDED.source_text ELSE supply_edges.source_text END,
+                extracted_at = NOW()
             RETURNING id
         """, (
-            supplier_ticker,
-            customer,
-            edge.revenue_pct,
-            edge.fiscal_year,
-            edge.disclosure_status,
-            accn,
-            chunk_id,
+            supplier_ticker, customer, edge.revenue_pct, edge.fiscal_year,
+            edge.disclosure_status, edge.threshold_only, accn, chunk_id, source_text,
+            is_primary, is_primary, is_primary,
         ))
         return cur.fetchone() is not None
     conn.commit()
@@ -384,11 +412,13 @@ def run_extraction(
     conn   = get_conn()
     _create_edges_table(conn)
 
-    # 1. Load candidate chunks
+    # 1. Load candidate chunks (join filing fiscal_year for primary-filing detection)
     with conn.cursor() as cur:
         query = """
-            SELECT tc.id, tc.ticker, tc.section, tc.text, tc.accn
+            SELECT tc.id, tc.ticker, tc.section, tc.text, tc.accn,
+                   fi.fiscal_year as filing_fiscal_year
             FROM text_chunks tc
+            JOIN filings fi ON fi.accn = tc.accn
             WHERE tc.ticker != 'AAPL'
         """
         params: list = []
@@ -405,11 +435,12 @@ def run_extraction(
     # 2. Extract edges per candidate chunk
     total_edges = 0
     for chunk in candidates:
-        chunk_id    = chunk["id"]
-        ticker      = chunk["ticker"]
-        section     = chunk["section"]
-        accn        = chunk["accn"]
-        text        = chunk["text"]
+        chunk_id           = chunk["id"]
+        ticker             = chunk["ticker"]
+        section            = chunk["section"]
+        accn               = chunk["accn"]
+        text               = chunk["text"]
+        filing_fiscal_year = chunk["filing_fiscal_year"]
 
         print(f"\n[{ticker}] chunk {chunk_id} ({section})")
         edges = _extract_from_chunk(client, text, ticker)
@@ -423,7 +454,9 @@ def run_extraction(
             print(f"  → {ticker}→{customer}  {edge.revenue_pct}%  "
                   f"FY{edge.fiscal_year}  [{edge.disclosure_status}]")
             if not dry_run:
-                _upsert_edge(conn, ticker, edge, accn, chunk_id)
+                _upsert_edge(conn, ticker, edge, accn, chunk_id,
+                             source_text=edge.evidence_sentence or None,
+                             filing_fiscal_year=filing_fiscal_year)
                 conn.commit()
             total_edges += 1
 

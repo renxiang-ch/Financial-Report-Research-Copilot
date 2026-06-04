@@ -155,10 +155,21 @@ def graph_query(
             fy_label  = str(fiscal_year)
 
             if fiscal_year == "latest" or fiscal_year is None:
+                # Resolve per-company: latest year THIS company has data, not global max
+                # When both given, resolve from supplier (the filing company)
+                ticker_col = "supplier_ticker" if supplier else "customer_ticker"
+                ticker_val = (supplier or customer or "").upper()
                 cur.execute(
-                    "SELECT MAX(fiscal_year) FROM supply_edges WHERE disclosure_status='named'"
+                    f"SELECT MAX(fiscal_year) FROM supply_edges "
+                    f"WHERE {ticker_col} = %s AND disclosure_status='named'",
+                    (ticker_val,),
                 )
-                fy_single = cur.fetchone()["max"]
+                row_fy = cur.fetchone()["max"]
+                if row_fy is None:
+                    # Company not in graph at all — return early
+                    conn.close()
+                    return {"found": False, "hub": ticker_val, "fiscal_year": "latest", "edges": []}
+                fy_single = row_fy
                 fy_clause = "AND e.fiscal_year = %s"
                 fy_params = [fy_single]
                 fy_label  = str(fy_single)
@@ -184,7 +195,11 @@ def graph_query(
 
             # ── Build single-hop query (depth=1) ────────────────────────────
             if depth == 1:
-                if customer:
+                if customer and supplier:
+                    # Both specified — filter to this exact supplier→customer relationship
+                    ticker_clause = "e.customer_ticker = %s AND e.supplier_ticker = %s"
+                    ticker_param  = [customer.upper(), supplier.upper()]
+                elif customer:
                     ticker_clause = "e.customer_ticker = %s"
                     ticker_param  = [customer.upper()]
                 elif supplier:
@@ -196,9 +211,9 @@ def graph_query(
                 cur.execute(
                     f"""
                     SELECT e.supplier_ticker, e.customer_ticker,
-                           e.revenue_pct, e.fiscal_year,
+                           e.revenue_pct, e.threshold_only, e.fiscal_year,
                            e.disclosure_status, e.accn,
-                           f.doc_url
+                           e.source_text, f.doc_url
                     FROM supply_edges e
                     LEFT JOIN filings f ON f.accn = e.accn
                     WHERE {ticker_clause}
@@ -261,16 +276,20 @@ def graph_query(
         doc_url = row.get("doc_url", "")
         accn    = row["accn"] or ""
         citation = f"SEC 10-K accession {accn} ({doc_url})" if accn else "accession not available"
+        is_threshold = bool(row.get("threshold_only", False))
         edge = {
             "supplier":          row["supplier_ticker"],
             "customer":          row["customer_ticker"],
             "revenue_pct":       row["revenue_pct"],
+            "threshold_only":    is_threshold,
             "fiscal_year":       row["fiscal_year"],
             "disclosure_status": row["disclosure_status"],
             "citation":          citation,
+            "source_text":       (row.get("source_text") or "")[:400],
         }
         edges.append(edge)
-        pct_str = f"{row['revenue_pct']}%" if row["revenue_pct"] else ">=10% (threshold)"
+        pct_str = (">10% (threshold — exact % not disclosed in 10-K text)"
+                   if is_threshold else f"{row['revenue_pct']}%")
         trace.append(
             f"{row['supplier_ticker']}->{row['customer_ticker']} "
             f"{pct_str} FY{row['fiscal_year']} [{accn}]"

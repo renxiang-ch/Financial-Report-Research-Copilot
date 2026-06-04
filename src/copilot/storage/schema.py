@@ -71,8 +71,10 @@ CREATE TABLE IF NOT EXISTS supply_edges (
     disclosure_status   TEXT DEFAULT 'named', -- 'named' | 'inferred' | 'unnamed'
     accn                TEXT,                -- SEC filing accession (citation)
     chunk_id            INT REFERENCES text_chunks(id),
+    source_text         TEXT,                -- verbatim disclosure sentence(s) from 10-K
+    threshold_only      BOOLEAN DEFAULT FALSE, -- true = text said ">10%" only, exact % not stated
     extracted_at        TIMESTAMPTZ DEFAULT NOW(),
-    UNIQUE (supplier_ticker, customer_ticker, fiscal_year, accn)
+    UNIQUE (supplier_ticker, customer_ticker, fiscal_year)
 );
 
 CREATE INDEX IF NOT EXISTS idx_edges_supplier ON supply_edges (supplier_ticker);
@@ -88,6 +90,10 @@ CREATE INDEX IF NOT EXISTS idx_chunks_embedding ON text_chunks
     WITH (m = 16, ef_construction = 64);
 """
 
+MIGRATE_ADD_THRESHOLD_ONLY_SQL = """
+ALTER TABLE supply_edges ADD COLUMN IF NOT EXISTS threshold_only BOOLEAN DEFAULT FALSE;
+"""
+
 
 def create_tables(conn) -> None:
     with conn.cursor() as cur:
@@ -99,4 +105,11 @@ def migrate_add_embedding(conn) -> None:
     """Add embedding column + HNSW index to existing databases. Safe to re-run."""
     with conn.cursor() as cur:
         cur.execute(MIGRATE_ADD_EMBEDDING_SQL)
+    conn.commit()
+
+
+def migrate_add_threshold_only(conn) -> None:
+    """Add threshold_only column to supply_edges. Safe to re-run."""
+    with conn.cursor() as cur:
+        cur.execute(MIGRATE_ADD_THRESHOLD_ONLY_SQL)
     conn.commit()

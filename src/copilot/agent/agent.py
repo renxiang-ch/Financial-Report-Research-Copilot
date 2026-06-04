@@ -116,18 +116,29 @@ TOOL_SCHEMAS = [
         "function": {
             "name": "graph_query",
             "description": (
-                "Query the supply-chain graph. Use for Tier-3 questions about "
-                "supplier dependencies and exposure analysis. "
-                "Examples: 'Who are Apple's suppliers?' → graph_query(customer='AAPL'). "
-                "'Who does QRVO sell to?' → graph_query(supplier='QRVO'). "
-                "Always surface the traversal_trace in your answer for citation."
+                "Query the supply-chain graph built from 10-K customer concentration disclosures "
+                "(ASC 280: customers ≥10% of revenue must be disclosed). "
+                "customer: return edges where this ticker is the customer. "
+                "supplier: return edges where this ticker is the supplier. "
+                "Pass both to query a specific supplier→customer pair. "
+                "fiscal_year: 'latest' = most recent year for this company, "
+                "'trend' = all available years, an integer year, or 'YYYY-YYYY' range. "
+                "depth: 1 = direct relationships (default), 2 = suppliers of suppliers. "
+                "Each edge includes revenue_pct, threshold_only (true = text says '>10%' only, "
+                "exact % not disclosed), citation (accession number), and source_text "
+                "(verbatim sentence from the 10-K). Always surface traversal_trace and "
+                "source_text in your final answer."
             ),
             "parameters": {
                 "type": "object",
                 "properties": {
                     "customer":    {"type": "string", "description": "Find suppliers of this customer e.g. AAPL"},
                     "supplier":    {"type": "string", "description": "Find customers of this supplier e.g. QRVO"},
-                    "fiscal_year": {"type": "string", "description": "Fiscal year: '2024' for one year, '2022-2025' for a range, 'trend' for all years, 'latest' (default)"},
+                    "fiscal_year": {"type": "string", "description": (
+                        "'latest' = most recent year for this company (default for snapshot questions). "
+                        "'trend' = all available years (use when asked about a relationship or evolution over time). "
+                        "'2024' = specific year. '2022-2025' = year range."
+                    )},
                     "depth":       {"type": "integer", "description": "Hops to traverse (1=direct, 2=suppliers of suppliers)"},
                 },
             },
@@ -148,6 +159,17 @@ You have tools to fetch exact numbers from a database and search filing text. Ne
    If asked for any other metric (Free Cash Flow, EBITDA, Shareholders' Equity,
    geographic revenue, dividend yield, etc.) say you cannot determine it.
    NEVER compute a proxy approximation for an unavailable metric.
+6. NEVER substitute a different company's data when the asked-about company has no results.
+   If the user asks about company X and the tool returns no data for X, say
+   "I cannot find supply-chain data for X in the database." — do not pivot to
+   other companies' data as a substitute answer. Answer only what was asked.
+7. When the question specifies a fiscal year (e.g. "FY2024", "fiscal year 2024"), pass that
+   EXACT year to BOTH query_financials AND graph_query. Never use fiscal_year="latest" when
+   a specific year is given.
+8. graph_query returns supplier-perspective data only: revenue_pct = what % of the SUPPLIER's
+   revenue comes from that customer. It does NOT tell you what % of the CUSTOMER's procurement
+   or spending comes from that supplier. Questions like "what % of Apple's procurement comes
+   from QRVO?" or "what share of Apple's spending is QRVO?" are UNANSWERABLE — say so explicitly.
 
 ## Multi-step questions — follow this pattern exactly
 
@@ -166,18 +188,34 @@ Example for gross margin:
   Step 2: query_financials(AAPL, Revenue, 2024)
   Step 3: compute("gross_profit / revenue * 100", {gross_profit: <val1>, revenue: <val2>})
 
-Example for supplier exposure analysis:
-  Step 1: graph_query(customer="AAPL") → get all suppliers + revenue_pct
+Example for supplier exposure / order-cut impact analysis:
+  Step 1: graph_query(customer="AAPL", fiscal_year=year) → get all suppliers + revenue_pct
   Step 2: query_financials(supplier, Revenue, year) × N → each supplier's total revenue
-  Step 3: compute("revenue * pct / 100", {...}) × N → dollar exposure per supplier
-  Step 4: rank by exposure, cite each edge's accession number from traversal_trace
+  Step 3: compute("revenue * pct / 100 * cut", {revenue: <val>, pct: <val>, cut: 0.20}) × N
+          → dollar IMPACT per supplier (e.g. 20% cut = multiply by 0.20, NOT 1.0)
+          IMPORTANT: "impact of a 20% cut" = total_apple_revenue × 0.20, not total_apple_revenue
+  Step 4: rank by dollar impact, cite accession number per edge
+
+Example for specific relationship question ("relationship between AAPL and SWKS"):
+  Step 1: graph_query(customer="AAPL", supplier="SWKS", fiscal_year="trend")
+  Step 2: State the relationship facts per fiscal year, cite accession number per edge
+
+Example for supplier trend question ("CRUS dependency on Apple" / "CRUS revenue from Apple over time"):
+  Step 1: graph_query(supplier="CRUS", fiscal_year="trend")
+  — CRUS is the supplier (files the 10-K that discloses the %). Apple is its customer.
+  — "Company X's dependency on Y" means X sells to Y → X=supplier param, Y=customer param.
+  — NEVER pass the filing company (the one whose revenue_pct is disclosed) as customer.
 
 ## Qualitative questions
 Use retrieve_text for risk factors, MD&A commentary, business descriptions, competitive position.
 
 ## Output format
 State the result clearly with: value, fiscal year/period, and SEC citation (accession number).
-For graph queries, always include the traversal_trace (edges visited + citations).
+For graph queries:
+- Keep the answer concise — state facts and cite one accession number per edge.
+- Do NOT quote source_text inline. The UI displays source_text in a separate Citations panel.
+- If an edge has threshold_only=true, report the percentage as ">10%" — never as "10.0%".
+  The 10-K text only disclosed a threshold ("more than ten percent"), not the exact figure.
 If a value cannot be determined, say so explicitly — never fabricate."""
 
 
