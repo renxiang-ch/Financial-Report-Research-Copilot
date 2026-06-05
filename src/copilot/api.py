@@ -11,6 +11,9 @@ app = FastAPI(title="Financial Report Copilot", version="0.1.0")
 
 @app.on_event("startup")
 def _preload_embedding_model() -> None:
+    import os
+    if os.environ.get("SKIP_PRELOAD", "").lower() in ("1", "true", "yes"):
+        return
     from copilot.retrieval.hybrid import retrieve_hybrid
     retrieve_hybrid("warmup", k=1)
 
