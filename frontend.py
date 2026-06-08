@@ -11,7 +11,22 @@ import streamlit as st
 API_URL = os.environ.get("API_URL", st.secrets.get("API_URL", "http://localhost:8000"))
 API_KEY = os.environ.get("API_KEY", st.secrets.get("API_KEY", ""))
 
+APP_PASSWORD = os.environ.get("APP_PASSWORD", st.secrets.get("APP_PASSWORD", ""))
+
 st.set_page_config(page_title="Financial Report Copilot", page_icon="📊", layout="centered")
+
+# Password gate
+if APP_PASSWORD:
+    if not st.session_state.get("authenticated"):
+        st.title("📊 Financial Report Copilot")
+        pwd = st.text_input("Access password", type="password")
+        if st.button("Login", type="primary"):
+            if pwd == APP_PASSWORD:
+                st.session_state["authenticated"] = True
+                st.rerun()
+            else:
+                st.error("Incorrect password")
+        st.stop()
 
 st.title("📊 Financial Report Copilot")
 st.caption("Ask questions about SEC filings. Numbers are verified from XBRL data — never fabricated.")
