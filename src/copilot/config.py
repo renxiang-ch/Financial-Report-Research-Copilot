@@ -21,6 +21,9 @@ class Settings(BaseSettings):
     langfuse_secret_key: str = ""
     langfuse_host: str = "https://cloud.langfuse.com"
 
+    # API access key (empty = no auth required)
+    api_key: str = ""
+
     # App
     log_level: str = "INFO"
 

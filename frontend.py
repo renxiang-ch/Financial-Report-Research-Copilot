@@ -1,9 +1,12 @@
 """Minimal Streamlit frontend for the Financial Report Copilot."""
 
+import os
+
 import httpx
 import streamlit as st
 
-API_URL = "http://localhost:8000"
+API_URL = os.environ.get("API_URL", st.secrets.get("API_URL", "http://localhost:8000"))
+API_KEY = os.environ.get("API_KEY", st.secrets.get("API_KEY", ""))
 
 st.set_page_config(page_title="Financial Report Copilot", page_icon="📊", layout="centered")
 
@@ -32,7 +35,8 @@ question = st.text_input(
 if st.button("Ask", type="primary", use_container_width=True) and question:
     with st.spinner("Thinking..."):
         try:
-            resp = httpx.post(f"{API_URL}/ask", json={"question": question}, timeout=120)
+            headers = {"X-API-Key": API_KEY} if API_KEY else {}
+            resp = httpx.post(f"{API_URL}/ask", json={"question": question}, headers=headers, timeout=120)
             resp.raise_for_status()
             data = resp.json()
         except Exception as e:
