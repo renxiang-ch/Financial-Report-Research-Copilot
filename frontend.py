@@ -1,6 +1,9 @@
 """Minimal Streamlit frontend for the Financial Report Copilot."""
 
 import os
+import queue as _queue
+import threading
+import time
 
 import httpx
 import streamlit as st
@@ -32,21 +35,64 @@ question = st.text_input(
     placeholder="e.g. What was Apple's revenue in FY2024?",
 )
 
-if st.button("Ask", type="primary", use_container_width=True) and question:
-    with st.spinner("Waking up server (first request may take ~60s)..."):
+# Session state init
+for k, v in [("_running", False), ("_result", None), ("_q", None)]:
+    if k not in st.session_state:
+        st.session_state[k] = v
+
+
+def _fetch(q: _queue.Queue, qtext: str) -> None:
+    try:
         try:
             httpx.get(f"{API_URL}/health", timeout=60)
         except Exception:
-            pass  # best-effort warm-up
-    with st.spinner("Thinking..."):
-        try:
-            headers = {"X-API-Key": API_KEY} if API_KEY else {}
-            resp = httpx.post(f"{API_URL}/ask", json={"question": question}, headers=headers, timeout=180)
-            resp.raise_for_status()
-            data = resp.json()
-        except Exception as e:
-            st.error(f"Could not reach API: {e}")
-            st.stop()
+            pass
+        headers = {"X-API-Key": API_KEY} if API_KEY else {}
+        resp = httpx.post(
+            f"{API_URL}/ask", json={"question": qtext},
+            headers=headers, timeout=180,
+        )
+        resp.raise_for_status()
+        q.put(("ok", resp.json()))
+    except Exception as e:
+        q.put(("err", str(e)))
+
+
+# Ask button — only show when not already running
+if not st.session_state._running:
+    if st.button("Ask", type="primary", use_container_width=True) and question:
+        q: _queue.Queue = _queue.Queue()
+        st.session_state._q = q
+        st.session_state._running = True
+        st.session_state._result = None
+        threading.Thread(target=_fetch, args=(q, question), daemon=True).start()
+        st.rerun()
+
+# Running state: poll for result, show Stop button
+if st.session_state._running:
+    q = st.session_state._q
+    if q is not None and not q.empty():
+        status, payload = q.get_nowait()
+        st.session_state._running = False
+        st.session_state._result = (status, payload)
+        st.rerun()
+    else:
+        st.info("Waiting for API (first request may take ~60s on cold start)...")
+        if st.button("Stop", use_container_width=True):
+            st.session_state._running = False
+            st.session_state._q = None
+            st.rerun()
+        time.sleep(1)
+        st.rerun()
+
+# Display result
+if st.session_state._result:
+    status, payload = st.session_state._result
+    if status == "err":
+        st.error(f"Could not reach API: {payload}")
+        st.stop()
+
+    data = payload
 
     # Answer
     st.markdown("### Answer")
@@ -68,13 +114,13 @@ if st.button("Ask", type="primary", use_container_width=True) and question:
     if graph_edges:
         with st.expander(f"Graph citations ({len(graph_edges)} edges)"):
             for edge in graph_edges:
-                supplier = edge.get("supplier", "")
-                customer = edge.get("customer", "")
-                fy       = edge.get("fiscal_year", "")
-                pct      = edge.get("revenue_pct")
+                supplier  = edge.get("supplier", "")
+                customer  = edge.get("customer", "")
+                fy        = edge.get("fiscal_year", "")
+                pct       = edge.get("revenue_pct")
                 threshold = edge.get("threshold_only", False)
-                accn     = edge.get("citation", "")
-                src      = edge.get("source_text", "")
+                accn      = edge.get("citation", "")
+                src       = edge.get("source_text", "")
 
                 pct_str = ">10% (threshold)" if threshold else (f"{pct}%" if pct else "n/a")
                 st.markdown(f"**{supplier} → {customer}** · FY{fy} · {pct_str}")
@@ -88,8 +134,8 @@ if st.button("Ask", type="primary", use_container_width=True) and question:
         with st.expander("Reasoning steps"):
             for step in data["steps"]:
                 tool = step["tool"]
-                inp = step["input"]
-                out = step.get("output", {})
+                inp  = step["input"]
+                out  = step.get("output", {})
 
                 if tool == "query_financials":
                     st.markdown(
@@ -111,4 +157,4 @@ if st.button("Ask", type="primary", use_container_width=True) and question:
 
     # Mock mode warning
     if "mock mode" in data["answer"].lower():
-        st.warning("Running in mock mode — add ANTHROPIC_API_KEY to .env to enable the agent.")
+        st.warning("Running in mock mode — add OPENAI_API_KEY to environment to enable the agent.")
