@@ -1,6 +1,5 @@
 """FastAPI endpoint tests — no real API calls (mock mode when OPENAI_API_KEY is unset)."""
 
-import pytest
 from fastapi.testclient import TestClient
 
 from copilot.api import app

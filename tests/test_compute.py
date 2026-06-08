@@ -1,7 +1,5 @@
 """Unit tests for the compute tool — pure Python, no external dependencies."""
 
-import pytest
-
 from copilot.agent.tools import compute
 
 

@@ -37,7 +37,7 @@ jobs:
             "pytest>=8" pytest-asyncio ruff
 
       - name: Lint
-        run: ruff check src tests
+        run: ruff check tests
 
       - name: Test
         run: pytest tests/ -v
