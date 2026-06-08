@@ -24,21 +24,13 @@ import httpx
 import tiktoken
 from bs4 import BeautifulSoup
 
+from copilot.pipeline.companies import CLUSTER_ALL, CLUSTER_FB, CLUSTER_V1
 from copilot.storage.db import get_conn
 from copilot.storage.schema import create_tables
 
 EDGAR_HEADERS = {"User-Agent": "financial-copilot research renxiangchao2678@gmail.com"}
 CHUNK_TOKENS = 500
 CHUNK_OVERLAP = 50
-
-CLUSTER = {
-    "AAPL": "Apple Inc.",
-    "SWKS": "Skyworks Solutions",
-    "QRVO": "Qorvo Inc.",
-    "CRUS": "Cirrus Logic Inc.",
-    "GLW":  "Corning Inc.",
-    "AVGO": "Broadcom Inc.",
-}
 
 # Sections we care about in 10-K filings
 TARGET_SECTIONS = {
@@ -227,9 +219,16 @@ def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--ticker", default=None)
     parser.add_argument("--years", type=int, default=3)
+    parser.add_argument(
+        "--cluster",
+        default="v1",
+        choices=["v1", "fb", "all"],
+        help="v1=original 6, fb=FinanceBench 31, all=37 companies",
+    )
     args = parser.parse_args()
 
-    tickers = [args.ticker.upper()] if args.ticker else list(CLUSTER.keys())
+    cluster_map = {"v1": CLUSTER_V1, "fb": CLUSTER_FB, "all": CLUSTER_ALL}
+    tickers = [args.ticker.upper()] if args.ticker else list(cluster_map[args.cluster].keys())
 
     conn = get_conn()
     create_tables(conn)

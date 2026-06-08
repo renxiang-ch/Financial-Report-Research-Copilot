@@ -3,7 +3,9 @@ Ingest XBRL financial facts from EDGAR into Postgres.
 
 Usage:
     python -m copilot.pipeline.ingest_xbrl --ticker AAPL
-    python -m copilot.pipeline.ingest_xbrl          # full cluster
+    python -m copilot.pipeline.ingest_xbrl                   # v1 cluster only
+    python -m copilot.pipeline.ingest_xbrl --cluster all     # all 37 companies
+    python -m copilot.pipeline.ingest_xbrl --cluster fb      # FinanceBench companies only
 """
 
 import argparse
@@ -11,33 +13,44 @@ import time
 
 import httpx
 
+from copilot.pipeline.companies import CLUSTER_ALL, CLUSTER_FB, CLUSTER_V1
 from copilot.storage.db import get_conn
 from copilot.storage.schema import create_tables
 
 EDGAR_HEADERS = {"User-Agent": "financial-copilot research renxiangchao2678@gmail.com"}
 
-CLUSTER = {
-    "AAPL": "Apple Inc.",
-    "SWKS": "Skyworks Solutions",
-    "QRVO": "Qorvo Inc.",
-    "CRUS": "Cirrus Logic Inc.",
-    "GLW":  "Corning Inc.",
-    "AVGO": "Broadcom Inc.",
-}
-
 # XBRL tag → human label mapping
+# v1: original 10 metrics
+# scale-up: added CapEx, OCF, PP&E, CurrentAssets, CurrentLiabilities, Equity, Inventory, Tax, D&A
 TAG_LABELS: dict[str, str] = {
+    # ── Income Statement ──────────────────────────────────────────────────────
     "RevenueFromContractWithCustomerExcludingAssessedTax": "Revenue",
-    "Revenues": "Revenue",
-    "GrossProfit": "GrossProfit",
-    "NetIncomeLoss": "NetIncome",
-    "OperatingIncomeLoss": "OperatingIncome",
-    "EarningsPerShareBasic": "EPS_Basic",
-    "EarningsPerShareDiluted": "EPS_Diluted",
-    "Assets": "TotalAssets",
-    "LongTermDebt": "LongTermDebt",
-    "ResearchAndDevelopmentExpense": "R&D",
-    "CostOfGoodsAndServicesSold": "COGS",
+    "Revenues":                                            "Revenue",
+    "GrossProfit":                                         "GrossProfit",
+    "CostOfGoodsAndServicesSold":                         "COGS",
+    "CostOfRevenue":                                       "COGS",
+    "OperatingIncomeLoss":                                 "OperatingIncome",
+    "NetIncomeLoss":                                       "NetIncome",
+    "EarningsPerShareBasic":                               "EPS_Basic",
+    "EarningsPerShareDiluted":                             "EPS_Diluted",
+    "ResearchAndDevelopmentExpense":                       "R&D",
+    "IncomeTaxExpenseBenefit":                             "IncomeTaxExpense",
+    "InterestExpense":                                     "InterestExpense",
+    "DepreciationDepletionAndAmortization":                "D&A",
+
+    # ── Balance Sheet ─────────────────────────────────────────────────────────
+    "Assets":                                              "TotalAssets",
+    "AssetsCurrent":                                       "CurrentAssets",
+    "LiabilitiesCurrent":                                  "CurrentLiabilities",
+    "LongTermDebt":                                        "LongTermDebt",
+    "PropertyPlantAndEquipmentNet":                        "PP&E",
+    "StockholdersEquity":                                  "TotalEquity",
+    "StockholdersEquityIncludingPortionAttributableToNoncontrollingInterest": "TotalEquity",
+    "InventoryNet":                                        "Inventory",
+
+    # ── Cash Flow Statement ───────────────────────────────────────────────────
+    "NetCashProvidedByUsedInOperatingActivities":          "OperatingCashFlow",
+    "PaymentsToAcquirePropertyPlantAndEquipment":          "CapEx",
 }
 
 
@@ -73,21 +86,21 @@ def extract_facts(ticker: str, facts: dict) -> list[dict]:
                 if f.get("form") not in ("10-K", "10-Q"):
                     continue
                 rows.append({
-                    "ticker": ticker,
-                    "tag": tag,
-                    "label": label,
-                    "value": f["val"],
-                    "unit": unit_key,
-                    "period_end": f["end"],
-                    "fiscal_year": f.get("fy"),
-                    "fiscal_period": f.get("fp"),
-                    "form": f.get("form"),
-                    "accn": f["accn"],
+                    "ticker":         ticker,
+                    "tag":            tag,
+                    "label":          label,
+                    "value":          f["val"],
+                    "unit":           unit_key,
+                    "period_end":     f["end"],
+                    "fiscal_year":    f.get("fy"),
+                    "fiscal_period":  f.get("fp"),
+                    "form":           f.get("form"),
+                    "accn":           f["accn"],
                 })
     return rows
 
 
-def upsert_company(conn, ticker: str, cik: str) -> None:
+def upsert_company(conn, ticker: str, name: str, cik: str) -> None:
     with conn.cursor() as cur:
         cur.execute(
             """
@@ -95,7 +108,7 @@ def upsert_company(conn, ticker: str, cik: str) -> None:
             VALUES (%s, %s, %s)
             ON CONFLICT (ticker) DO UPDATE SET name = EXCLUDED.name, cik = EXCLUDED.cik
             """,
-            (ticker, CLUSTER[ticker], cik),
+            (ticker, name, cik),
         )
     conn.commit()
 
@@ -120,12 +133,12 @@ def upsert_facts(conn, rows: list[dict]) -> int:
     return len(rows)
 
 
-def ingest_ticker(ticker: str, conn) -> None:
+def ingest_ticker(ticker: str, name: str, conn) -> None:
     print(f"[{ticker}] fetching CIK...")
     cik = get_cik(ticker)
     print(f"[{ticker}] CIK={cik}, fetching facts...")
     facts = get_company_facts(cik)
-    upsert_company(conn, ticker, cik)
+    upsert_company(conn, ticker, name, cik)
     rows = extract_facts(ticker, facts)
     inserted = upsert_facts(conn, rows)
     print(f"[{ticker}] upserted {inserted} fact rows")
@@ -133,20 +146,33 @@ def ingest_ticker(ticker: str, conn) -> None:
 
 def main() -> None:
     parser = argparse.ArgumentParser()
-    parser.add_argument("--ticker", default=None)
+    parser.add_argument("--ticker", default=None, help="Single ticker to ingest")
+    parser.add_argument(
+        "--cluster",
+        default="v1",
+        choices=["v1", "fb", "all"],
+        help="v1=original 6, fb=FinanceBench 31, all=37 companies",
+    )
     args = parser.parse_args()
 
-    tickers = [args.ticker.upper()] if args.ticker else list(CLUSTER.keys())
+    if args.ticker:
+        cluster = CLUSTER_ALL
+        ticker = args.ticker.upper()
+        if ticker not in cluster:
+            raise ValueError(f"{ticker} not in company registry — add it to companies.py")
+        targets = {ticker: cluster[ticker]}
+    else:
+        targets = {"v1": CLUSTER_V1, "fb": CLUSTER_FB, "all": CLUSTER_ALL}[args.cluster]
 
     conn = get_conn()
     create_tables(conn)
-    print("Tables ready.")
+    print(f"Tables ready. Ingesting {len(targets)} companies...")
 
-    for i, ticker in enumerate(tickers):
+    for i, (ticker, name) in enumerate(targets.items()):
         if i > 0:
             time.sleep(0.3)
         try:
-            ingest_ticker(ticker, conn)
+            ingest_ticker(ticker, name, conn)
         except Exception as e:
             print(f"[{ticker}] ERROR: {e}")
 
