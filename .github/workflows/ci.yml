@@ -9,6 +9,16 @@ on:
 jobs:
   lint-and-test:
     runs-on: ubuntu-latest
+
+    env:
+      # Empty key → mock mode (no real OpenAI calls, no cost)
+      OPENAI_API_KEY: ""
+      ANTHROPIC_API_KEY: ""
+      DATABASE_URL: "postgresql://dummy:dummy@localhost/dummy"
+      API_KEY: ""
+      SKIP_PRELOAD: "1"
+      PYTHONUNBUFFERED: "1"
+
     steps:
       - uses: actions/checkout@v4
 
@@ -17,9 +27,14 @@ jobs:
         with:
           python-version: "3.11"
 
-      - name: Install dependencies
+      - name: Install dependencies (skip sentence-transformers/torch)
         run: |
-          pip install -e ".[dev]"
+          pip install -e . --no-deps
+          pip install \
+            fastapi "uvicorn[standard]" pydantic pydantic-settings python-dotenv \
+            openai httpx psycopg2-binary pgvector rank-bm25 tiktoken beautifulsoup4 \
+            anthropic langfuse \
+            "pytest>=8" pytest-asyncio ruff
 
       - name: Lint
         run: ruff check src tests

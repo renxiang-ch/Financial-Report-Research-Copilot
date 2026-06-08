@@ -429,9 +429,60 @@ Results saved: `data/eval_results_t3_graph.json`, `data/eval_results_t3_baseline
 
 ### Weeks 11–12 (Deploy + Polish)
 - [ ] Frontend polish (exposure view / graph viz)
-- [ ] Containerize + deploy (Render/Railway/Fly)
+- [x] Deploy — Supabase + Render + Streamlit Community Cloud (2026-06-08)
+  - OOM fixes: SKIP_PRELOAD + lazy sentence_transformers import
+  - Auth: API key on /ask + APP_PASSWORD gate on frontend
+  - Auto-deploy on push to main
 - [ ] Scheduled ingestion running
-- [ ] README, demo script, recorded demo
+- [x] README updated — live demo link, ablation results, deployment section (2026-06-08)
+- [ ] Demo script, recorded demo
+
+---
+
+## Deployment (Live — 2026-06-08)
+
+Three-service architecture. All free tiers.
+
+| Service | Provider | URL |
+|---|---|---|
+| Database | Supabase (PostgreSQL + pgvector) | project `hslwxgbkbbiwhcgjgocu` |
+| API | Render (Python 3, Free) | `https://financial-copilot-api-d60z.onrender.com` |
+| Frontend | Streamlit Community Cloud | `https://financial-copilot.streamlit.app` |
+
+### Environment variables per service
+
+**Render (API):**
+- `OPENAI_API_KEY` — gpt-4o-mini calls
+- `DATABASE_URL` — Supabase Session Pooler URL (IPv4; direct connection is IPv6-only on free tier)
+  - Format: `postgresql://postgres.hslwxgbkbbiwhcgjgocu:<pw>@aws-1-us-east-1.pooler.supabase.com:5432/postgres`
+- `API_KEY` — secret key required in `X-API-Key` header for `/ask` (empty = open access)
+- `SKIP_PRELOAD=1` — skips embedding model warmup at startup (prevents OOM on 512MB)
+- `PYTHONUNBUFFERED=1` — log flushing
+
+**Streamlit Community Cloud (Secrets):**
+```toml
+API_URL = "https://financial-copilot-api-d60z.onrender.com"
+API_KEY = "<same value as Render API_KEY>"
+APP_PASSWORD = "<password shown to visitors before they can use the app>"
+```
+
+### Known fixes applied (all in codebase)
+1. `SKIP_PRELOAD=1` — startup event returns early before loading embedding model
+2. Lazy `sentence_transformers` import in `dense.py` — PyTorch not loaded until first `retrieve_text` call; prevents OOM on Tier-1/2/3 numeric queries
+3. Password gate in `frontend.py` — `APP_PASSWORD` secret required before UI is shown
+4. API key auth on `/ask` — `_require_api_key` FastAPI dependency; `/health` remains public
+5. Non-blocking frontend — `retrieve_text` calls run in background thread with Stop button
+
+### Redeployment
+- Push to `main` → Render and Streamlit auto-deploy (Auto-Deploy is on)
+- To update DB schema: Supabase SQL editor (project dashboard → SQL Editor)
+- To re-run extraction: `uv run --active python -m copilot.pipeline.extract_edges --source all` (local only)
+- Free tier cold start: Render spins down after 15 min inactivity; first request ~50-60s
+
+### Supabase migration notes
+- pgvector extension must be in `public` schema: `ALTER EXTENSION vector SET SCHEMA public;`
+- Session Pooler required for IPv4 access (free tier direct = IPv6 only)
+- pg_restore used for initial migration from local PostgreSQL
 
 ---
 
@@ -631,8 +682,9 @@ Two regex forms needed: `%` symbol AND text-form "percent" — companies are inc
 
 ### Known data gaps
 
-- **SWKS**: Both text and HTML say "more than ten percent" — exact ~69% is only in XBRL
-  structured data (not in any text). Stored as 10.0% threshold disclosure.
+- **SWKS**: Both text and HTML say "more than ten percent" — exact ~69% is available only
+  in WRDS Compustat (third-party paid database). EDGAR XBRL contains no ConcentrationRisk
+  tags for any company in our cluster (confirmed). Stored as 10.0% threshold disclosure.
 - **GLW**: No single-customer concentration disclosure (business is more diversified).
 
 ### Entity disambiguation — current approach and limitations
