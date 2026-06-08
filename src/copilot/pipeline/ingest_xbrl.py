@@ -13,7 +13,7 @@ import time
 
 import httpx
 
-from copilot.pipeline.companies import CLUSTER_ALL, CLUSTER_FB, CLUSTER_V1
+from copilot.pipeline.companies import CIK_OVERRIDES, CLUSTER_ALL, CLUSTER_FB, CLUSTER_V1
 from copilot.storage.db import get_conn
 from copilot.storage.schema import create_tables
 
@@ -55,6 +55,8 @@ TAG_LABELS: dict[str, str] = {
 
 
 def get_cik(ticker: str) -> str:
+    if ticker.upper() in CIK_OVERRIDES:
+        return CIK_OVERRIDES[ticker.upper()]
     resp = httpx.get(
         "https://www.sec.gov/files/company_tickers.json",
         headers=EDGAR_HEADERS,
