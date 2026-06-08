@@ -33,10 +33,15 @@ question = st.text_input(
 )
 
 if st.button("Ask", type="primary", use_container_width=True) and question:
+    with st.spinner("Waking up server (first request may take ~60s)..."):
+        try:
+            httpx.get(f"{API_URL}/health", timeout=60)
+        except Exception:
+            pass  # best-effort warm-up
     with st.spinner("Thinking..."):
         try:
             headers = {"X-API-Key": API_KEY} if API_KEY else {}
-            resp = httpx.post(f"{API_URL}/ask", json={"question": question}, headers=headers, timeout=120)
+            resp = httpx.post(f"{API_URL}/ask", json={"question": question}, headers=headers, timeout=180)
             resp.raise_for_status()
             data = resp.json()
         except Exception as e:
