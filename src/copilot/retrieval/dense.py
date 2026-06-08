@@ -7,8 +7,6 @@ then runs KNN search against the HNSW index on text_chunks.embedding.
 
 from functools import lru_cache
 
-from sentence_transformers import SentenceTransformer
-
 from copilot.storage.db import get_conn
 
 EMBED_MODEL = "BAAI/bge-small-en-v1.5"
@@ -17,7 +15,8 @@ BGE_QUERY_PREFIX = "Represent this sentence for searching relevant passages: "
 
 
 @lru_cache(maxsize=1)
-def _model() -> SentenceTransformer:
+def _model():
+    from sentence_transformers import SentenceTransformer  # lazy: avoids loading PyTorch at import time
     return SentenceTransformer(EMBED_MODEL)
 
 
