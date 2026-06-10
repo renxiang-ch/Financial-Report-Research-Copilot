@@ -847,10 +847,35 @@ In structured financial QA systems, locking the numeric channel to SQL/XBRL caus
 | Weak / negative (no named customer >10%) | GLW, ADI, TXN, MCHP, ON, NXPI | Tests whether system hallucinates non-existent edges |
 | 2-hop extension (limited) | APH, JBL, FLEX | EMS / connector tier, structural inference only |
 
-**Why this industry:**
-- ASC 280 forces disclosure → ground truth is legally mandated and EDGAR-verifiable
-- Hub-spoke structure is unambiguous; graph semantics are clear
-- Economically meaningful: Apple order-cut scenarios are real analyst use cases
+**Why this industry — four principled reasons (in order of importance):**
+
+1. **ASC 280 legal mandate produces ground truth automatically.**
+   US securities law requires any company to name and quantify any single customer that
+   accounts for >10% of revenue in their 10-K filing. Ground truth is not hand-labeled —
+   it is legally mandated. This does not hold in other jurisdictions or industries.
+
+2. **US-listed companies file 10-K + XBRL → machine-readable, structured data.**
+   The constraint is not "suppliers are American" but "EDGAR/XBRL data is available."
+   Causality: we need ASC 280 disclosures → we need 10-K filers → we exclude foreign
+   suppliers (TSMC, Foxconn file 20-F; Samsung files 20-F equivalent). TSMC is Apple's
+   largest fab supplier but is out of scope precisely because it cannot provide the same
+   structured, verifiable disclosure.
+
+3. **Apple is too large to anonymize — disclosures are named and precise.**
+   ASC 280 technically allows "a significant customer" without naming them. In practice,
+   when that customer is the world's largest company by market cap, suppliers name Apple
+   explicitly (investors would demand it). This guarantees the ground truth is attributed
+   (supplier → AAPL, not supplier → "major customer") and numerically precise.
+   QCOM is additionally valuable: its Apple relationship changed dramatically from 2017
+   (dispute, revenue fell to near zero) → 2019 (settlement) → 2023+ (self-design displacement),
+   providing a temporally dynamic edge for trend reasoning questions.
+
+4. **Dependency concentration gradient, not scatter — enables dataset diversity.**
+   The supply chain is NOT "distributed." It is highly concentrated around Apple.
+   What creates dataset diversity is the *gradient of dependency levels*:
+   CRUS (~90%) → QRVO (~46%) → AVGO (~20%) → SWKS (>10%, threshold only) → GLW (no disclosure).
+   This gradient supports T1–T5 question variety and makes the negative samples
+   (GLW/TXN/ADI) a principled test of whether the system hallucinates non-existent edges.
 
 **Graph direction convention:** supplier → customer (revenue_pct = % of *supplier's* revenue from that customer)
 
