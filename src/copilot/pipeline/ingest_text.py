@@ -8,7 +8,8 @@ Pipeline:
 
 Usage:
     python -m copilot.pipeline.ingest_text --ticker AAPL --years 3
-    python -m copilot.pipeline.ingest_text            # full cluster, last 3 years
+    python -m copilot.pipeline.ingest_text                     # v1 cluster, last 3 years
+    python -m copilot.pipeline.ingest_text --cluster research --years 10
 """
 
 import argparse
@@ -24,21 +25,13 @@ import httpx
 import tiktoken
 from bs4 import BeautifulSoup
 
+from copilot.pipeline.companies import CIK_OVERRIDES, CLUSTER_RESEARCH, CLUSTER_V1
 from copilot.storage.db import get_conn
 from copilot.storage.schema import create_tables
 
 EDGAR_HEADERS = {"User-Agent": "financial-copilot research renxiangchao2678@gmail.com"}
 CHUNK_TOKENS = 500
 CHUNK_OVERLAP = 50
-
-CLUSTER = {
-    "AAPL": "Apple Inc.",
-    "SWKS": "Skyworks Solutions",
-    "QRVO": "Qorvo Inc.",
-    "CRUS": "Cirrus Logic Inc.",
-    "GLW":  "Corning Inc.",
-    "AVGO": "Broadcom Inc.",
-}
 
 # Sections we care about in 10-K filings
 TARGET_SECTIONS = {
@@ -52,9 +45,12 @@ enc = tiktoken.get_encoding("cl100k_base")
 
 
 def get_cik(ticker: str) -> str:
+    if ticker.upper() in CIK_OVERRIDES:
+        return CIK_OVERRIDES[ticker.upper()]
     resp = httpx.get(
         "https://www.sec.gov/files/company_tickers.json",
-        headers=EDGAR_HEADERS, timeout=15,
+        headers=EDGAR_HEADERS,
+        timeout=15,
     )
     resp.raise_for_status()
     for entry in resp.json().values():
@@ -227,12 +223,20 @@ def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--ticker", default=None)
     parser.add_argument("--years", type=int, default=3)
+    parser.add_argument(
+        "--cluster",
+        default="v1",
+        choices=["v1", "research"],
+        help="v1=original 6 companies, research=15-company SC-DisclosureQA cluster",
+    )
     args = parser.parse_args()
 
-    tickers = [args.ticker.upper()] if args.ticker else list(CLUSTER.keys())
+    cluster = CLUSTER_RESEARCH if args.cluster == "research" else CLUSTER_V1
+    tickers = [args.ticker.upper()] if args.ticker else list(cluster.keys())
 
     conn = get_conn()
     create_tables(conn)
+    print(f"Ingesting {len(tickers)} companies (cluster={args.cluster}, years={args.years}).")
 
     for i, ticker in enumerate(tickers):
         if i > 0:

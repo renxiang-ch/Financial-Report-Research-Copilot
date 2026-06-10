@@ -3,7 +3,8 @@ Ingest XBRL financial facts from EDGAR into Postgres.
 
 Usage:
     python -m copilot.pipeline.ingest_xbrl --ticker AAPL
-    python -m copilot.pipeline.ingest_xbrl          # full cluster
+    python -m copilot.pipeline.ingest_xbrl                    # v1 cluster (6 companies)
+    python -m copilot.pipeline.ingest_xbrl --cluster research # 15-company research cluster
 """
 
 import argparse
@@ -11,37 +12,54 @@ import time
 
 import httpx
 
+from copilot.pipeline.companies import CIK_OVERRIDES, CLUSTER_RESEARCH, CLUSTER_V1
 from copilot.storage.db import get_conn
 from copilot.storage.schema import create_tables
 
 EDGAR_HEADERS = {"User-Agent": "financial-copilot research renxiangchao2678@gmail.com"}
 
-CLUSTER = {
-    "AAPL": "Apple Inc.",
-    "SWKS": "Skyworks Solutions",
-    "QRVO": "Qorvo Inc.",
-    "CRUS": "Cirrus Logic Inc.",
-    "GLW":  "Corning Inc.",
-    "AVGO": "Broadcom Inc.",
-}
-
 # XBRL tag → human label mapping
+# Multiple tags can map to the same label; first match wins at query time.
 TAG_LABELS: dict[str, str] = {
+    # Income statement
     "RevenueFromContractWithCustomerExcludingAssessedTax": "Revenue",
-    "Revenues": "Revenue",
-    "GrossProfit": "GrossProfit",
-    "NetIncomeLoss": "NetIncome",
-    "OperatingIncomeLoss": "OperatingIncome",
-    "EarningsPerShareBasic": "EPS_Basic",
-    "EarningsPerShareDiluted": "EPS_Diluted",
-    "Assets": "TotalAssets",
-    "LongTermDebt": "LongTermDebt",
-    "ResearchAndDevelopmentExpense": "R&D",
-    "CostOfGoodsAndServicesSold": "COGS",
+    "Revenues":                                            "Revenue",
+    "SalesRevenueNet":                                     "Revenue",
+    "RevenueFromContractWithCustomerIncludingAssessedTax": "Revenue",
+    "GrossProfit":                                         "GrossProfit",
+    "CostOfGoodsAndServicesSold":                          "COGS",
+    "CostOfRevenue":                                       "COGS",
+    "CostOfGoodsSold":                                     "COGS",
+    "OperatingIncomeLoss":                                 "OperatingIncome",
+    "NetIncomeLoss":                                       "NetIncome",
+    "EarningsPerShareBasic":                               "EPS_Basic",
+    "EarningsPerShareDiluted":                             "EPS_Diluted",
+    "ResearchAndDevelopmentExpense":                       "R&D",
+    "IncomeTaxExpenseBenefit":                             "IncomeTaxExpense",
+    "InterestExpense":                                     "InterestExpense",
+    "InterestExpenseDebt":                                 "InterestExpense",
+    "DepreciationDepletionAndAmortization":                "D&A",
+    "DepreciationAndAmortization":                         "D&A",
+    # Balance sheet
+    "Assets":                                              "TotalAssets",
+    "AssetsCurrent":                                       "CurrentAssets",
+    "LiabilitiesCurrent":                                  "CurrentLiabilities",
+    "LongTermDebt":                                        "LongTermDebt",
+    "LongTermDebtNoncurrent":                              "LongTermDebt",
+    "StockholdersEquity":                                  "TotalEquity",
+    "StockholdersEquityIncludingPortionAttributableToNoncontrollingInterest": "TotalEquity",
+    "PropertyPlantAndEquipmentNet":                        "PP&E",
+    "InventoryNet":                                        "Inventory",
+    # Cash flow
+    "NetCashProvidedByUsedInOperatingActivities":          "OperatingCashFlow",
+    "PaymentsToAcquirePropertyPlantAndEquipment":          "CapEx",
+    "PaymentsForCapitalImprovements":                      "CapEx",
 }
 
 
 def get_cik(ticker: str) -> str:
+    if ticker.upper() in CIK_OVERRIDES:
+        return CIK_OVERRIDES[ticker.upper()]
     resp = httpx.get(
         "https://www.sec.gov/files/company_tickers.json",
         headers=EDGAR_HEADERS,
@@ -87,7 +105,7 @@ def extract_facts(ticker: str, facts: dict) -> list[dict]:
     return rows
 
 
-def upsert_company(conn, ticker: str, cik: str) -> None:
+def upsert_company(conn, ticker: str, name: str, cik: str) -> None:
     with conn.cursor() as cur:
         cur.execute(
             """
@@ -95,7 +113,7 @@ def upsert_company(conn, ticker: str, cik: str) -> None:
             VALUES (%s, %s, %s)
             ON CONFLICT (ticker) DO UPDATE SET name = EXCLUDED.name, cik = EXCLUDED.cik
             """,
-            (ticker, CLUSTER[ticker], cik),
+            (ticker, name, cik),
         )
     conn.commit()
 
@@ -120,12 +138,12 @@ def upsert_facts(conn, rows: list[dict]) -> int:
     return len(rows)
 
 
-def ingest_ticker(ticker: str, conn) -> None:
+def ingest_ticker(ticker: str, name: str, conn) -> None:
     print(f"[{ticker}] fetching CIK...")
     cik = get_cik(ticker)
     print(f"[{ticker}] CIK={cik}, fetching facts...")
     facts = get_company_facts(cik)
-    upsert_company(conn, ticker, cik)
+    upsert_company(conn, ticker, name, cik)
     rows = extract_facts(ticker, facts)
     inserted = upsert_facts(conn, rows)
     print(f"[{ticker}] upserted {inserted} fact rows")
@@ -134,19 +152,27 @@ def ingest_ticker(ticker: str, conn) -> None:
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--ticker", default=None)
+    parser.add_argument(
+        "--cluster",
+        default="v1",
+        choices=["v1", "research"],
+        help="v1=original 6 companies, research=15-company SC-DisclosureQA cluster",
+    )
     args = parser.parse_args()
 
-    tickers = [args.ticker.upper()] if args.ticker else list(CLUSTER.keys())
+    cluster = CLUSTER_RESEARCH if args.cluster == "research" else CLUSTER_V1
+    tickers = {args.ticker.upper(): cluster.get(args.ticker.upper(), args.ticker.upper())} \
+        if args.ticker else cluster
 
     conn = get_conn()
     create_tables(conn)
-    print("Tables ready.")
+    print(f"Tables ready. Ingesting {len(tickers)} companies (cluster={args.cluster}).")
 
-    for i, ticker in enumerate(tickers):
+    for i, (ticker, name) in enumerate(tickers.items()):
         if i > 0:
             time.sleep(0.3)
         try:
-            ingest_ticker(ticker, conn)
+            ingest_ticker(ticker, name, conn)
         except Exception as e:
             print(f"[{ticker}] ERROR: {e}")
 
