@@ -817,3 +817,175 @@ Implemented as persona config passed into agent system prompt at request time.
 | P3 | User role routing | High demo impact; product feel |
 | P4 | 8-K real-time data | Adds recency; meaningful engineering effort |
 | P5 | V1/V2 numeric + citation check | Straightforward but low marginal value given 100% Tier-1 accuracy |
+
+---
+
+## Research Branch — SC-DisclosureQA (2026-06-09)
+
+> **Branch: `research`** — Experimental research track. Does NOT affect `main` / deployed prototype.
+
+### Research Question
+
+**Core claim (one sentence):**
+In structured financial QA systems, locking the numeric channel to SQL/XBRL causes hallucination to migrate toward qualitative retrieval and cross-entity relational reasoning; graph augmentation selectively suppresses the relational error layer; the three error types are architecturally separable.
+
+**Three sub-questions:**
+1. How much numeric hallucination does SQL-locking eliminate?
+2. Do residual errors concentrate in retrieval and graph reasoning?
+3. Does evidence trace improve verifiability of cross-entity claims?
+
+---
+
+### Industry & Company Cluster
+
+**Industry: Apple semiconductor supply chain (ASC 280 customer concentration disclosures)**
+
+| Role | Companies | Rationale |
+|---|---|---|
+| Hub | AAPL | Customer cited in supplier 10-Ks |
+| Core positive (explicit Apple % disclosed) | CRUS, QRVO, SWKS, AVGO, QCOM | Apple >10% revenue, EDGAR-verifiable |
+| Weak / negative (no named customer >10%) | GLW, ADI, TXN, MCHP, ON, NXPI | Tests whether system hallucinates non-existent edges |
+| 2-hop extension (limited) | APH, JBL, FLEX | EMS / connector tier, structural inference only |
+
+**Why this industry:**
+- ASC 280 forces disclosure → ground truth is legally mandated and EDGAR-verifiable
+- Hub-spoke structure is unambiguous; graph semantics are clear
+- Economically meaningful: Apple order-cut scenarios are real analyst use cases
+
+**Graph direction convention:** supplier → customer (revenue_pct = % of *supplier's* revenue from that customer)
+
+**Supply-chain depth:**
+- Primary: 1-hop (Supplier → AAPL)
+- Extension: 2-hop structural inference only (Sub-supplier → Supplier → AAPL), no 2-hop text ground truth required
+- Out of scope: 3-hop
+
+---
+
+### Dataset Design — SC-DisclosureQA Benchmark (target: 150 questions)
+
+| Type | Count | Example | Ground truth source |
+|---|---|---|---|
+| **T1 SQL numeric** | 30 | "CRUS FY2023 Revenue?" | XBRL financial_facts |
+| **T2 SQL + compute** | 30 | "QRVO Apple exposure × Revenue = dollar amount" | XBRL + compute |
+| **T3 Qualitative retrieval** | 25 | "How does SWKS describe customer concentration risk?" | text_chunks key phrase |
+| **T4 Graph relation** | 30 | "Which companies supply Apple in FY2024? At what %?" | supply_edges |
+| **T5 Cross-entity reasoning** | 20 | "20% Apple order cut: CRUS vs QRVO — who loses more in dollars?" | graph + compute |
+| **T6 Unanswerable / refusal** | 15 | "What % of Apple's procurement comes from QRVO?" | Customer-side = no disclosure → must refuse |
+
+**Dataset special properties:**
+- Every T4/T5 question has a `traversal_ground_truth` field (required edges that must appear in the answer's reasoning trace)
+- T6 includes two sub-types: true data gaps AND direction-reversed questions (customer-side queries)
+- Time range: FY2020–FY2024 (5 years), enabling trend questions
+
+**Build process:** `python -m copilot.eval.build_sc_eval` — to be implemented
+
+---
+
+### System Conditions (Ablation Design)
+
+```
+Condition A — Naive RAG
+  User → LLM + retrieve_text only → Answer
+  (no SQL tools, no graph)
+
+Condition B — SQL-locked RAG
+  User → Agent → query_financials / compute / retrieve_text → Answer
+  (numeric forced through SQL, no graph)
+
+Condition C — SQL + Graph + Evidence Trace  [this system]
+  User → Agent → query_financials / compute / retrieve_text / graph_query → Answer
+  (full system; graph provides relations; evidence trace provides citation chain)
+
+Condition D — SQL + Graph, no Evidence Trace  [optional ablation]
+  Isolates the contribution of citation/grounding mechanism
+```
+
+**Verification logic for core claim:**
+```
+If A → B: numeric_accuracy ↑, relation_accuracy ≈ flat  → SQL isolates numeric layer
+If B → C: relation_accuracy ↑, numeric_accuracy ≈ flat  → graph isolates relational layer
+→ Three error types are architecturally separable (error isolation thesis)
+```
+
+---
+
+### Evaluation Framework
+
+Each question scored on five dimensions:
+
+| Dimension | Measurement |
+|---|---|
+| Numeric accuracy | `_within_tolerance()` ±2%, XBRL-verified |
+| Relation accuracy | `traversal_trace` contains required edges |
+| Retrieval hit | key phrase present in `retrieve_text` output |
+| Refusal accuracy | refusal keyword detection |
+| Citation verifiability | accession number resolves to real SEC document |
+
+Harness: `src/copilot/eval/harness_sc.py` — to be implemented
+
+---
+
+### Expected Contributions
+
+1. **SC-DisclosureQA benchmark** — first supply-chain QA dataset grounded in ASC 280 mandatory disclosures with EDGAR-verifiable ground truth (150 questions, 6 types, 15 companies, FY2020–2024)
+2. **Error migration evidence** — quantified ablation showing SQL-locking and graph augmentation selectively suppress distinct hallucination types
+3. **Evidence trace design** — `graph_query` returns `traversal_trace` + `source_text` per edge; enables citation-level verification of cross-entity claims
+4. **Finance-domain GraphRAG instantiation** — domain-specific application of Edge et al. (2024) GraphRAG with EDGAR ground truth (vs. synthetic data in prior work)
+
+---
+
+### Target Venue
+
+| Priority | Venue | Notes |
+|---|---|---|
+| Primary | EMNLP / ACL 2027 Findings | NLP + finance domain, fits system paper track |
+| Backup | AAAI 2027 / FinNLP workshop (KDD/IJCAI satellite) | Finance-specific audience |
+| arXiv preprint | 2026 Q4 | Establish priority before submission |
+
+---
+
+### Execution Roadmap
+
+```
+Current (already built on main)
+  ├── 6-company XBRL + text_chunks + supply_edges ✅
+  ├── Agent + 5 tools (query_financials, compute, retrieve_text, graph_query, list_metrics) ✅
+  ├── Eval harness (Tier 1/2/3/refusal) ✅
+  └── Tier-3 ablation: graph vs no-graph, +87.5pp delta ✅
+
+Phase 1 — Data expansion (2–4 weeks)
+  ├── Expand to 15 companies: add QCOM, ADI, TXN, MCHP, ON, NXPI, APH, JBL, FLEX
+  ├── XBRL ingestion: 10 years (FY2015–FY2024) per company
+  ├── text_chunks: ingest + embed (~50,000 chunks total)
+  ├── supply_edges: re-run extraction, manually verify golden set per company
+  └── Validate: WRDS cross-check where available
+
+Phase 2 — Benchmark construction (2–3 weeks)
+  ├── Implement build_sc_eval.py (150 questions + human review)
+  ├── Label traversal_ground_truth per T4/T5 question
+  ├── Verify T6 unanswerable boundaries (direction-reversed vs. true gaps)
+  └── Lock dataset (no changes after first eval run)
+
+Phase 3 — Experiments (2–3 weeks)
+  ├── Run Condition A (Naive RAG: disable SQL tools, retrieve_text only)
+  ├── Run Condition B (SQL-locked: no graph_query)
+  ├── Run Condition C (full system)
+  ├── Optional: Condition D (no evidence trace)
+  └── Per-type error breakdown → error migration analysis
+
+Phase 4 — Writing (ongoing)
+  ├── Core results table + error migration figure
+  ├── Case studies: CRUS vs QRVO order-cut comparison
+  └── arXiv draft → venue submission
+```
+
+---
+
+### Research Branch — Key Decisions Log
+
+| Date | Decision | Rationale |
+|---|---|---|
+| 2026-06-09 | Use Apple supply-chain cluster as primary domain | ASC 280 ground truth, hub-spoke clarity, economic relevance |
+| 2026-06-09 | 2-hop = structural inference only, no text ground truth required | EDGAR sub-supplier disclosures don't reveal end-customer chains |
+| 2026-06-09 | Negative samples (GLW/TXN/etc.) test hallucinated-edge detection | Most interesting failure mode for graph layer |
+| 2026-06-09 | Error migration as core claim, not accuracy leaderboard | Mechanistic claim is harder to challenge than benchmark score |
