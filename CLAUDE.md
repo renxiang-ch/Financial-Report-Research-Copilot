@@ -144,10 +144,10 @@ config.py resolves `.env` via absolute path from `__file__`, so it works regardl
 **Windows (research branch — SC-DisclosureQA dataset):**
 - 7,444 text chunks — all embedded with `BAAI/bge-small-en-v1.5` (research cluster, 10 years)
 - 42,244 financial facts across 15 companies, 20 metrics (FY2015-2025 depending on company)
-- 144 filings (15 companies × ~9.6 years avg)
-- supply_edges: 74 edges (V1 + research-cluster extraction complete, chunks source)
+- 148 filings (15 companies × ~9.9 years avg)
+- supply_edges: ~130+ edges (chunks + HTML extraction complete; see extraction results section)
 - Run embed: `uv run --active python -m copilot.pipeline.embed_chunks`
-- Run extraction: `PYTHONUTF8=1; uv run --active python -m copilot.pipeline.extract_edges --source all`
+- Run extraction: `$env:PYTHONUTF8="1"; uv run --active python -m copilot.pipeline.extract_edges --source all`
 
 **Mac (V1 prototype):**
 - 969 text chunks — all embedded
@@ -689,40 +689,48 @@ Eval harness checks traversal trace the same way it checks `tool_trace` for Tier
 - `--source html`: direct HTML parsing of Item 8 Financial Notes from EDGAR
 - Rerun command: `$env:PYTHONUTF8="1"; uv run --active python -m copilot.pipeline.extract_edges --source all`
 
-**V1 cluster (confirmed, WRDS-validated):**
+**DB state after full extraction (chunks + HTML, 2026-06-11):**
+~130 edges across 13 suppliers. HTML source added Item 8 EMS sub-supplier edges for CRUS (Pegatron, Foxconn/Hongfujin, Jabil Circuits, Protek) and smartphone OEM edges for QCOM (Samsung, OPPO, vivo).
 
-| Supplier | Customer | FY Range | revenue_pct | WRDS match |
-|---|---|---|---|---|
-| QRVO | AAPL | 2023–2026 | 37%→46%→47%→50% | ✅ exact |
-| QRVO | 005930.KS | 2023–2026 | 12%→12%→10%→10% | — |
-| SWKS | AAPL | 2021–2025 | 10% (threshold only) | ⚠️ real=69% in XBRL |
-| AVGO | AAPL | 2020–2023 | 15%→20%→20%→20% | ✅ exact |
-| CRUS | AAPL | 2020–2026 | 79%→83%→79%→83%→87%→89%→91% | ✅ exact |
-| GLW | unnamed | 2014–2016 | >10% (threshold only) | — (Corning doesn't name customer) |
+**Post-extraction data quality cleanup applied (2026-06-11):**
+- Deleted sub-10% edges (QRVO→Huawei FY2018 8%, QRVO→Samsung FY2021 7%) — below ASC 280 threshold
+- Deleted aggregate/channel edges (AVGO "top 5 customers" / "distributors", ON/ADI "10 largest") — not single-entity disclosures
+- Deleted inferred duplicates (APH "largest customer" FY2020 = named AAPL same filing)
+- Deduplicated Huawei aliases (Huawei / HWT / Huawei Technologies Co., Ltd.) → kept canonical name
+- Set `threshold_only=TRUE` on APH FY2022-2025 "10% or more" language
+- **Pending cleanup after HTML extraction completes**: QRVO Huawei aliases may re-appear from HTML source; AVGO/CRUS WT Micro name variants need normalization
 
-**Research cluster — new discoveries (2026-06-11):**
+**Named Apple edges confirmed (WRDS-validated where available):**
 
-| Supplier | Customer | FY Range | revenue_pct | Notes |
-|---|---|---|---|---|
-| **ADI** | **AAPL** | **2016–2017** | **12%→14%** | Named Apple disclosure — then disappears. ADI merged with Linear Technology (Nov 2017); post-merger revenue mix diversified away from Apple concentration. Classic temporal edge. |
-| **APH** | **AAPL** | **2018, 2020** | **12%, 11%** | Amphenol (connector/interconnect) had Apple as named >10% customer in select years; not in all years — intermittent concentration. |
-| **JBL** | **AAPL** | **2020–2024** | **11%–22%** | Jabil EMS consistently discloses Apple as named >10% customer. Reclassified: JBL is a Tier-1 positive, not pure Tier-2. |
-| JBL | AMZN | 2020 | 11% | Amazon also disclosed as named >10% in FY2020 only. |
-| LRCX | unnamed | 2014–2016 | 45%–52% | Very high unnamed concentration. Most likely Samsung (major memory fab customer of Lam Research). Not in Apple supply chain. Useful as negative T4 test. |
-| AVGO | WT Microelectronics | 2022–2023 | 20%–21% | Taiwan distributor as named >10% customer alongside Apple. |
+| Supplier | FY Range | Apple % range | Status |
+|---|---|---|---|
+| CRUS | FY2017–2026 | 79%–91% | ✅ WRDS exact |
+| QRVO | FY2016–2026 | 30%–50% | ✅ WRDS exact (FY2024) |
+| JBL | FY2020–2024 | 11%–22% | Named, not WRDS-validated |
+| AVGO | FY2020–2023 | 15%–20% | ✅ WRDS exact |
+| ADI | FY2016–2017 | 12%–14% | Named; disappears post-LT merger |
+| APH | FY2018, FY2020 | 11%–12% | Named; intermittent |
+| SWKS | FY2021–2025 | >10% threshold | ⚠️ real ~69% per WRDS |
 
-**Tier-1 negative confirmation (no named customer >10%):**
-TXN, MCHP, ON, SANM — regex pre-filter found candidates but LLM correctly returned no edges.
-QCOM — candidates were QTL segment revenue %, not customer concentration; correctly not extracted.
-ADI post-2017 — no Apple disclosure after LT merger.
+**Other notable edges from HTML source:**
+- CRUS→EMS partners (Pegatron, Hongfujin/Foxconn, Jabil Circuits, Protek) — Apple assemblers appear in CRUS concentration notes as indirect customer chain
+- QCOM→AAPL: confirmed named Apple disclosure in modem/chip business (pre-dispute years)
+- QCOM→Samsung/OPPO/vivo: smartphone OEM customers in QCT segment
+- ON→unnamed distributor: single distributor 10–13% FY2020-2025 (likely automotive channel)
+- MCHP→Arrow Electronics: named distributor 10–12% FY2024-2026
+- LRCX→unnamed: 45–52% FY2014-2016 (likely Samsung memory fabs; not Apple chain)
+
+**Tier-1 negative confirmation (no named single-customer >10% in any year):**
+TXN, SANM, GLW (threshold-only unnamed), LRCX (unnamed only)
 
 ### Company tier reclassification based on extraction results
 
-Original: JBL = Tier-2 EMS (no Apple concentration expected)
-**Revised: JBL = Tier-1 positive** (consistent Apple named disclosure FY2020-2024)
-
-ADI: **Hybrid** — Tier-1 positive for FY2016-2017, Tier-1 negative for FY2018+ (post-merger)
-APH: **Intermittent positive** — named Apple disclosure in FY2018/2020 only
+| Company | Original tier | Revised tier | Evidence |
+|---|---|---|---|
+| JBL | Tier-2 EMS | **Tier-1 positive** | Consistent Apple named disclosure FY2020-2024 |
+| ADI | Tier-1 negative | **Hybrid** | Apple 12-14% FY2016-2017; gone post-LT merger |
+| APH | Tier-2 connector | **Intermittent positive** | Named Apple FY2018, FY2020; not other years |
+| QCOM | Tier-1 negative | **Confirmed negative** | No customer concentration disclosure found in any year (segment revenues, not customer %) |
 
 ### Disclosure patterns discovered
 
@@ -1074,6 +1082,29 @@ Phase 4 — Writing (ongoing)
 
 ---
 
+### Research Branch — Pending Work (as of 2026-06-11)
+
+**Phase 1 data expansion — status:**
+- [x] XBRL ingestion: 42,244 facts, 15 companies, 20 metrics
+- [x] Text ingestion: 7,444 chunks (all embedded), 148 filings, 10yr per company (AVGO 8yr, entity limit)
+- [x] EDGAR pagination fix + LRCX heading regex fix → all companies re-ingested
+- [x] supply_edges extraction: chunks source complete; HTML source complete
+- [ ] **Final cleanup pass on supply_edges after HTML extraction** — re-run dedup/filter (Huawei aliases re-appear from HTML; AVGO WT Micro name variants; any new sub-10% edges)
+- [ ] Add `CUSTOMER_ALIASES` entries: `"huawei"`, `"hwt"`, `"huawei technologies"` → canonical ticker; prevents future re-extraction duplicates
+
+**Phase 2 benchmark construction — not started:**
+- [ ] Implement `build_sc_eval.py` — 150 questions, 6 types (T1–T6)
+- [ ] Label `traversal_ground_truth` per T4/T5 question (required supply_edges rows must appear in answer trace)
+- [ ] Verify T6 unanswerable boundaries (direction-reversed vs. true data gaps)
+- [ ] Lock dataset (freeze after first eval run)
+- Suggested starting point: generate T1/T2 questions from financial_facts (automated), T4 questions from confirmed supply_edges, T6 questions from confirmed negative companies (TXN/GLW/etc.)
+
+**Phase 3 experiments — not started:**
+- Condition A: Naive RAG (disable SQL + graph tools, retrieve_text only)
+- Condition B: SQL-locked (no graph_query)
+- Condition C: Full system
+- Harness to implement: `src/copilot/eval/harness_sc.py`
+
 ### Research Branch — Key Decisions Log
 
 | Date | Decision | Rationale |
@@ -1082,3 +1113,7 @@ Phase 4 — Writing (ongoing)
 | 2026-06-09 | 2-hop = structural inference only, no text ground truth required | EDGAR sub-supplier disclosures don't reveal end-customer chains |
 | 2026-06-09 | Negative samples (GLW/TXN/etc.) test hallucinated-edge detection | Most interesting failure mode for graph layer |
 | 2026-06-09 | Error migration as core claim, not accuracy leaderboard | Mechanistic claim is harder to challenge than benchmark score |
+| 2026-06-11 | JBL reclassified Tier-2→Tier-1 positive | Extraction confirmed Apple named 11-22% FY2020-2024 |
+| 2026-06-11 | ADI classified as hybrid (Tier-1 positive FY2016-17, negative after) | Apple disappears post-LT merger — temporal edge case |
+| 2026-06-11 | QCOM classified Tier-1 negative | No customer concentration disclosure found; QCT reports segment not customer % |
+| 2026-06-11 | EDGAR pagination fix applied to ingest_text.py | GLW/QRVO/QCOM/ADI/MCHP/JBL all extended to 10yr |
