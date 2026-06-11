@@ -138,6 +138,10 @@ def run_extraction_from_html(
             edges = _extract_from_chunk(client, para, ticker)
             for edge in edges:
                 customer = _normalize_customer(edge.customer_ticker, edge.customer_name)
+                skip, reason = _should_skip_edge(edge)
+                if skip:
+                    print(f"  SKIP {ticker}→{customer}  {edge.revenue_pct}%  FY{edge.fiscal_year}  [{reason}]")
+                    continue
                 print(f"  → {ticker}→{customer}  {edge.revenue_pct}%  FY{edge.fiscal_year}  [{edge.disclosure_status}]")
                 if not dry_run:
                     _upsert_edge(conn, ticker, edge, accn, chunk_id=None,
@@ -167,23 +171,95 @@ GOLDEN_EDGES = [
 
 # ── Customer name → ticker resolution ────────────────────────────────────────
 CUSTOMER_ALIASES: dict[str, str] = {
+    # Apple
     "apple": "AAPL",
     "apple inc": "AAPL",
     "apple inc.": "AAPL",
     "apple, inc.": "AAPL",
     "apple, inc": "AAPL",
+    # Cluster members
     "skyworks": "SWKS",
     "skyworks solutions": "SWKS",
     "qorvo": "QRVO",
     "cirrus logic": "CRUS",
     "corning": "GLW",
     "broadcom": "AVGO",
+    # Samsung
     "samsung": "005930.KS",
     "samsung electronics": "005930.KS",
     "samsung electronics co., ltd.": "005930.KS",
     "samsung electronics co., ltd": "005930.KS",
     "005930": "005930.KS",
+    # Huawei — all known variants → canonical
+    "huawei": "Huawei",
+    "hwt": "Huawei",
+    "huawei technologies": "Huawei",
+    "huawei technologies co., ltd.": "Huawei",
+    "huawei technologies co., ltd": "Huawei",
+    "huawei technology co., ltd.": "Huawei",
+    "huawei technology co., ltd": "Huawei",
+    # WT Microelectronics (AVGO distributor)
+    "wt microelectronics": "WT Microelectronics",
+    "wt microelectronics co., ltd.": "WT Microelectronics",
+    "wt microelectronics co., ltd": "WT Microelectronics",
+    # Foxconn / Hon Hai
+    "foxconn": "Foxconn",
+    "foxconn technology group": "Foxconn",
+    "hon hai precision industry co., ltd.": "Foxconn",
+    "hon hai precision industry co., ltd./foxconn": "Foxconn",
+    "hon hai": "Foxconn",
+    # OPPO / VIVO (QCOM customers)
+    "oppo": "OPPO",
+    "guangdong oppo mobile telecommunications corp. ltd.": "OPPO",
+    "guangdong oppo mobile telecommunications": "OPPO",
+    "vivo": "VIVO",
+    "vivo communication technology co., ltd.": "VIVO",
+    "vivo communication technology": "VIVO",
+    # Arrow Electronics (MCHP distributor)
+    "arrow electronics": "Arrow Electronics",
+    "arrow electronics, inc.": "Arrow Electronics",
 }
+
+# ── Post-extraction edge validation ──────────────────────────────────────────
+
+_MIN_REVENUE_PCT = 10.0  # ASC 280-10-50-42 requires disclosure only at ≥10%
+
+# Patterns in customer_name/ticker that indicate aggregate or geographic disclosures,
+# not single-entity ASC 280 concentration disclosures. Uses word boundary so it also
+# catches "China-based customers", "distributors channel", etc.
+_AGGREGATE_NAME_RE = re.compile(
+    r"\b(unnamed|distributors?|top\s*\d+\s+customer|\d+\s+largest\s+customer"
+    r"|china[\-\s]based|japan[\-\s]based|korea[\-\s]based"
+    r"|geographic|segment\s+revenue|territory)\b",
+    re.IGNORECASE,
+)
+
+# Detect geographic framing in the evidence sentence (e.g. "shipments to China-based customers")
+_GEOGRAPHIC_EVIDENCE_RE = re.compile(
+    r"(china|japan|korea|europe|asia|taiwan|geographic|region|territory|country"
+    r"|overseas|international)[- \w]{0,25}(customer|account|revenue|sales)",
+    re.IGNORECASE,
+)
+
+
+def _should_skip_edge(edge: "EdgeCandidate") -> tuple[bool, str]:
+    """Return (skip, reason). Applied before upsert to prevent known false-positive patterns."""
+    # Below ASC 280 mandatory disclosure threshold
+    if edge.revenue_pct < _MIN_REVENUE_PCT:
+        return True, f"revenue_pct {edge.revenue_pct}% < 10% ASC 280 threshold"
+
+    # Aggregate or geographic customer name
+    name_key = (edge.customer_ticker + " " + edge.customer_name).lower().strip()
+    if _AGGREGATE_NAME_RE.search(name_key):
+        return True, f"aggregate/geographic customer identifier: {edge.customer_name!r}"
+
+    # Geographic framing detected in the evidence sentence
+    evidence = (edge.evidence_sentence or "").lower()
+    if _GEOGRAPHIC_EVIDENCE_RE.search(evidence):
+        return True, f"geographic revenue disclosure in evidence: {edge.evidence_sentence[:80]!r}"
+
+    return False, ""
+
 
 # ── Regex pre-filter patterns ─────────────────────────────────────────────────
 _CONCENTRATION_PATTERNS = [
@@ -238,8 +314,8 @@ class ExtractionResult(BaseModel):
 
 _SYSTEM_PROMPT = """You extract supply-chain customer concentration disclosures from SEC 10-K filings.
 
-A customer concentration disclosure states that a single customer accounts for a meaningful
-percentage (typically ≥10%) of a company's revenue. These are required under ASC 280-10-50-42.
+A customer concentration disclosure states that a SINGLE, IDENTIFIABLE customer accounts for a
+meaningful percentage (≥10%) of a company's revenue. These are required under ASC 280-10-50-42.
 
 Rules:
 - Extract ONLY explicit disclosures, do not infer or estimate.
@@ -250,6 +326,13 @@ Rules:
   (e.g. "more than ten percent", "at least 10%", "over 10%", "constituted more than ten percent"),
   set revenue_pct to 10.0 AND threshold_only to true.
 - If no percentage or threshold is stated at all, do not extract that customer.
+
+DO NOT extract any of the following — these are NOT ASC 280 single-customer disclosures:
+- Geographic revenue (e.g. "shipments to China-based customers represent 20% of revenue",
+  "sales in Asia accounted for 30%") — these describe territories, not individual customers.
+- Aggregate customer groups (e.g. "our top 5 customers account for 40%", "10 largest customers")
+- Distribution channel totals (e.g. "sales through distributors = 42% of revenue")
+- Business segment revenue (e.g. "our Semiconductor segment = 30% of total revenue")
 
 For disclosure_status:
 - "named": customer is explicitly named (e.g. "Apple Inc.")
@@ -450,7 +533,12 @@ def run_extraction(
             continue
 
         for edge in edges:
-            customer = edge.customer_ticker or edge.customer_name
+            customer = _normalize_customer(edge.customer_ticker, edge.customer_name)
+            skip, reason = _should_skip_edge(edge)
+            if skip:
+                print(f"  SKIP {ticker}→{customer}  {edge.revenue_pct}%  "
+                      f"FY{edge.fiscal_year}  [{reason}]")
+                continue
             print(f"  → {ticker}→{customer}  {edge.revenue_pct}%  "
                   f"FY{edge.fiscal_year}  [{edge.disclosure_status}]")
             if not dry_run:

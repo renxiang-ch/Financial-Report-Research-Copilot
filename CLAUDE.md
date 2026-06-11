@@ -145,7 +145,7 @@ config.py resolves `.env` via absolute path from `__file__`, so it works regardl
 - 7,444 text chunks — all embedded with `BAAI/bge-small-en-v1.5` (research cluster, 10 years)
 - 42,244 financial facts across 15 companies, 20 metrics (FY2015-2025 depending on company)
 - 148 filings (15 companies × ~9.9 years avg)
-- supply_edges: ~130+ edges (chunks + HTML extraction complete; see extraction results section)
+- supply_edges: **110 rows, 29 (supplier,customer) pairs** — chunks + HTML extraction complete, full cleanup done (2026-06-11)
 - Run embed: `uv run --active python -m copilot.pipeline.embed_chunks`
 - Run extraction: `$env:PYTHONUTF8="1"; uv run --active python -m copilot.pipeline.extract_edges --source all`
 
@@ -698,7 +698,16 @@ Eval harness checks traversal trace the same way it checks `tool_trace` for Tier
 - Deleted inferred duplicates (APH "largest customer" FY2020 = named AAPL same filing)
 - Deduplicated Huawei aliases (Huawei / HWT / Huawei Technologies Co., Ltd.) → kept canonical name
 - Set `threshold_only=TRUE` on APH FY2022-2025 "10% or more" language
-- **Pending cleanup after HTML extraction completes**: QRVO Huawei aliases may re-appear from HTML source; AVGO/CRUS WT Micro name variants need normalization
+- **HTML extraction cleanup complete (2026-06-11)**:
+  - AVGO pre-2018 rows deleted (entity limitation: CIK created 2018)
+  - AVGO Foxconn 9% FY2018 deleted (sub-10%)
+  - QRVO Huawei aliases deduplicated (HWT / Huawei Technologies Co., Ltd. → "Huawei")
+  - AVGO WT Microelectronics Co., Ltd. → "WT Microelectronics" (normalized)
+  - QCOM OPPO/VIVO/Foxconn customer names normalized
+  - TXN geographic revenue row (China 20%) deleted — false positive, not ASC 280
+  - SWKS→AAPL FY2016-2018 upgraded to exact values (40%/39%/47%) from Item 8 notes
+  - **Code fixes in extract_edges.py**: `_should_skip_edge()` added — auto-rejects sub-10%, geographic revenue (China-based etc.), aggregate groups (top-N, distributors); `CUSTOMER_ALIASES` extended with Huawei/WT Micro/OPPO/VIVO/Foxconn/Arrow variants; `_SYSTEM_PROMPT` updated with explicit DO NOT EXTRACT rules
+  - **Final state: 110 rows, 29 (supplier,customer) pairs**
 
 **Named Apple edges confirmed (WRDS-validated where available):**
 
@@ -1089,8 +1098,8 @@ Phase 4 — Writing (ongoing)
 - [x] Text ingestion: 7,444 chunks (all embedded), 148 filings, 10yr per company (AVGO 8yr, entity limit)
 - [x] EDGAR pagination fix + LRCX heading regex fix → all companies re-ingested
 - [x] supply_edges extraction: chunks source complete; HTML source complete
-- [ ] **Final cleanup pass on supply_edges after HTML extraction** — re-run dedup/filter (Huawei aliases re-appear from HTML; AVGO WT Micro name variants; any new sub-10% edges)
-- [ ] Add `CUSTOMER_ALIASES` entries: `"huawei"`, `"hwt"`, `"huawei technologies"` → canonical ticker; prevents future re-extraction duplicates
+- [x] **Final cleanup pass on supply_edges after HTML extraction** — 110 rows, 29 pairs (2026-06-11)
+- [x] Add `CUSTOMER_ALIASES` + `_should_skip_edge()` to extract_edges.py — future re-extractions auto-reject geographic/aggregate/sub-10% false positives
 
 **Phase 2 benchmark construction — not started:**
 - [ ] Implement `build_sc_eval.py` — 150 questions, 6 types (T1–T6)
