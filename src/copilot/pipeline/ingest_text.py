@@ -59,22 +59,15 @@ def get_cik(ticker: str) -> str:
     raise ValueError(f"Ticker {ticker} not found")
 
 
-def get_recent_10k_filings(cik: str, years: int = 3) -> list[dict]:
-    """Return metadata for the most recent N 10-K filings."""
-    url = f"https://data.sec.gov/submissions/CIK{cik}.json"
-    resp = httpx.get(url, headers=EDGAR_HEADERS, timeout=20)
-    resp.raise_for_status()
-    data = resp.json()
-
-    filings = data["filings"]["recent"]
+def _parse_filing_batch(cik: str, batch: dict) -> list[dict]:
+    """Extract 10-K entries from a filings batch dict (recent or archived page)."""
     results = []
-    count = 0
-    for i, form in enumerate(filings["form"]):
+    for i, form in enumerate(batch["form"]):
         if form != "10-K":
             continue
-        accn = filings["accessionNumber"][i]
-        filed = filings["filingDate"][i]
-        doc = filings["primaryDocument"][i]
+        accn = batch["accessionNumber"][i]
+        filed = batch["filingDate"][i]
+        doc = batch["primaryDocument"][i]
         accn_no_dash = accn.replace("-", "")
         doc_url = f"https://www.sec.gov/Archives/edgar/data/{int(cik)}/{accn_no_dash}/{doc}"
         results.append({
@@ -83,9 +76,36 @@ def get_recent_10k_filings(cik: str, years: int = 3) -> list[dict]:
             "fiscal_year": int(filed[:4]),
             "doc_url": doc_url,
         })
-        count += 1
-        if count >= years:
+    return results
+
+
+def get_recent_10k_filings(cik: str, years: int = 3) -> list[dict]:
+    """Return metadata for the most recent N 10-K filings.
+
+    Handles EDGAR pagination: companies with long histories store older filings
+    in separate archived submission pages (submissions-001.json, etc.).
+    """
+    url = f"https://data.sec.gov/submissions/CIK{cik}.json"
+    resp = httpx.get(url, headers=EDGAR_HEADERS, timeout=20)
+    resp.raise_for_status()
+    data = resp.json()
+
+    all_results = _parse_filing_batch(cik, data["filings"]["recent"])
+
+    # Fetch archived pages if we still need more
+    for page in data["filings"].get("files", []):
+        if len(all_results) >= years:
             break
+        arch_url = f"https://data.sec.gov/submissions/{page['name']}"
+        arch_resp = httpx.get(arch_url, headers=EDGAR_HEADERS, timeout=20)
+        arch_resp.raise_for_status()
+        arch_data = arch_resp.json()
+        all_results.extend(_parse_filing_batch(cik, arch_data))
+        time.sleep(0.3)
+
+    # Return the N most recent, sorted newest-first
+    all_results.sort(key=lambda x: x["filed_date"], reverse=True)
+    results = all_results[:years]
 
     return results
 
@@ -121,9 +141,18 @@ def split_into_sections(text: str) -> list[tuple[str, str]]:
     """
     Split filing text into (section_label, section_text) pairs.
     Uses Item headings as section boundaries.
+
+    Handles two heading formats:
+    - "Item 1A. Title text on same line" (most filers)
+    - "Item1.\nTitle on next line" (Lam Research iXBRL format, no space before digit)
     """
-    # Match patterns like "Item 1.", "ITEM 1A.", "Item 7."
-    pattern = re.compile(r"(Item\s+\d+[A-Z]?\.?\s+[^\n]{3,60})", re.IGNORECASE)
+    # Matches inline: "Item 1A. Title..." or "Item1A: Title..." (colon separator)
+    # Also matches next-line: "Item1.\nTitle..."
+    pattern = re.compile(
+        r"(Item\s*\d+[A-Z]?[.:]?\s+[^\n]{3,60}"    # title on same line
+        r"|Item\s*\d+[A-Z]?[.:]?\s*\n[^\n]{3,60})", # title on next line
+        re.IGNORECASE,
+    )
     parts = pattern.split(text)
 
     sections = []

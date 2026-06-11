@@ -139,11 +139,48 @@ DATABASE_URL=postgresql://postgres:<password>@localhost:5432/financial_copilot
 ```
 config.py resolves `.env` via absolute path from `__file__`, so it works regardless of working directory.
 
-### Database state (both machines in sync)
-- 969 text chunks — all embedded with `BAAI/bge-small-en-v1.5` (run `python -m copilot.pipeline.embed_chunks` if cloning fresh)
-- 7,368 financial facts across 6 companies, 10 metrics (Windows machine; includes 10-K annual + 10-Q quarterly going back to 2009–2018 depending on company)
+### Database state
+
+**Windows (research branch — SC-DisclosureQA dataset):**
+- 7,444 text chunks — all embedded with `BAAI/bge-small-en-v1.5` (research cluster, 10 years)
+- 42,244 financial facts across 15 companies, 20 metrics (FY2015-2025 depending on company)
+- 144 filings (15 companies × ~9.6 years avg)
+- supply_edges: 74 edges (V1 + research-cluster extraction complete, chunks source)
+- Run embed: `uv run --active python -m copilot.pipeline.embed_chunks`
+- Run extraction: `PYTHONUTF8=1; uv run --active python -m copilot.pipeline.extract_edges --source all`
+
+**Mac (V1 prototype):**
+- 969 text chunks — all embedded
+- 7,368 financial facts across 6 companies, 10 metrics
 - 18 filings (6 companies × 3 years)
-- Note: DB contains some FY2025 filings (SWKS, QRVO) fetched automatically — eval questions use FY2024
+- Note: DB contains some FY2025 filings (SWKS, QRVO) — eval questions use FY2024
+
+**Filing coverage per company (Windows research DB):**
+
+| Ticker | Text coverage | XBRL coverage | Notes |
+|---|---|---|---|
+| AAPL | FY2016-2025 (10yr) | FY2009+ | Hub company |
+| CRUS | FY2017-2026 (10yr) | FY2015+ | |
+| QRVO | FY2017-2026 (10yr) | FY2016+ | IPO Jan 2015; first 10-K FY2016 |
+| SWKS | FY2016-2025 (10yr) | FY2015+ | |
+| **AVGO** | **FY2018-2025 (8yr)** | **FY2018+** | **Entity limit: CIK 0001730168 created 2018 when Avago Technologies acquired old Broadcom Corp and renamed. Pre-merger Avago 10-Ks exist under old CIK 0001549802 (different entity, different product mix — not included).** |
+| QCOM | FY2016-2025 (10yr) | FY2015+ | FY2016-2017 fetched from EDGAR archive after pagination fix |
+| GLW | FY2017-2026 (10yr) | FY2015+ | FY2018-2019 return 0 chunks (old HTML format); fetched via archive pagination |
+| ADI | FY2016-2025 (10yr) | FY2015+ | FY2016-2017 fetched from archive; ADI merged with Linear Technology in 2017 (surviving entity, same CIK) |
+| TXN | FY2017-2026 (10yr) | FY2015+ | 14 chunks/filing avg — Texas Instruments 10-Ks are minimalist |
+| MCHP | FY2017-2026 (10yr) | FY2015+ | FY2017-2018 fetched from archive; acquired Microsemi in 2018 (surviving entity) |
+| ON | FY2017-2026 (10yr) | FY2015+ | |
+| LRCX | FY2016-2025 (10yr) | FY2015+ | FY2024-2025 required heading-regex fix (Item1.\nTitle format) |
+| APH | FY2017-2026 (10yr) | FY2015+ | |
+| JBL | FY2016-2025 (10yr) | FY2015+ | FY2016-2017 fetched from archive |
+| SANM | FY2016-2025 (10yr) | FY2015+ | |
+
+**Known text coverage gaps (Windows research DB):**
+- AVGO: Genuinely only 8 years — new legal entity post-2018 merger, no archive exists
+- GLW FY2018-2019: 0 chunks (old pre-iXBRL HTML format not parseable by section regex)
+- TXN: ~14 chunks/filing (minimalist 10-K structure, not a parsing issue)
+- SWKS: ~17 chunks/filing (very brief customer concentration disclosures, threshold-only Apple)
+- QRVO: FY2016 10-K exists in EDGAR archive but not fetched (first year as merged entity, partial year); FY2017-2026 covers full trading history
 
 ---
 
@@ -643,23 +680,49 @@ Eval harness checks traversal trace the same way it checks `tool_trace` for Tier
 
 ---
 
-## Stage 2 — Extraction Results (2026-06-02)
+## Stage 2 — Extraction Results (2026-06-11, research cluster)
 
-### supply_edges table — current state (updated 2026-06-02)
+### supply_edges table — current state (updated 2026-06-11)
 
 **Two extraction pipelines, both write to supply_edges:**
 - `--source chunks`: from text_chunks (Business/Risk Factors sections already in DB)
 - `--source html`: direct HTML parsing of Item 8 Financial Notes from EDGAR
 - Rerun command: `$env:PYTHONUTF8="1"; uv run --active python -m copilot.pipeline.extract_edges --source all`
 
-| Supplier | Customer | FY Range | revenue_pct | source_text quality | WRDS match |
-|---|---|---|---|---|---|
-| QRVO | AAPL | 2023–2026 | 37%→46%→47%→50% | ✅ exact disclosure sentence | ✅ exact |
-| QRVO | 005930.KS | 2023–2026 | 12%→12%→10%→10% | ✅ exact disclosure sentence | — |
-| SWKS | AAPL | 2021–2025 | 10% (threshold only) | ✅ "constituted more than ten percent..." | ⚠️ real=69% in XBRL |
-| AVGO | AAPL | 2022–2023 | 20% | ✅ "aggregate sales to Apple Inc...20% of net revenue" | ✅ exact |
-| CRUS | AAPL | 2022–2026 | 79%→83%→87%→89%→91% | ✅ "Apple Inc. represented approximately X percent..." | ✅ exact |
-| GLW | — | — | — | no named disclosure | — |
+**V1 cluster (confirmed, WRDS-validated):**
+
+| Supplier | Customer | FY Range | revenue_pct | WRDS match |
+|---|---|---|---|---|
+| QRVO | AAPL | 2023–2026 | 37%→46%→47%→50% | ✅ exact |
+| QRVO | 005930.KS | 2023–2026 | 12%→12%→10%→10% | — |
+| SWKS | AAPL | 2021–2025 | 10% (threshold only) | ⚠️ real=69% in XBRL |
+| AVGO | AAPL | 2020–2023 | 15%→20%→20%→20% | ✅ exact |
+| CRUS | AAPL | 2020–2026 | 79%→83%→79%→83%→87%→89%→91% | ✅ exact |
+| GLW | unnamed | 2014–2016 | >10% (threshold only) | — (Corning doesn't name customer) |
+
+**Research cluster — new discoveries (2026-06-11):**
+
+| Supplier | Customer | FY Range | revenue_pct | Notes |
+|---|---|---|---|---|
+| **ADI** | **AAPL** | **2016–2017** | **12%→14%** | Named Apple disclosure — then disappears. ADI merged with Linear Technology (Nov 2017); post-merger revenue mix diversified away from Apple concentration. Classic temporal edge. |
+| **APH** | **AAPL** | **2018, 2020** | **12%, 11%** | Amphenol (connector/interconnect) had Apple as named >10% customer in select years; not in all years — intermittent concentration. |
+| **JBL** | **AAPL** | **2020–2024** | **11%–22%** | Jabil EMS consistently discloses Apple as named >10% customer. Reclassified: JBL is a Tier-1 positive, not pure Tier-2. |
+| JBL | AMZN | 2020 | 11% | Amazon also disclosed as named >10% in FY2020 only. |
+| LRCX | unnamed | 2014–2016 | 45%–52% | Very high unnamed concentration. Most likely Samsung (major memory fab customer of Lam Research). Not in Apple supply chain. Useful as negative T4 test. |
+| AVGO | WT Microelectronics | 2022–2023 | 20%–21% | Taiwan distributor as named >10% customer alongside Apple. |
+
+**Tier-1 negative confirmation (no named customer >10%):**
+TXN, MCHP, ON, SANM — regex pre-filter found candidates but LLM correctly returned no edges.
+QCOM — candidates were QTL segment revenue %, not customer concentration; correctly not extracted.
+ADI post-2017 — no Apple disclosure after LT merger.
+
+### Company tier reclassification based on extraction results
+
+Original: JBL = Tier-2 EMS (no Apple concentration expected)
+**Revised: JBL = Tier-1 positive** (consistent Apple named disclosure FY2020-2024)
+
+ADI: **Hybrid** — Tier-1 positive for FY2016-2017, Tier-1 negative for FY2018+ (post-merger)
+APH: **Intermittent positive** — named Apple disclosure in FY2018/2020 only
 
 ### Disclosure patterns discovered
 
@@ -667,6 +730,7 @@ Eval harness checks traversal trace the same way it checks `tool_trace` for Tier
 ```
 "Apple Inc. ('Apple')...accounted for 46% and 37% of total revenue"  ← QRVO style, uses %
 "Apple, Inc....represented approximately 87 percent of total sales"   ← CRUS style, uses "percent"
+"Apple, Inc...accounted for approximately 20% of net revenue" ← AVGO style
 ```
 
 **Item 1A Risk Factors — unnamed, aggregate:**
@@ -685,7 +749,8 @@ Two regex forms needed: `%` symbol AND text-form "percent" — companies are inc
 - **SWKS**: Both text and HTML say "more than ten percent" — exact ~69% is available only
   in WRDS Compustat (third-party paid database). EDGAR XBRL contains no ConcentrationRisk
   tags for any company in our cluster (confirmed). Stored as 10.0% threshold disclosure.
-- **GLW**: No single-customer concentration disclosure (business is more diversified).
+- **GLW**: Discloses unnamed threshold-only concentration — Corning never names Apple even though it is the principal Gorilla Glass supplier. Cannot verify via EDGAR alone.
+- **QCOM**: No customer concentration disclosure found in any year — QCOM discloses segment revenues (QCT/QTL) but not single-customer %. Apple dispute FY2017-2019 is documented in MD&A text, not as a concentration disclosure.
 
 ### Entity disambiguation — current approach and limitations
 
@@ -708,17 +773,12 @@ New aliases not in the dict pass through unresolved. Examples that would fail:
 - `"the Cupertino company"` → unresolvable
 - `"AAPL Inc."` → not in aliases
 
-**Mitigation for current scope:** 10-K language is formulaic; the 6-company cluster uses
+**Mitigation for current scope:** 10-K language is formulaic; the 15-company cluster uses
 consistent naming. The dict covers all observed variants. If cluster expands, fix is to
-constrain LLM output to a predefined ticker list in the system prompt:
-```
-"Output customer_ticker as one of: AAPL, 005930.KS, MSFT, NVDA...
- If no match, output empty string."
-```
+constrain LLM output to a predefined ticker list in the system prompt.
 
-**Cost note:** Extraction is a one-time batch job (~$0.002 for full corpus). Per-filing
-chunk aggregation (reduce 33 calls → 8 calls) is not worth implementing at current scale;
-revisit if cluster expands to 50+ companies.
+**Cost note:** Full research-cluster extraction (~219 candidates, chunks source) cost ~$0.04
+(171K input + 26K output tokens, gpt-4o-mini at $0.15/$0.60 per 1M). One-time batch job.
 
 ---
 
@@ -843,9 +903,17 @@ In structured financial QA systems, locking the numeric channel to SQL/XBRL caus
 | Role | Companies | Rationale |
 |---|---|---|
 | Hub | AAPL | Customer cited in supplier 10-Ks |
-| Core positive (explicit Apple % disclosed) | CRUS, QRVO, SWKS, AVGO, QCOM | Apple >10% revenue, EDGAR-verifiable |
-| Weak / negative (no named customer >10%) | GLW, ADI, TXN, MCHP, ON, NXPI | Tests whether system hallucinates non-existent edges |
-| 2-hop extension (limited) | APH, JBL, FLEX | EMS / connector tier, structural inference only |
+| Tier-1 positive — consistent Apple disclosure | CRUS, QRVO, SWKS, AVGO, JBL | Apple >10% revenue, named, EDGAR-verifiable across multiple years |
+| Tier-1 positive — historical only | ADI (FY2016-2017), APH (FY2018/2020), QCOM (pre-2017 QCT) | Apple concentration documented but no longer active or not directly disclosed |
+| Tier-1 negative (no named customer >10%) | GLW, TXN, MCHP, ON, LRCX | Tests whether system hallucinates non-existent edges |
+| Tier-2 EMS / connector | APH, SANM | Structural supply chain role; Apple concentration intermittent or inferred |
+
+**Extraction-confirmed updates vs. original design (2026-06-11):**
+- JBL reclassified Tier-2 → **Tier-1 positive**: named Apple disclosure FY2020-2024 (11-22%)
+- ADI reclassified Tier-1 negative → **hybrid**: had Apple 12-14% in FY2016-2017, disappeared after Linear Technology merger
+- APH: intermittent Apple >10% (FY2018, FY2020 only) — stays Tier-2 but with known positive years
+- QCOM: no customer concentration disclosure found in any year — QCOM reports segment revenues, not customer %; classified Tier-1 negative for graph layer purposes
+- NXPI/FLEX replaced by LRCX/SANM (foreign private issuers excluded)
 
 **Why this industry — four principled reasons (in order of importance):**
 
