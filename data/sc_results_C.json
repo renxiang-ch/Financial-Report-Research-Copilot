@@ -1,0 +1,2486 @@
+{
+  "dataset": "2026-06-12T14:59:45.462647Z",
+  "dataset_version": "1.0",
+  "condition": "C",
+  "n_total": 125,
+  "T1_accuracy": 96.7,
+  "T2_accuracy": 100.0,
+  "T4_accuracy": 73.3,
+  "T5_accuracy": 75.0,
+  "T6_accuracy": 86.7,
+  "graph_fact_accuracy": 62.5,
+  "graph_lookup_accuracy": 100.0,
+  "graph_trend_accuracy": 66.7,
+  "graph_comparison_accuracy": 50.0,
+  "graph_negative_accuracy": 100.0,
+  "graph_compute_accuracy": 80.0,
+  "overall_accuracy": 87.2,
+  "avg_judge_score": 2.17,
+  "avg_latency_s": 5.72,
+  "total_latency_s": 714.7,
+  "input_tokens": 680916,
+  "output_tokens": 17247,
+  "estimated_cost_usd": 0.1125,
+  "results": [
+    {
+      "id": "t1_aapl_revenue_2024",
+      "sc_type": "T1",
+      "sc_subtype": "",
+      "answerable": true,
+      "correct": true,
+      "expected": 391035000000.0,
+      "got_raw": 391.04,
+      "sql_called": true,
+      "got_text": "Apple's revenue in fiscal year 2024 was $391.04 billion, according to the SEC 10-K filing (accession number 0000320193-24-000123).",
+      "latency_s": 8.25,
+      "tool_trace": [
+        "query_financials(AAPL, Revenue, FY2024) -> 391035000000.0"
+      ]
+    },
+    {
+      "id": "t1_aapl_netincome_2022",
+      "sc_type": "T1",
+      "sc_subtype": "",
+      "answerable": true,
+      "correct": true,
+      "expected": 99803000000.0,
+      "got_raw": 99803000000.0,
+      "sql_called": true,
+      "got_text": "Apple's net income in fiscal year 2022 was $99,803,000,000. This is from the 10-K filing for the period ending September 24, 2022 (SEC accession number 0000320193-22-000108).",
+      "latency_s": 2.83,
+      "tool_trace": [
+        "query_financials(AAPL, NetIncome, FY2022) -> 99803000000.0"
+      ]
+    },
+    {
+      "id": "t1_crus_revenue_2024",
+      "sc_type": "T1",
+      "sc_subtype": "",
+      "answerable": true,
+      "correct": true,
+      "expected": 1788890000.0,
+      "got_raw": 1788890000.0,
+      "sql_called": true,
+      "got_text": "Cirrus Logic's revenue in fiscal year 2024 was $1,788,890,000. This is reported for the period ending March 30, 2024, in their SEC 10-K filing (accession number: 0000772406-24-000031).",
+      "latency_s": 3.33,
+      "tool_trace": [
+        "query_financials(CRUS, Revenue, FY2024) -> 1788890000.0"
+      ]
+    },
+    {
+      "id": "t1_crus_operatingincome_2023",
+      "sc_type": "T1",
+      "sc_subtype": "",
+      "answerable": true,
+      "correct": true,
+      "expected": 249031000.0,
+      "got_raw": 249031000.0,
+      "sql_called": true,
+      "got_text": "Cirrus Logic's operating income in fiscal year 2023 was $249,031,000. This information is from the SEC 10-K filing (accession number 0000772406-23-000019).",
+      "latency_s": 2.78,
+      "tool_trace": [
+        "query_financials(CRUS, OperatingIncome, FY2023) -> 249031000.0"
+      ]
+    },
+    {
+      "id": "t1_qrvo_revenue_2023",
+      "sc_type": "T1",
+      "sc_subtype": "",
+      "answerable": true,
+      "correct": true,
+      "expected": 3569399000.0,
+      "got_raw": 3569399000.0,
+      "sql_called": true,
+      "got_text": "Qorvo's revenue in fiscal year 2023 was $3,569,399,000. This figure is from the SEC 10-K filing with accession number 0001604778-23-000055.",
+      "latency_s": 2.73,
+      "tool_trace": [
+        "query_financials(QRVO, Revenue, FY2023) -> 3569399000.0"
+      ]
+    },
+    {
+      "id": "t1_qrvo_grossprofit_2022",
+      "sc_type": "T1",
+      "sc_subtype": "",
+      "answerable": true,
+      "correct": true,
+      "expected": 2286168000.0,
+      "got_raw": 2286168000.0,
+      "sql_called": true,
+      "got_text": "Qorvo's gross profit in fiscal year 2022 was $2,286,168,000. This information is from their SEC 10-K filing (accession number 0001604778-22-000029).",
+      "latency_s": 2.77,
+      "tool_trace": [
+        "query_financials(QRVO, GrossProfit, FY2022) -> 2286168000.0"
+      ]
+    },
+    {
+      "id": "t1_swks_revenue_2024",
+      "sc_type": "T1",
+      "sc_subtype": "",
+      "answerable": true,
+      "correct": true,
+      "expected": 4178000000.0,
+      "got_raw": 4178000000.0,
+      "sql_called": true,
+      "got_text": "Skyworks's revenue in fiscal year 2024 was $4,178,000,000. This figure is from the SEC 10-K filing (accession number 0000004127-24-000131).",
+      "latency_s": 2.81,
+      "tool_trace": [
+        "query_financials(SWKS, Revenue, FY2024) -> 4178000000.0"
+      ]
+    },
+    {
+      "id": "t1_swks_netincome_2023",
+      "sc_type": "T1",
+      "sc_subtype": "",
+      "answerable": true,
+      "correct": true,
+      "expected": 982800000.0,
+      "got_raw": 982.8,
+      "sql_called": true,
+      "got_text": "Skyworks's net income in fiscal year 2023 was $982.8 million. This figure is from the 10-K filing for the period ending September 29, 2023 (SEC accession number 0000004127-23-000030).",
+      "latency_s": 2.99,
+      "tool_trace": [
+        "query_financials(SWKS, NetIncome, FY2023) -> 982800000.0"
+      ]
+    },
+    {
+      "id": "t1_avgo_revenue_2024",
+      "sc_type": "T1",
+      "sc_subtype": "",
+      "answerable": true,
+      "correct": true,
+      "expected": 51574000000.0,
+      "got_raw": 51574000000.0,
+      "sql_called": true,
+      "got_text": "Broadcom's revenue in fiscal year 2024 was $51,574,000,000. This figure comes from their SEC 10-K filing (accession number 0001730168-24-000139).",
+      "latency_s": 2.71,
+      "tool_trace": [
+        "query_financials(AVGO, Revenue, FY2024) -> 51574000000.0"
+      ]
+    },
+    {
+      "id": "t1_avgo_rd_2023",
+      "sc_type": "T1",
+      "sc_subtype": "",
+      "answerable": true,
+      "correct": true,
+      "expected": 5253000000.0,
+      "got_raw": 5253000000.0,
+      "sql_called": true,
+      "got_text": "Broadcom's R&D spending in fiscal year 2023 was $5,253,000,000. This information can be found in their SEC 10-K filing with accession number 0001730168-23-000096.",
+      "latency_s": 3.11,
+      "tool_trace": [
+        "query_financials(AVGO, R&D, FY2023) -> 5253000000.0"
+      ]
+    },
+    {
+      "id": "t1_qcom_revenue_2024",
+      "sc_type": "T1",
+      "sc_subtype": "",
+      "answerable": true,
+      "correct": true,
+      "expected": 38962000000.0,
+      "got_raw": 38962000000.0,
+      "sql_called": true,
+      "got_text": "Qualcomm's revenue in fiscal year 2024 was $38,962,000,000 USD, as reported in their SEC 10-K filing (accession number 0000804328-24-000075).",
+      "latency_s": 3.31,
+      "tool_trace": [
+        "query_financials(QCOM, Revenue, FY2024) -> 38962000000.0"
+      ]
+    },
+    {
+      "id": "t1_qcom_operatingincome_2023",
+      "sc_type": "T1",
+      "sc_subtype": "",
+      "answerable": true,
+      "correct": true,
+      "expected": 7788000000.0,
+      "got_raw": 7788000000.0,
+      "sql_called": true,
+      "got_text": "Qualcomm's operating income in fiscal year 2023 was $7,788,000,000 (USD). This information is from the SEC 10-K filing (accession number 0000804328-23-000055).",
+      "latency_s": 3.17,
+      "tool_trace": [
+        "query_financials(QCOM, OperatingIncome, FY2023) -> 7788000000.0"
+      ]
+    },
+    {
+      "id": "t1_glw_revenue_2023",
+      "sc_type": "T1",
+      "sc_subtype": "",
+      "answerable": true,
+      "correct": true,
+      "expected": 12588000000.0,
+      "got_raw": 12588000000.0,
+      "sql_called": true,
+      "got_text": "Corning's revenue in fiscal year 2023 was $12,588,000,000. This information is from the SEC 10-K filing with accession number 0001437749-24-003735.",
+      "latency_s": 3.1,
+      "tool_trace": [
+        "query_financials(GLW, Revenue, FY2023) -> 12588000000.0"
+      ]
+    },
+    {
+      "id": "t1_glw_netincome_2022",
+      "sc_type": "T1",
+      "sc_subtype": "",
+      "answerable": true,
+      "correct": true,
+      "expected": 1316000000.0,
+      "got_raw": 1316000000.0,
+      "sql_called": true,
+      "got_text": "Corning's net income in fiscal year 2022 was $1,316,000,000 (or $1.316 billion). This information is from the SEC 10-K filing accession number 0001437749-23-003123.",
+      "latency_s": 3.19,
+      "tool_trace": [
+        "query_financials(GLW, NetIncome, FY2022) -> 1316000000.0"
+      ]
+    },
+    {
+      "id": "t1_adi_revenue_2024",
+      "sc_type": "T1",
+      "sc_subtype": "",
+      "answerable": true,
+      "correct": true,
+      "expected": 9427157000.0,
+      "got_raw": 9427157000.0,
+      "sql_called": true,
+      "got_text": "Analog Devices's revenue in fiscal year 2024 was $9,427,157,000. This is based on the SEC 10-K filing accession number 0000006281-24-000204. You can view the filing [here](https://www.sec.gov/Archives",
+      "latency_s": 4.05,
+      "tool_trace": [
+        "query_financials(ADI, Revenue, FY2024) -> 9427157000.0"
+      ]
+    },
+    {
+      "id": "t1_adi_grossprofit_2023",
+      "sc_type": "T1",
+      "sc_subtype": "",
+      "answerable": true,
+      "correct": true,
+      "expected": 7877218000.0,
+      "got_raw": 7877218000.0,
+      "sql_called": true,
+      "got_text": "Analog Devices's gross profit in fiscal year 2023 was $7,877,218,000 USD, as reported in their SEC 10-K filing (accession number 0000006281-23-000203).",
+      "latency_s": 3.21,
+      "tool_trace": [
+        "query_financials(ADI, GrossProfit, FY2023) -> 7877218000.0"
+      ]
+    },
+    {
+      "id": "t1_txn_revenue_2023",
+      "sc_type": "T1",
+      "sc_subtype": "",
+      "answerable": true,
+      "correct": true,
+      "expected": 17519000000.0,
+      "got_raw": 17519000000.0,
+      "sql_called": true,
+      "got_text": "Texas Instruments's revenue in fiscal year 2023 was $17,519,000,000 (17.52 billion USD). This figure is from the SEC 10-K filing with accession number 0000097476-24-000007.",
+      "latency_s": 4.67,
+      "tool_trace": [
+        "query_financials(TXN, Revenue, FY2023) -> 17519000000.0"
+      ]
+    },
+    {
+      "id": "t1_txn_operatingincome_2022",
+      "sc_type": "T1",
+      "sc_subtype": "",
+      "answerable": true,
+      "correct": true,
+      "expected": 10140000000.0,
+      "got_raw": 10140000000.0,
+      "sql_called": true,
+      "got_text": "Texas Instruments's operating income in fiscal year 2022 was $10,140,000,000 USD, as reported in their SEC 10-K filing (accession number 0000097476-23-000007).",
+      "latency_s": 3.29,
+      "tool_trace": [
+        "query_financials(TXN, OperatingIncome, FY2022) -> 10140000000.0"
+      ]
+    },
+    {
+      "id": "t1_mchp_revenue_2024",
+      "sc_type": "T1",
+      "sc_subtype": "",
+      "answerable": true,
+      "correct": true,
+      "expected": 7634400000.0,
+      "got_raw": 7634400000.0,
+      "sql_called": true,
+      "got_text": "Microchip Technology's revenue in fiscal year 2024 was $7,634,400,000. This figure is reported for the period ending March 31, 2024, with the citation from the SEC 10-K filing (accession number 000082",
+      "latency_s": 5.99,
+      "tool_trace": [
+        "query_financials(MCHP, Revenue, FY2024) -> 7634400000.0"
+      ]
+    },
+    {
+      "id": "t1_mchp_netincome_2023",
+      "sc_type": "T1",
+      "sc_subtype": "",
+      "answerable": true,
+      "correct": true,
+      "expected": 2237700000.0,
+      "got_raw": 2237700000.0,
+      "sql_called": true,
+      "got_text": "Microchip Technology's net income in fiscal year 2023 was $2,237,700,000. This figure is reported for the period ending March 31, 2023, and can be found in the SEC 10-K filing (accession number 000082",
+      "latency_s": 3.93,
+      "tool_trace": [
+        "query_financials(MCHP, NetIncome, FY2023) -> 2237700000.0"
+      ]
+    },
+    {
+      "id": "t1_on_revenue_2023",
+      "sc_type": "T1",
+      "sc_subtype": "",
+      "answerable": true,
+      "correct": true,
+      "expected": 8253000000.0,
+      "got_raw": 8253000000.0,
+      "sql_called": true,
+      "got_text": "Onsemi's revenue in fiscal year 2023 was $8,253,000,000. The SEC citation for this information is accession number 0001628280-24-003201.",
+      "latency_s": 2.63,
+      "tool_trace": [
+        "query_financials(ON, Revenue, FY2023) -> 8253000000.0"
+      ]
+    },
+    {
+      "id": "t1_on_grossprofit_2022",
+      "sc_type": "T1",
+      "sc_subtype": "",
+      "answerable": true,
+      "correct": true,
+      "expected": 4077200000.0,
+      "got_raw": 4077200000.0,
+      "sql_called": true,
+      "got_text": "onsemi's gross profit in fiscal year 2022 was $4,077,200,000. This figure is from their 10-K filing for the period ending December 31, 2022 (SEC accession number 0001628280-23-002350).",
+      "latency_s": 3.43,
+      "tool_trace": [
+        "query_financials(ON, GrossProfit, FY2022) -> 4077200000.0"
+      ]
+    },
+    {
+      "id": "t1_lrcx_revenue_2024",
+      "sc_type": "T1",
+      "sc_subtype": "",
+      "answerable": true,
+      "correct": true,
+      "expected": 14905386000.0,
+      "got_raw": 14905386000.0,
+      "sql_called": true,
+      "got_text": "Lam Research's revenue in fiscal year 2024 was $14,905,386,000 (approximately $14.9 billion), ending on June 30, 2024. This information can be found in the SEC 10-K filing (accession number: 000070754",
+      "latency_s": 5.23,
+      "tool_trace": [
+        "query_financials(LRCX, Revenue, FY2024) -> 14905386000.0"
+      ]
+    },
+    {
+      "id": "t1_lrcx_operatingcashflow_2023",
+      "sc_type": "T1",
+      "sc_subtype": "",
+      "answerable": true,
+      "correct": false,
+      "expected": 5178938000.0,
+      "got_raw": null,
+      "sql_called": false,
+      "got_text": "I cannot determine Lam Research's operating cash flow as it is not available in the data I can access. The metrics I can retrieve do not include operating cash flow.",
+      "latency_s": 1.42,
+      "tool_trace": []
+    },
+    {
+      "id": "t1_aph_revenue_2024",
+      "sc_type": "T1",
+      "sc_subtype": "",
+      "answerable": true,
+      "correct": true,
+      "expected": 15222700000.0,
+      "got_raw": 15222700000.0,
+      "sql_called": true,
+      "got_text": "Amphenol's revenue in fiscal year 2024 was $15,222,700,000. This figure is for the period ending December 31, 2024, as reported in their SEC 10-K filing (accession number 0001558370-25-000714).",
+      "latency_s": 4.1,
+      "tool_trace": [
+        "query_financials(APH, Revenue, FY2024) -> 15222700000.0"
+      ]
+    },
+    {
+      "id": "t1_aph_netincome_2023",
+      "sc_type": "T1",
+      "sc_subtype": "",
+      "answerable": true,
+      "correct": true,
+      "expected": 1928000000.0,
+      "got_raw": 1928000000.0,
+      "sql_called": true,
+      "got_text": "Amphenol's net income for fiscal year 2023 was $1,928,000,000. This is reported for the period ending December 31, 2023 (SEC 10-K filing accession 0001558370-24-000866).",
+      "latency_s": 3.48,
+      "tool_trace": [
+        "query_financials(APH, NetIncome, FY2023) -> 1928000000.0"
+      ]
+    },
+    {
+      "id": "t1_jbl_revenue_2024",
+      "sc_type": "T1",
+      "sc_subtype": "",
+      "answerable": true,
+      "correct": true,
+      "expected": 28883000000.0,
+      "got_raw": 28883000000.0,
+      "sql_called": true,
+      "got_text": "Jabil's revenue in fiscal year 2024 was $28,883,000,000. This figure is reported for the period ending August 31, 2024, with the SEC citation being accession number 0001628280-24-043960.",
+      "latency_s": 3.55,
+      "tool_trace": [
+        "query_financials(JBL, Revenue, FY2024) -> 28883000000.0"
+      ]
+    },
+    {
+      "id": "t1_jbl_grossprofit_2023",
+      "sc_type": "T1",
+      "sc_subtype": "",
+      "answerable": true,
+      "correct": true,
+      "expected": 2867000000.0,
+      "got_raw": 2867000000.0,
+      "sql_called": true,
+      "got_text": "Jabil's gross profit for fiscal year 2023 was $2,867,000,000. The period ended on August 31, 2023, and the citation for this information is SEC 10-K filing accession 0001193125-23-259599.",
+      "latency_s": 10.44,
+      "tool_trace": [
+        "query_financials(JBL, GrossProfit, FY2023) -> 2867000000.0"
+      ]
+    },
+    {
+      "id": "t1_sanm_revenue_2024",
+      "sc_type": "T1",
+      "sc_subtype": "",
+      "answerable": true,
+      "correct": true,
+      "expected": 7568328000.0,
+      "got_raw": 7568328000.0,
+      "sql_called": true,
+      "got_text": "Sanmina's revenue in fiscal year 2024 was $7,568,328,000. This figure is from the SEC 10-K filing with accession number 0000897723-24-000056.",
+      "latency_s": 7.81,
+      "tool_trace": [
+        "query_financials(SANM, Revenue, FY2024) -> 7568328000.0"
+      ]
+    },
+    {
+      "id": "t1_sanm_netincome_2023",
+      "sc_type": "T1",
+      "sc_subtype": "",
+      "answerable": true,
+      "correct": true,
+      "expected": 309970000.0,
+      "got_raw": 309970000.0,
+      "sql_called": true,
+      "got_text": "Sanmina's net income in fiscal year 2023 was $309,970,000. This corresponds to the period ending on September 30, 2023, as per the SEC 10-K filing (accession number 0000897723-23-000028).",
+      "latency_s": 4.28,
+      "tool_trace": [
+        "query_financials(SANM, NetIncome, FY2023) -> 309970000.0"
+      ]
+    },
+    {
+      "id": "t2_aapl_gross_margin_2024",
+      "sc_type": "T2",
+      "sc_subtype": "",
+      "answerable": true,
+      "correct": true,
+      "expected": 46.2063,
+      "got_raw": 46.206349815233935,
+      "input_values_ok": "GrossProfit",
+      "input_detail": "Revenue",
+      "sql_called": true,
+      "compute_called": true,
+      "got_text": "Apple's gross margin percentage in fiscal year 2024 was approximately 46.21%. This is based on a gross profit of $180.68 billion and revenue of $391.04 billion. The figures are cited from the SEC 10-K",
+      "latency_s": 10.19,
+      "tool_trace": [
+        "query_financials(AAPL, GrossProfit, FY2024) -> 180683000000.0",
+        "query_financials(AAPL, Revenue, FY2024) -> 391035000000.0",
+        "compute(gross_profit / revenue * 100) -> 46.206349815233935"
+      ]
+    },
+    {
+      "id": "t2_qrvo_gross_margin_2023",
+      "sc_type": "T2",
+      "sc_subtype": "",
+      "answerable": true,
+      "correct": true,
+      "expected": 36.335,
+      "got_raw": 36.33502446770451,
+      "input_values_ok": "GrossProfit",
+      "input_detail": "Revenue",
+      "sql_called": true,
+      "compute_called": true,
+      "got_text": "Qorvo's gross margin percentage in fiscal year 2023 was approximately 36.34%, as noted in their SEC filing (accession number 0001604778-23-000055).",
+      "latency_s": 7.28,
+      "tool_trace": [
+        "query_financials(QRVO, GrossProfit, FY2023) -> 1296942000.0",
+        "query_financials(QRVO, Revenue, FY2023) -> 3569399000.0",
+        "compute(gross_profit / revenue * 100) -> 36.33502446770451"
+      ]
+    },
+    {
+      "id": "t2_crus_gross_margin_2024",
+      "sc_type": "T2",
+      "sc_subtype": "",
+      "answerable": true,
+      "correct": true,
+      "expected": 51.209,
+      "got_raw": 51.20896198201119,
+      "input_values_ok": "GrossProfit",
+      "input_detail": "Revenue",
+      "sql_called": true,
+      "compute_called": true,
+      "got_text": "Cirrus Logic's gross margin percentage in fiscal year 2024 was approximately 51.21%. This is based on a gross profit of $916,072,000 and revenue of $1,788,890,000 (SEC 10-K filing accession 0000772406",
+      "latency_s": 7.14,
+      "tool_trace": [
+        "query_financials(CRUS, GrossProfit, FY2024) -> 916072000.0",
+        "query_financials(CRUS, Revenue, FY2024) -> 1788890000.0",
+        "compute(gross_profit / revenue * 100) -> 51.20896198201119"
+      ]
+    },
+    {
+      "id": "t2_avgo_gross_margin_2024",
+      "sc_type": "T2",
+      "sc_subtype": "",
+      "answerable": true,
+      "correct": true,
+      "expected": 63.0337,
+      "got_raw": 63.03369915073487,
+      "input_values_ok": "GrossProfit",
+      "input_detail": "Revenue",
+      "sql_called": true,
+      "compute_called": true,
+      "got_text": "Broadcom's gross margin percentage in fiscal year 2024 was approximately 63.03%, as reported in their SEC 10-K filing (accession number 0001730168-24-000139).",
+      "latency_s": 6.09,
+      "tool_trace": [
+        "query_financials(AVGO, GrossProfit, FY2024) -> 32509000000.0",
+        "query_financials(AVGO, Revenue, FY2024) -> 51574000000.0",
+        "compute(gross_profit / revenue * 100) -> 63.03369915073487"
+      ]
+    },
+    {
+      "id": "t2_swks_gross_margin_2023",
+      "sc_type": "T2",
+      "sc_subtype": "",
+      "answerable": true,
+      "correct": true,
+      "expected": 44.156,
+      "got_raw": 44.15598021959601,
+      "input_values_ok": "GrossProfit",
+      "input_detail": "Revenue",
+      "sql_called": true,
+      "compute_called": true,
+      "got_text": "Skyworks's gross margin percentage in fiscal year 2023 was approximately 44.16%. This is based on a gross profit of $2,107,300,000 and revenue of $4,772,400,000, as reported in their SEC 10-K filing (",
+      "latency_s": 6.74,
+      "tool_trace": [
+        "query_financials(SWKS, GrossProfit, FY2023) -> 2107300000.0",
+        "query_financials(SWKS, Revenue, FY2023) -> 4772400000.0",
+        "compute(gross_profit / revenue * 100) -> 44.15598021959601"
+      ]
+    },
+    {
+      "id": "t2_jbl_gross_margin_2024",
+      "sc_type": "T2",
+      "sc_subtype": "",
+      "answerable": true,
+      "correct": true,
+      "expected": 9.265,
+      "got_raw": 9.264965550669944,
+      "input_values_ok": "GrossProfit",
+      "input_detail": "Revenue",
+      "sql_called": true,
+      "compute_called": true,
+      "got_text": "Jabil's gross margin percentage in fiscal year 2024 was approximately 9.26%, as per their SEC 10-K filing (accession number 0001628280-24-043960).",
+      "latency_s": 6.5,
+      "tool_trace": [
+        "query_financials(JBL, GrossProfit, FY2024) -> 2676000000.0",
+        "query_financials(JBL, Revenue, FY2024) -> 28883000000.0",
+        "compute(gross_profit / revenue * 100) -> 9.264965550669944"
+      ]
+    },
+    {
+      "id": "t2_adi_gross_margin_2023",
+      "sc_type": "T2",
+      "sc_subtype": "",
+      "answerable": true,
+      "correct": true,
+      "expected": 64.0136,
+      "got_raw": 64.0135958286752,
+      "input_values_ok": "GrossProfit",
+      "input_detail": "Revenue",
+      "sql_called": true,
+      "compute_called": true,
+      "got_text": "Analog Devices's gross margin percentage in fiscal year 2023 was approximately 64.01%, with the figures sourced from the SEC 10-K filing (accession number 0000006281-23-000203).",
+      "latency_s": 5.85,
+      "tool_trace": [
+        "query_financials(ADI, GrossProfit, FY2023) -> 7877218000.0",
+        "query_financials(ADI, Revenue, FY2023) -> 12305539000.0",
+        "compute(gross_profit / revenue * 100) -> 64.0135958286752"
+      ]
+    },
+    {
+      "id": "t2_txn_gross_margin_2023",
+      "sc_type": "T2",
+      "sc_subtype": "",
+      "answerable": true,
+      "correct": true,
+      "expected": 62.8974,
+      "got_raw": 62.897425652149096,
+      "input_values_ok": "GrossProfit",
+      "input_detail": "Revenue",
+      "sql_called": true,
+      "compute_called": true,
+      "got_text": "Texas Instruments's gross margin percentage in fiscal year 2023 was approximately 62.90%, as reported in their SEC 10-K filing (accession number 0000097476-24-000007).",
+      "latency_s": 9.74,
+      "tool_trace": [
+        "query_financials(TXN, GrossProfit, FY2023) -> 11019000000.0",
+        "query_financials(TXN, Revenue, FY2023) -> 17519000000.0",
+        "compute(gross_profit / revenue * 100) -> 62.897425652149096"
+      ]
+    },
+    {
+      "id": "t2_on_gross_margin_2023",
+      "sc_type": "T2",
+      "sc_subtype": "",
+      "answerable": true,
+      "correct": true,
+      "expected": 47.0556,
+      "got_raw": 47.0556161395856,
+      "input_values_ok": "GrossProfit",
+      "input_detail": "Revenue",
+      "sql_called": true,
+      "compute_called": true,
+      "got_text": "onsemi's gross margin percentage in fiscal year 2023 was approximately 47.06%, as reported in their SEC 10-K filing (accession number 0001628280-24-003201).",
+      "latency_s": 5.63,
+      "tool_trace": [
+        "query_financials(ON, GrossProfit, FY2023) -> 3883500000.0",
+        "query_financials(ON, Revenue, FY2023) -> 8253000000.0",
+        "compute(gross_profit / revenue * 100) -> 47.0556161395856"
+      ]
+    },
+    {
+      "id": "t2_lrcx_gross_margin_2024",
+      "sc_type": "T2",
+      "sc_subtype": "",
+      "answerable": true,
+      "correct": true,
+      "expected": 47.3171,
+      "got_raw": 47.31706377815375,
+      "input_values_ok": "GrossProfit",
+      "input_detail": "Revenue",
+      "sql_called": true,
+      "compute_called": true,
+      "got_text": "Lam Research's gross margin percentage in fiscal year 2024 was approximately 47.32%. This is based on a gross profit of $7,052,791,000 and revenue of $14,905,386,000 (SEC 10-K filing accession 0000707",
+      "latency_s": 8.14,
+      "tool_trace": [
+        "query_financials(LRCX, GrossProfit, FY2024) -> 7052791000.0",
+        "query_financials(LRCX, Revenue, FY2024) -> 14905386000.0",
+        "compute(gross_profit / revenue * 100) -> 47.31706377815375"
+      ]
+    },
+    {
+      "id": "t2_qrvo_rd_intensity_2024",
+      "sc_type": "T2",
+      "sc_subtype": "",
+      "answerable": true,
+      "correct": true,
+      "expected": 18.0992,
+      "got_raw": 18.09916206526797,
+      "input_values_ok": "R&D",
+      "input_detail": "Revenue",
+      "sql_called": true,
+      "compute_called": true,
+      "got_text": "Qorvo's R&D spending was approximately 18.10% of revenue in fiscal year 2024, based on their SEC 10-K filing (accession number 0001604778-24-000036).",
+      "latency_s": 8.73,
+      "tool_trace": [
+        "query_financials(QRVO, R&D, FY2024) -> 682249000.0",
+        "query_financials(QRVO, Revenue, FY2024) -> 3769506000.0",
+        "compute((R&D / Revenue) * 100) -> None",
+        "compute((r_and_d / revenue) * 100) -> 18.09916206526797"
+      ]
+    },
+    {
+      "id": "t2_crus_rd_intensity_2024",
+      "sc_type": "T2",
+      "sc_subtype": "",
+      "answerable": true,
+      "correct": true,
+      "expected": 23.8402,
+      "got_raw": 23.840202583725105,
+      "input_values_ok": "R&D",
+      "input_detail": "Revenue",
+      "sql_called": true,
+      "compute_called": true,
+      "got_text": "Cirrus Logic's R&D spending as a percentage of revenue in fiscal year 2024 was approximately 23.84%. This is based on R&D spending of $426,475,000 and total revenue of $1,788,890,000 (SEC 10-K filing ",
+      "latency_s": 7.8,
+      "tool_trace": [
+        "query_financials(CRUS, R&D, FY2024) -> 426475000.0",
+        "query_financials(CRUS, Revenue, FY2024) -> 1788890000.0",
+        "compute((426475000 / 1788890000) * 100) -> 23.840202583725105"
+      ]
+    },
+    {
+      "id": "t2_swks_rd_intensity_2023",
+      "sc_type": "T2",
+      "sc_subtype": "",
+      "answerable": true,
+      "correct": true,
+      "expected": 12.7148,
+      "got_raw": 12.714776632302405,
+      "input_values_ok": "R&D",
+      "input_detail": "Revenue",
+      "sql_called": true,
+      "compute_called": true,
+      "got_text": "Skyworks's R&D spending as a percentage of revenue in fiscal year 2023 was approximately 12.71%, based on revenue of $4.77 billion and R&D spending of $606.8 million (SEC 10-K filing accession 0000004",
+      "latency_s": 8.83,
+      "tool_trace": [
+        "query_financials(SWKS, R&D, FY2023) -> 606800000.0",
+        "query_financials(SWKS, Revenue, FY2023) -> 4772400000.0",
+        "compute(R&D / Revenue * 100) -> None",
+        "compute(r_and_d / revenue * 100) -> 12.714776632302405"
+      ]
+    },
+    {
+      "id": "t2_avgo_rd_intensity_2023",
+      "sc_type": "T2",
+      "sc_subtype": "",
+      "answerable": true,
+      "correct": true,
+      "expected": 14.6654,
+      "got_raw": 14.665401044138585,
+      "input_values_ok": "R&D",
+      "input_detail": "Revenue",
+      "sql_called": true,
+      "compute_called": true,
+      "got_text": "Broadcom's R&D spending as a percentage of revenue in fiscal year 2023 was approximately 14.67%. This is based on R&D spending of $5,253,000,000 and revenue of $35,819,000,000 (SEC 10-K filing accessi",
+      "latency_s": 7.37,
+      "tool_trace": [
+        "query_financials(AVGO, R&D, FY2023) -> 5253000000.0",
+        "query_financials(AVGO, Revenue, FY2023) -> 35819000000.0",
+        "compute(r_and_d / revenue * 100) -> 14.665401044138585"
+      ]
+    },
+    {
+      "id": "t2_txn_rd_intensity_2024",
+      "sc_type": "T2",
+      "sc_subtype": "",
+      "answerable": true,
+      "correct": true,
+      "expected": 12.5248,
+      "got_raw": 12.524774630778083,
+      "input_values_ok": "R&D",
+      "input_detail": "Revenue",
+      "sql_called": true,
+      "compute_called": true,
+      "got_text": "Texas Instruments's R&D spending as a percentage of revenue in fiscal year 2024 was approximately 12.52%. This is based on R&D spending of $1,959,000,000 and revenue of $15,641,000,000 (SEC 10-K filin",
+      "latency_s": 7.11,
+      "tool_trace": [
+        "query_financials(TXN, R&D, FY2024) -> 1959000000.0",
+        "query_financials(TXN, Revenue, FY2024) -> 15641000000.0",
+        "compute(r_and_d / revenue * 100) -> 12.524774630778083"
+      ]
+    },
+    {
+      "id": "t2_qcom_rd_intensity_2023",
+      "sc_type": "T2",
+      "sc_subtype": "",
+      "answerable": true,
+      "correct": true,
+      "expected": 24.6175,
+      "got_raw": 24.617532104969293,
+      "input_values_ok": "R&D",
+      "input_detail": "Revenue",
+      "sql_called": true,
+      "compute_called": true,
+      "got_text": "Qualcomm's R&D spending was approximately 24.62% of revenue in fiscal year 2023. This is based on R&D expenditures of $8,818,000,000 and revenue of $35,820,000,000 (SEC 10-K filing accession number 00",
+      "latency_s": 13.89,
+      "tool_trace": [
+        "query_financials(QCOM, R&D, FY2023) -> 8818000000.0",
+        "query_financials(QCOM, Revenue, FY2023) -> 35820000000.0",
+        "compute((R&D / Revenue) * 100) -> None",
+        "compute((r_and_d / revenue) * 100) -> 24.617532104969293"
+      ]
+    },
+    {
+      "id": "t2_adi_rd_intensity_2024",
+      "sc_type": "T2",
+      "sc_subtype": "",
+      "answerable": true,
+      "correct": true,
+      "expected": 15.7827,
+      "got_raw": 15.782732800567551,
+      "input_values_ok": "R&D",
+      "input_detail": "Revenue",
+      "sql_called": true,
+      "compute_called": true,
+      "got_text": "Analog Devices's R&D spending as a percentage of revenue in fiscal year 2024 was approximately 15.78%. This is based on R&D expenditures of $1,487,863,000 and total revenue of $9,427,157,000 (SEC 10-K",
+      "latency_s": 6.52,
+      "tool_trace": [
+        "query_financials(ADI, R&D, FY2024) -> 1487863000.0",
+        "query_financials(ADI, Revenue, FY2024) -> 9427157000.0",
+        "compute((1487863000 / 9427157000) * 100) -> 15.782732800567551"
+      ]
+    },
+    {
+      "id": "t2_mchp_rd_intensity_2023",
+      "sc_type": "T2",
+      "sc_subtype": "",
+      "answerable": true,
+      "correct": true,
+      "expected": 13.252,
+      "got_raw": 13.252041191178737,
+      "input_values_ok": "R&D",
+      "input_detail": "Revenue",
+      "sql_called": true,
+      "compute_called": true,
+      "got_text": "Microchip Technology's R&D spending as a percentage of revenue in fiscal year 2023 was approximately 13.25%. This data is cited from their SEC 10-K filing (accession number 0000827054-23-000080).",
+      "latency_s": 7.99,
+      "tool_trace": [
+        "query_financials(MCHP, R&D, FY2023) -> 1118300000.0",
+        "query_financials(MCHP, Revenue, FY2023) -> 8438700000.0",
+        "compute((rd / revenue) * 100) -> 13.252041191178737"
+      ]
+    },
+    {
+      "id": "t2_qrvo_revenue_yoy_2022_2023",
+      "sc_type": "T2",
+      "sc_subtype": "",
+      "answerable": true,
+      "correct": true,
+      "expected": -23.1679,
+      "got_raw": -23.16791347896147,
+      "input_values_ok": "Revenue_2023",
+      "input_detail": "Revenue_2022",
+      "sql_called": true,
+      "compute_called": true,
+      "got_text": "Qorvo's revenue decreased by approximately 23.17% from fiscal year 2022 to 2023. This change corresponds to a revenue of $4,645,714,000 in 2022 (SEC 10-K filing accession 0001604778-22-000029) and $3,",
+      "latency_s": 12.02,
+      "tool_trace": [
+        "query_financials(QRVO, Revenue, FY2022) -> 4645714000.0",
+        "query_financials(QRVO, Revenue, FY2023) -> 3569399000.0",
+        "compute((new - old) / old * 100) -> -23.16791347896147"
+      ]
+    },
+    {
+      "id": "t2_crus_revenue_yoy_2022_2023",
+      "sc_type": "T2",
+      "sc_subtype": "",
+      "answerable": true,
+      "correct": true,
+      "expected": 6.5203,
+      "got_raw": 6.520326024721296,
+      "input_values_ok": "Revenue_2023",
+      "input_detail": "Revenue_2022",
+      "sql_called": true,
+      "compute_called": true,
+      "got_text": "Cirrus Logic's revenue increased by approximately 6.52% from fiscal year 2022 to 2023. \n\n- FY 2022 Revenue: $1,781,460,000 (SEC 10-K filing accession 0000772406-22-000014)\n- FY 2023 Revenue: $1,897,61",
+      "latency_s": 7.84,
+      "tool_trace": [
+        "query_financials(CRUS, Revenue, FY2022) -> 1781460000.0",
+        "query_financials(CRUS, Revenue, FY2023) -> 1897617000.0",
+        "compute((new - old) / old * 100) -> 6.520326024721296"
+      ]
+    },
+    {
+      "id": "t2_jbl_revenue_yoy_2022_2023",
+      "sc_type": "T2",
+      "sc_subtype": "",
+      "answerable": true,
+      "correct": true,
+      "expected": 3.6561,
+      "got_raw": 3.656132385447159,
+      "input_values_ok": "Revenue_2023",
+      "input_detail": "Revenue_2022",
+      "sql_called": true,
+      "compute_called": true,
+      "got_text": "Jabil's revenue changed by approximately 3.66% from fiscal year 2022 to 2023. \n\n- Revenue (FY 2022): $33,478,000,000 (SEC 10-K filing accession 0001193125-22-268383)\n- Revenue (FY 2023): $34,702,000,0",
+      "latency_s": 7.67,
+      "tool_trace": [
+        "query_financials(JBL, Revenue, FY2022) -> 33478000000.0",
+        "query_financials(JBL, Revenue, FY2023) -> 34702000000.0",
+        "compute((new - old) / old * 100) -> 3.656132385447159"
+      ]
+    },
+    {
+      "id": "t2_aapl_revenue_yoy_2023_2024",
+      "sc_type": "T2",
+      "sc_subtype": "",
+      "answerable": true,
+      "correct": true,
+      "expected": 2.022,
+      "got_raw": 2.021994077514121,
+      "input_values_ok": "Revenue_2024",
+      "input_detail": "Revenue_2023",
+      "sql_called": true,
+      "compute_called": true,
+      "got_text": "Apple's revenue increased by approximately 2.02% from fiscal year 2023 to 2024. The revenue for FY2023 was $383.29 billion (SEC 10-K filing accession 0000320193-23-000106) and for FY2024 it was $391.0",
+      "latency_s": 8.4,
+      "tool_trace": [
+        "query_financials(AAPL, Revenue, FY2023) -> 383285000000.0",
+        "query_financials(AAPL, Revenue, FY2024) -> 391035000000.0",
+        "compute((new - old) / old * 100) -> 2.021994077514121"
+      ]
+    },
+    {
+      "id": "t2_swks_revenue_yoy_2022_2023",
+      "sc_type": "T2",
+      "sc_subtype": "",
+      "answerable": true,
+      "correct": true,
+      "expected": -12.9997,
+      "got_raw": -12.99972655181843,
+      "input_values_ok": "Revenue_2023",
+      "input_detail": "Revenue_2022",
+      "sql_called": true,
+      "compute_called": true,
+      "got_text": "Skyworks's revenue decreased by approximately 13.0% from fiscal year 2022 to 2023. The revenues were $5,485,500,000 for 2022 (SEC accession number 0000004127-22-000038) and $4,772,400,000 for 2023 (SE",
+      "latency_s": 7.44,
+      "tool_trace": [
+        "query_financials(SWKS, Revenue, FY2022) -> 5485500000.0",
+        "query_financials(SWKS, Revenue, FY2023) -> 4772400000.0",
+        "compute((new - old) / old * 100) -> -12.99972655181843"
+      ]
+    },
+    {
+      "id": "t2_on_revenue_yoy_2021_2022",
+      "sc_type": "T2",
+      "sc_subtype": "",
+      "answerable": true,
+      "correct": true,
+      "expected": 23.5378,
+      "got_raw": 23.537790438885427,
+      "input_values_ok": "Revenue_2022",
+      "input_detail": "Revenue_2021",
+      "sql_called": true,
+      "compute_called": true,
+      "got_text": "Onsemi's revenue increased by approximately 23.54% from fiscal year 2021 to 2022. \n\n- FY 2022 Revenue: $8,326,200,000 (SEC 10-K filing accession 0001628280-23-002350)  \n- FY 2021 Revenue: $6,739,800,0",
+      "latency_s": 7.41,
+      "tool_trace": [
+        "query_financials(ON, Revenue, FY2022) -> 8326200000.0",
+        "query_financials(ON, Revenue, FY2021) -> 6739800000.0",
+        "compute((new - old) / old * 100) -> 23.537790438885427"
+      ]
+    },
+    {
+      "id": "t2_lrcx_revenue_yoy_2023_2024",
+      "sc_type": "T2",
+      "sc_subtype": "",
+      "answerable": true,
+      "correct": true,
+      "expected": -14.477,
+      "got_raw": -14.477021451510847,
+      "input_values_ok": "Revenue_2024",
+      "input_detail": "Revenue_2023",
+      "sql_called": true,
+      "compute_called": true,
+      "got_text": "Lam Research's revenue decreased by approximately 14.48% from fiscal year 2023 to 2024. \n\n- FY 2023 Revenue: $17,428,516,000 (SEC 10-K filing accession 0000707549-23-000102)\n- FY 2024 Revenue: $14,905",
+      "latency_s": 7.55,
+      "tool_trace": [
+        "query_financials(LRCX, Revenue, FY2023) -> 17428516000.0",
+        "query_financials(LRCX, Revenue, FY2024) -> 14905386000.0",
+        "compute((new - old) / old * 100) -> -14.477021451510847"
+      ]
+    },
+    {
+      "id": "t2_aapl_operating_margin_2023",
+      "sc_type": "T2",
+      "sc_subtype": "",
+      "answerable": true,
+      "correct": true,
+      "expected": 29.8214,
+      "got_raw": 29.821412265024723,
+      "input_values_ok": "OperatingIncome",
+      "input_detail": "Revenue",
+      "sql_called": true,
+      "compute_called": true,
+      "got_text": "Apple's operating margin percentage for fiscal year 2023 was approximately 29.82%, based on an operating income of $114.30 billion and revenue of $383.29 billion (SEC 10-K filing accession 0000320193-",
+      "latency_s": 5.93,
+      "tool_trace": [
+        "query_financials(AAPL, OperatingIncome, FY2023) -> 114301000000.0",
+        "query_financials(AAPL, Revenue, FY2023) -> 383285000000.0",
+        "compute(operating_income / revenue * 100) -> 29.821412265024723"
+      ]
+    },
+    {
+      "id": "t2_qcom_operating_margin_2022",
+      "sc_type": "T2",
+      "sc_subtype": "",
+      "answerable": true,
+      "correct": true,
+      "expected": 35.8824,
+      "got_raw": 35.88235294117647,
+      "input_values_ok": "OperatingIncome",
+      "input_detail": "Revenue",
+      "sql_called": true,
+      "compute_called": true,
+      "got_text": "Qualcomm's operating margin percentage for fiscal year 2022 was approximately 35.88%, based on an operating income of $15.86 billion and revenue of $44.20 billion (SEC 10-K filing accession 0000804328",
+      "latency_s": 5.98,
+      "tool_trace": [
+        "query_financials(QCOM, OperatingIncome, FY2022) -> 15860000000.0",
+        "query_financials(QCOM, Revenue, FY2022) -> 44200000000.0",
+        "compute(operating_income / revenue * 100) -> 35.88235294117647"
+      ]
+    },
+    {
+      "id": "t2_glw_operating_margin_2023",
+      "sc_type": "T2",
+      "sc_subtype": "",
+      "answerable": true,
+      "correct": true,
+      "expected": 7.0702,
+      "got_raw": 7.070225611693677,
+      "input_values_ok": "OperatingIncome",
+      "input_detail": "Revenue",
+      "sql_called": true,
+      "compute_called": true,
+      "got_text": "Corning's operating margin percentage in fiscal year 2023 was approximately 7.07%, as reported in their SEC 10-K filing (accession number 0001437749-24-003735).",
+      "latency_s": 6.32,
+      "tool_trace": [
+        "query_financials(GLW, OperatingIncome, FY2023) -> 890000000.0",
+        "query_financials(GLW, Revenue, FY2023) -> 12588000000.0",
+        "compute(operating_income / revenue * 100) -> 7.070225611693677"
+      ]
+    },
+    {
+      "id": "t2_txn_operating_margin_2022",
+      "sc_type": "T2",
+      "sc_subtype": "",
+      "answerable": true,
+      "correct": true,
+      "expected": 50.6291,
+      "got_raw": 50.629119233073695,
+      "input_values_ok": "OperatingIncome",
+      "input_detail": "Revenue",
+      "sql_called": true,
+      "compute_called": true,
+      "got_text": "Texas Instruments's operating margin percentage in fiscal year 2022 was approximately 50.63%, as calculated from their operating income of $10.14 billion and revenue of $20.03 billion (SEC 10-K filing",
+      "latency_s": 9.04,
+      "tool_trace": [
+        "query_financials(TXN, OperatingIncome, FY2022) -> 10140000000.0",
+        "query_financials(TXN, Revenue, FY2022) -> 20028000000.0",
+        "compute(operating_income / revenue * 100) -> 50.629119233073695"
+      ]
+    },
+    {
+      "id": "t2_sanm_operating_margin_2024",
+      "sc_type": "T2",
+      "sc_subtype": "",
+      "answerable": true,
+      "correct": true,
+      "expected": 4.4329,
+      "got_raw": 4.432868131508042,
+      "input_values_ok": "OperatingIncome",
+      "input_detail": "Revenue",
+      "sql_called": true,
+      "compute_called": true,
+      "got_text": "Sanmina's operating margin percentage in fiscal year 2024 was approximately 4.43%. This is based on an operating income of $335,494,000 and revenue of $7,568,328,000 (SEC 10-K filing accession 0000897",
+      "latency_s": 10.3,
+      "tool_trace": [
+        "query_financials(SANM, OperatingIncome, FY2024) -> 335494000.0",
+        "query_financials(SANM, Revenue, FY2024) -> 7568328000.0",
+        "compute(operating_income / revenue * 100) -> 4.432868131508042"
+      ]
+    },
+    {
+      "id": "t4_fact_crus_aapl_2024",
+      "sc_type": "T4",
+      "sc_subtype": "graph_fact",
+      "answerable": true,
+      "correct": true,
+      "expected": 87.0,
+      "got_raw": 87.0,
+      "graph_called": true,
+      "traversal_ok": true,
+      "missing_edges": [],
+      "got_text": "In fiscal year 2024, approximately 87% of Cirrus Logic's revenue came from Apple. This information is sourced from SEC 10-K accession number 0000772406-24-000031.",
+      "latency_s": 2.65,
+      "tool_trace": [
+        "graph_query(supplier=CRUS, customer=AAPL, fiscal_year=2024) -> 1 edges",
+        "  edge: CRUS->AAPL 87.0% FY2024 [0000772406-24-000031]"
+      ]
+    },
+    {
+      "id": "t4_fact_qrvo_aapl_2024",
+      "sc_type": "T4",
+      "sc_subtype": "graph_fact",
+      "answerable": true,
+      "correct": true,
+      "expected": 46.0,
+      "got_raw": 46.0,
+      "graph_called": true,
+      "traversal_ok": true,
+      "missing_edges": [],
+      "got_text": "In fiscal year 2024, 46% of Qorvo's revenue came from Apple. This information is sourced from their SEC 10-K filing (accession number 0001604778-24-000036).",
+      "latency_s": 3.34,
+      "tool_trace": [
+        "graph_query(supplier=QRVO, customer=AAPL, fiscal_year=2024) -> 1 edges",
+        "  edge: QRVO->AAPL 46.0% FY2024 [0001604778-24-000036]"
+      ]
+    },
+    {
+      "id": "t4_fact_jbl_aapl_2023",
+      "sc_type": "T4",
+      "sc_subtype": "graph_fact",
+      "answerable": true,
+      "correct": true,
+      "expected": 17.0,
+      "got_raw": 17.0,
+      "graph_called": true,
+      "traversal_ok": true,
+      "missing_edges": [],
+      "got_text": "In fiscal year 2023, 17.0% of Jabil's revenue came from Apple. This information is sourced from SEC 10-K accession number 0001193125-23-259599.",
+      "latency_s": 5.82,
+      "tool_trace": [
+        "graph_query(supplier=JBL, customer=AAPL, fiscal_year=2023) -> 1 edges",
+        "  edge: JBL->AAPL 17.0% FY2023 [0001193125-23-259599]"
+      ]
+    },
+    {
+      "id": "t4_fact_avgo_aapl_2022",
+      "sc_type": "T4",
+      "sc_subtype": "graph_fact",
+      "answerable": true,
+      "correct": true,
+      "expected": 20.0,
+      "got_raw": 20.0,
+      "graph_called": true,
+      "traversal_ok": true,
+      "missing_edges": [],
+      "got_text": "In fiscal year 2022, approximately 20% of Broadcom's revenue came from Apple. This information is disclosed in their SEC 10-K filing (accession number: 0001730168-22-000118).",
+      "latency_s": 2.82,
+      "tool_trace": [
+        "graph_query(supplier=AVGO, customer=AAPL, fiscal_year=2022) -> 1 edges",
+        "  edge: AVGO->AAPL 20.0% FY2022 [0001730168-22-000118]"
+      ]
+    },
+    {
+      "id": "t4_fact_crus_aapl_2022",
+      "sc_type": "T4",
+      "sc_subtype": "graph_fact",
+      "answerable": true,
+      "correct": true,
+      "expected": 79.0,
+      "got_raw": 79.0,
+      "graph_called": true,
+      "traversal_ok": true,
+      "missing_edges": [],
+      "got_text": "In fiscal year 2022, approximately 79% of Cirrus Logic's revenue came from Apple. This percentage is based on their disclosures for the twelve-month period ending March 26, 2022 (SEC 10-K accession 00",
+      "latency_s": 3.57,
+      "tool_trace": [
+        "graph_query(supplier=CRUS, customer=AAPL, fiscal_year=2022) -> 1 edges",
+        "  edge: CRUS->AAPL 79.0% FY2022 [0000772406-22-000014]"
+      ]
+    },
+    {
+      "id": "t4_fact_qrvo_aapl_2022",
+      "sc_type": "T4",
+      "sc_subtype": "graph_fact",
+      "answerable": true,
+      "correct": true,
+      "expected": 33.0,
+      "got_raw": 33.0,
+      "graph_called": true,
+      "traversal_ok": true,
+      "missing_edges": [],
+      "got_text": "In fiscal year 2022, 33% of Qorvo's revenue came from Apple. This is cited from SEC 10-K accession number 0001604778-22-000029.",
+      "latency_s": 2.79,
+      "tool_trace": [
+        "graph_query(supplier=QRVO, customer=AAPL, fiscal_year=2022) -> 1 edges",
+        "  edge: QRVO->AAPL 33.0% FY2022 [0001604778-22-000029]"
+      ]
+    },
+    {
+      "id": "t4_fact_jbl_aapl_2021",
+      "sc_type": "T4",
+      "sc_subtype": "graph_fact",
+      "answerable": true,
+      "correct": true,
+      "expected": 22.0,
+      "got_raw": 22.0,
+      "graph_called": true,
+      "traversal_ok": true,
+      "missing_edges": [],
+      "got_text": "In fiscal year 2021, approximately 22.0% of Jabil's revenue came from Apple. This is based on the SEC 10-K filing (accession number 0001193125-21-305429).",
+      "latency_s": 3.51,
+      "tool_trace": [
+        "graph_query(supplier=JBL, customer=AAPL, fiscal_year=2021) -> 1 edges",
+        "  edge: JBL->AAPL 22.0% FY2021 [0001193125-21-305429]"
+      ]
+    },
+    {
+      "id": "t4_fact_avgo_aapl_2021",
+      "sc_type": "T4",
+      "sc_subtype": "graph_fact",
+      "answerable": true,
+      "correct": true,
+      "expected": 20.0,
+      "got_raw": 20.0,
+      "graph_called": true,
+      "traversal_ok": true,
+      "missing_edges": [],
+      "got_text": "In fiscal year 2021, approximately 20% of Broadcom's revenue came from Apple. \n\nThis information is cited from SEC 10-K accession number 0001730168-21-000153.",
+      "latency_s": 2.97,
+      "tool_trace": [
+        "graph_query(supplier=AVGO, customer=AAPL, fiscal_year=2021) -> 1 edges",
+        "  edge: AVGO->AAPL 20.0% FY2021 [0001730168-21-000153]"
+      ]
+    },
+    {
+      "id": "t4_fact_adi_aapl_2017",
+      "sc_type": "T4",
+      "sc_subtype": "graph_fact",
+      "answerable": true,
+      "correct": true,
+      "expected": 14.0,
+      "got_raw": 14.0,
+      "graph_called": true,
+      "traversal_ok": true,
+      "missing_edges": [],
+      "got_text": "In fiscal year 2017, approximately 14% of Analog Devices' revenue came from Apple. This information is sourced from the SEC 10-K filing with accession number 0000006281-18-000126.",
+      "latency_s": 4.19,
+      "tool_trace": [
+        "graph_query(supplier=ADI, customer=AAPL, fiscal_year=2017) -> 1 edges",
+        "  edge: ADI->AAPL 14.0% FY2017 [0000006281-18-000126]"
+      ]
+    },
+    {
+      "id": "t4_fact_qrvo_aapl_2020",
+      "sc_type": "T4",
+      "sc_subtype": "graph_fact",
+      "answerable": true,
+      "correct": true,
+      "expected": 33.0,
+      "got_raw": 33.0,
+      "graph_called": true,
+      "traversal_ok": true,
+      "missing_edges": [],
+      "got_text": "In fiscal year 2020, 33% of Qorvo's revenue came from Apple. This information is cited from SEC 10-K accession number 0001604778-20-000030.",
+      "latency_s": 2.91,
+      "tool_trace": [
+        "graph_query(supplier=QRVO, customer=AAPL, fiscal_year=2020) -> 1 edges",
+        "  edge: QRVO->AAPL 33.0% FY2020 [0001604778-20-000030]"
+      ]
+    },
+    {
+      "id": "t4_fact_qrvo_huawei_2019",
+      "sc_type": "T4",
+      "sc_subtype": "graph_fact",
+      "answerable": true,
+      "correct": false,
+      "expected": 13.0,
+      "got_raw": null,
+      "graph_called": true,
+      "traversal_ok": false,
+      "missing_edges": [
+        {
+          "supplier": "QRVO",
+          "customer": "Huawei",
+          "fiscal_year": 2019,
+          "revenue_pct": 13.0,
+          "threshold_only": false
+        }
+      ],
+      "got_text": "I cannot find supply-chain data for Qorvo in the database regarding the percentage of revenue from Huawei in fiscal year 2019.",
+      "latency_s": 2.42,
+      "tool_trace": [
+        "graph_query(supplier=QRVO, customer=HUAWEI, fiscal_year=2019) -> NOT FOUND"
+      ]
+    },
+    {
+      "id": "t4_fact_avgo_wt_microelectronics_2022",
+      "sc_type": "T4",
+      "sc_subtype": "graph_fact",
+      "answerable": true,
+      "correct": false,
+      "expected": 20.0,
+      "got_raw": null,
+      "graph_called": true,
+      "traversal_ok": false,
+      "missing_edges": [
+        {
+          "supplier": "AVGO",
+          "customer": "WT Microelectronics",
+          "fiscal_year": 2022,
+          "revenue_pct": 20.0,
+          "threshold_only": false
+        }
+      ],
+      "got_text": "I cannot find supply-chain data for Broadcom (AVGO) in the database for WT Microelectronics in fiscal year 2022.",
+      "latency_s": 2.19,
+      "tool_trace": [
+        "graph_query(supplier=WTM, customer=AVGO, fiscal_year=2022) -> NOT FOUND"
+      ]
+    },
+    {
+      "id": "t4_fact_qrvo_005930.ks_2022",
+      "sc_type": "T4",
+      "sc_subtype": "graph_fact",
+      "answerable": true,
+      "correct": false,
+      "expected": 11.0,
+      "got_raw": null,
+      "graph_called": true,
+      "traversal_ok": false,
+      "missing_edges": [
+        {
+          "supplier": "QRVO",
+          "customer": "005930.KS",
+          "fiscal_year": 2022,
+          "revenue_pct": 11.0,
+          "threshold_only": false
+        }
+      ],
+      "got_text": "I cannot find supply-chain data for Qorvo in the database.",
+      "latency_s": 2.0,
+      "tool_trace": [
+        "graph_query(supplier=QRVO, customer=SAMSUNG, fiscal_year=2022) -> NOT FOUND"
+      ]
+    },
+    {
+      "id": "t4_fact_qrvo_005930.ks_2023",
+      "sc_type": "T4",
+      "sc_subtype": "graph_fact",
+      "answerable": true,
+      "correct": false,
+      "expected": 12.0,
+      "got_raw": null,
+      "graph_called": true,
+      "traversal_ok": false,
+      "missing_edges": [
+        {
+          "supplier": "QRVO",
+          "customer": "005930.KS",
+          "fiscal_year": 2023,
+          "revenue_pct": 12.0,
+          "threshold_only": false
+        }
+      ],
+      "got_text": "I cannot find supply-chain data for Qorvo in the database regarding its revenue percentage from Samsung in fiscal year 2023.",
+      "latency_s": 2.21,
+      "tool_trace": [
+        "graph_query(supplier=QRVO, customer=Samsung, fiscal_year=2023) -> NOT FOUND"
+      ]
+    },
+    {
+      "id": "t4_fact_qrvo_005930.ks_2024",
+      "sc_type": "T4",
+      "sc_subtype": "graph_fact",
+      "answerable": true,
+      "correct": false,
+      "expected": 12.0,
+      "got_raw": null,
+      "graph_called": true,
+      "traversal_ok": false,
+      "missing_edges": [
+        {
+          "supplier": "QRVO",
+          "customer": "005930.KS",
+          "fiscal_year": 2024,
+          "revenue_pct": 12.0,
+          "threshold_only": false
+        }
+      ],
+      "got_text": "I cannot find supply-chain data for Qorvo in the database for fiscal year 2024.",
+      "latency_s": 2.82,
+      "tool_trace": [
+        "graph_query(supplier=QRVO, customer=Samsung, fiscal_year=2024) -> NOT FOUND"
+      ]
+    },
+    {
+      "id": "t4_fact_avgo_wt_microelectronics_2021",
+      "sc_type": "T4",
+      "sc_subtype": "graph_fact",
+      "answerable": true,
+      "correct": false,
+      "expected": 18.0,
+      "got_raw": null,
+      "graph_called": true,
+      "traversal_ok": false,
+      "missing_edges": [
+        {
+          "supplier": "AVGO",
+          "customer": "WT Microelectronics",
+          "fiscal_year": 2021,
+          "revenue_pct": 18.0,
+          "threshold_only": false
+        }
+      ],
+      "got_text": "I cannot find supply-chain data for Broadcom from WT Microelectronics in the database.",
+      "latency_s": 2.02,
+      "tool_trace": [
+        "graph_query(supplier=WT, customer=AVGO, fiscal_year=2021) -> NOT FOUND"
+      ]
+    },
+    {
+      "id": "t4_lookup_apple_suppliers_2021",
+      "sc_type": "T4",
+      "sc_subtype": "graph_lookup",
+      "answerable": true,
+      "correct": true,
+      "expected": [
+        "CRUS",
+        "QRVO",
+        "JBL",
+        "AVGO",
+        "SWKS"
+      ],
+      "found_in_response": [
+        "CRUS",
+        "QRVO",
+        "JBL",
+        "AVGO",
+        "SWKS"
+      ],
+      "missing": [],
+      "graph_called": true,
+      "got_text": "In fiscal year 2021, the following companies disclosed Apple as a significant revenue customer, contributing more than 10% to their total revenue:\n\n1. **CRUS (Cirrus Logic, Inc.)**: 83.0% of revenue from Apple. [Source](https://www.sec.gov/Archives/edgar/data/772406/000077240621000013/crus-20210327.",
+      "latency_s": 11.26,
+      "tool_trace": [
+        "graph_query(customer=AAPL, fiscal_year=2021) -> 5 edges",
+        "  edge: CRUS->AAPL 83.0% FY2021 [0000772406-21-000013]",
+        "  edge: QRVO->AAPL 30.0% FY2021 [0001604778-21-000032]",
+        "  edge: JBL->AAPL 22.0% FY2021 [0001193125-21-305429]",
+        "  edge: AVGO->AAPL 20.0% FY2021 [0001730168-21-000153]",
+        "  edge: SWKS->AAPL >10% (threshold \u2014 exact % not disclosed in 10-K text) FY2021 [0000004127-21-000058]"
+      ]
+    },
+    {
+      "id": "t4_lookup_apple_suppliers_2022",
+      "sc_type": "T4",
+      "sc_subtype": "graph_lookup",
+      "answerable": true,
+      "correct": true,
+      "expected": [
+        "CRUS",
+        "QRVO",
+        "AVGO",
+        "JBL",
+        "SWKS"
+      ],
+      "found_in_response": [
+        "CRUS",
+        "QRVO",
+        "AVGO",
+        "JBL",
+        "SWKS"
+      ],
+      "missing": [],
+      "graph_called": true,
+      "got_text": "In fiscal year 2022, the following companies disclosed Apple as a significant (>10%) revenue customer:\n\n1. **CRUS**: Approximately 79% of total sales were to Apple. [SEC 10-K accession 0000772406-22-000014](https://www.sec.gov/Archives/edgar/data/772406/000077240622000014/crus-20220326.htm)\n\n2. **QR",
+      "latency_s": 12.81,
+      "tool_trace": [
+        "graph_query(customer=AAPL, fiscal_year=2022) -> 5 edges",
+        "  edge: CRUS->AAPL 79.0% FY2022 [0000772406-22-000014]",
+        "  edge: QRVO->AAPL 33.0% FY2022 [0001604778-22-000029]",
+        "  edge: AVGO->AAPL 20.0% FY2022 [0001730168-22-000118]",
+        "  edge: JBL->AAPL 19.0% FY2022 [0001193125-22-268383]",
+        "  edge: SWKS->AAPL >10% (threshold \u2014 exact % not disclosed in 10-K text) FY2022 [0000004127-22-000038]"
+      ]
+    },
+    {
+      "id": "t4_lookup_apple_suppliers_2023",
+      "sc_type": "T4",
+      "sc_subtype": "graph_lookup",
+      "answerable": true,
+      "correct": true,
+      "expected": [
+        "CRUS",
+        "QRVO",
+        "AVGO",
+        "JBL",
+        "SWKS"
+      ],
+      "found_in_response": [
+        "CRUS",
+        "QRVO",
+        "AVGO",
+        "JBL",
+        "SWKS"
+      ],
+      "missing": [],
+      "graph_called": true,
+      "got_text": "In fiscal year 2023, the following companies disclosed Apple as a significant (>10%) revenue customer:\n\n1. **CRUS**: Apple represented approximately **83%** of total sales.\n   - SEC citation: [SEC 10-K accession 0000772406-23-000019](https://www.sec.gov/Archives/edgar/data/772406/000077240623000019/",
+      "latency_s": 13.4,
+      "tool_trace": [
+        "graph_query(customer=AAPL, fiscal_year=2023) -> 5 edges",
+        "  edge: CRUS->AAPL 83.0% FY2023 [0000772406-23-000019]",
+        "  edge: QRVO->AAPL 37.0% FY2023 [0001604778-23-000055]",
+        "  edge: AVGO->AAPL 20.0% FY2023 [0001730168-23-000096]",
+        "  edge: JBL->AAPL 17.0% FY2023 [0001193125-23-259599]",
+        "  edge: SWKS->AAPL >10% (threshold \u2014 exact % not disclosed in 10-K text) FY2023 [0000004127-23-000030]"
+      ]
+    },
+    {
+      "id": "t4_lookup_apple_suppliers_2024",
+      "sc_type": "T4",
+      "sc_subtype": "graph_lookup",
+      "answerable": true,
+      "correct": true,
+      "expected": [
+        "CRUS",
+        "QRVO",
+        "JBL",
+        "SWKS"
+      ],
+      "found_in_response": [
+        "CRUS",
+        "QRVO",
+        "JBL",
+        "SWKS"
+      ],
+      "missing": [],
+      "graph_called": true,
+      "got_text": "In fiscal year 2024, the following companies disclosed Apple as a significant (>10%) revenue customer:\n\n1. **CRUS**: Apple constituted approximately 87% of their total sales. \n   - SEC citation: [0000772406-24-000031](https://www.sec.gov/Archives/edgar/data/772406/000077240624000031/crus-20240330.ht",
+      "latency_s": 9.13,
+      "tool_trace": [
+        "graph_query(customer=AAPL, fiscal_year=2024) -> 4 edges",
+        "  edge: CRUS->AAPL 87.0% FY2024 [0000772406-24-000031]",
+        "  edge: QRVO->AAPL 46.0% FY2024 [0001604778-24-000036]",
+        "  edge: JBL->AAPL 11.0% FY2024 [0001628280-24-043960]",
+        "  edge: SWKS->AAPL >10% (threshold \u2014 exact % not disclosed in 10-K text) FY2024 [0000004127-24-000131]"
+      ]
+    },
+    {
+      "id": "t4_trend_crus_apple_2020_2024",
+      "sc_type": "T4",
+      "sc_subtype": "graph_trend",
+      "answerable": true,
+      "correct": true,
+      "expected": {
+        "2020": 79.0,
+        "2021": 83.0,
+        "2022": 79.0,
+        "2023": 83.0,
+        "2024": 87.0
+      },
+      "got_map": {
+        "2020": 79.0,
+        "2021": 83.0,
+        "2022": 79.0,
+        "2023": 83.0,
+        "2024": 87.0
+      },
+      "graph_called": true,
+      "traversal_ok": true,
+      "missing_edges": [],
+      "got_text": "The revenue concentration from Apple for Cirrus Logic (CRUS) has changed as follows:\n\n- **Fiscal Year 2020:** 79% (SEC 10-K accession 0000772406-20-000007)\n- **Fiscal Year 2021:** 83% (SEC 10-K accession 0000772406-21-000013)\n- **Fiscal Year 2022:** 79% (SEC 10-K accession 0000772406-22-000014)\n- **",
+      "latency_s": 14.58,
+      "tool_trace": [
+        "graph_query(customer=AAPL, fiscal_year=trend) -> 55 edges",
+        "  edge: CRUS->AAPL 91.0% FY2026 [0000772406-26-000018]",
+        "  edge: QRVO->AAPL 50.0% FY2026 [0001628280-26-032873]",
+        "  edge: CRUS->AAPL 89.0% FY2025 [0000772406-25-000014]",
+        "  edge: QRVO->AAPL 47.0% FY2025 [0001604778-25-000041]",
+        "  edge: SWKS->AAPL >10% (threshold \u2014 exact % not disclosed in 10-K text) FY2025 [0000004127-25-000085]",
+        "  edge: CRUS->AAPL 87.0% FY2024 [0000772406-24-000031]",
+        "  edge: QRVO->AAPL 46.0% FY2024 [0001604778-24-000036]",
+        "  edge: JBL->AAPL 11.0% FY2024 [0001628280-24-043960]",
+        "  edge: SWKS->AAPL >10% (threshold \u2014 exact % not disclosed in 10-K text) FY2024 [0000004127-24-000131]",
+        "  edge: CRUS->AAPL 83.0% FY2023 [0000772406-23-000019]",
+        "  edge: QRVO->AAPL 37.0% FY2023 [0001604778-23-000055]",
+        "  edge: AVGO->AAPL 20.0% FY2023 [0001730168-23-000096]",
+        "  edge: JBL->AAPL 17.0% FY2023 [0001193125-23-259599]",
+        "  edge: SWKS->AAPL >10% (threshold \u2014 exact % not disclosed in 10-K text) FY2023 [0000004127-23-000030]",
+        "  edge: CRUS->AAPL 79.0% FY2022 [0000772406-22-000014]",
+        "  edge: QRVO->AAPL 33.0% FY2022 [0001604778-22-000029]",
+        "  edge: AVGO->AAPL 20.0% FY2022 [0001730168-22-000118]",
+        "  edge: JBL->AAPL 19.0% FY2022 [0001193125-22-268383]",
+        "  edge: SWKS->AAPL >10% (threshold \u2014 exact % not disclosed in 10-K text) FY2022 [0000004127-22-000038]",
+        "  edge: CRUS->AAPL 83.0% FY2021 [0000772406-21-000013]",
+        "  edge: QRVO->AAPL 30.0% FY2021 [0001604778-21-000032]",
+        "  edge: JBL->AAPL 22.0% FY2021 [0001193125-21-305429]",
+        "  edge: AVGO->AAPL 20.0% FY2021 [0001730168-21-000153]",
+        "  edge: SWKS->AAPL >10% (threshold \u2014 exact % not disclosed in 10-K text) FY2021 [0000004127-21-000058]",
+        "  edge: CRUS->AAPL 79.0% FY2020 [0000772406-20-000007]",
+        "  edge: QRVO->AAPL 33.0% FY2020 [0001604778-20-000030]",
+        "  edge: JBL->AAPL 20.0% FY2020 [0001193125-20-274411]",
+        "  edge: AVGO->AAPL 15.0% FY2020 [0001730168-20-000226]",
+        "  edge: APH->AAPL 11.0% FY2020 [0001558370-21-000881]",
+        "  edge: SWKS->AAPL >10% (threshold \u2014 exact % not disclosed in 10-K text) FY2020 [0000004127-20-000058]",
+        "  edge: CRUS->AAPL 78.0% FY2019 [0000772406-19-000008]",
+        "  edge: JBL->AAPL 22.0% FY2019 [0001193125-19-271646]",
+        "  edge: AVGO->AAPL 20.0% FY2019 [0001730168-19-000144]",
+        "  edge: QRVO->AAPL 11.0% FY2019 [0001604778-19-000031]",
+        "  edge: SWKS->AAPL >10% (threshold \u2014 exact % not disclosed in 10-K text) FY2019 [0000004127-19-000049]",
+        "  edge: CRUS->AAPL 81.0% FY2018 [0000772406-18-000007]",
+        "  edge: SWKS->AAPL 47.0% FY2018 [0000004127-18-000046]",
+        "  edge: JBL->AAPL 28.0% FY2018 [0001193125-18-303041]",
+        "  edge: AVGO->AAPL 25.0% FY2018 [0001730168-18-000084]",
+        "  edge: APH->AAPL 12.0% FY2018 [0001558370-20-000728]",
+        "  edge: QRVO->AAPL 12.0% FY2018 [0001604778-18-000023]",
+        "  edge: CRUS->AAPL 79.0% FY2017 [0001193125-17-181625]",
+        "  edge: SWKS->AAPL 39.0% FY2017 [0000004127-19-000049]",
+        "  edge: QRVO->AAPL 34.0% FY2017 [0001604778-17-000031]",
+        "  edge: JBL->AAPL 24.0% FY2017 [0001193125-17-313834]",
+        "  edge: ADI->AAPL 14.0% FY2017 [0000006281-18-000126]",
+        "  edge: QCOM->AAPL >10% (threshold \u2014 exact % not disclosed in 10-K text) FY2017 [0001234452-17-000190]",
+        "  edge: CRUS->AAPL 66.0% FY2016 [0000772406-18-000007]",
+        "  edge: SWKS->AAPL 40.0% FY2016 [0000004127-18-000046]",
+        "  edge: QRVO->AAPL 37.0% FY2016 [0001604778-18-000023]",
+        "  edge: JBL->AAPL 24.0% FY2016 [0001193125-16-742815]",
+        "  edge: ADI->AAPL 12.0% FY2016 [0000006281-18-000126]",
+        "  edge: CRUS->AAPL 72.0% FY2015 [0001193125-17-181625]",
+        "  edge: JBL->AAPL 24.0% FY2015 [0001193125-16-742815]",
+        "  edge: JBL->AAPL 18.0% FY2014 [0001193125-16-742815]"
+      ]
+    },
+    {
+      "id": "t4_trend_qrvo_apple_2020_2024",
+      "sc_type": "T4",
+      "sc_subtype": "graph_trend",
+      "answerable": true,
+      "correct": true,
+      "expected": {
+        "2020": 33.0,
+        "2021": 30.0,
+        "2022": 33.0,
+        "2023": 37.0,
+        "2024": 46.0
+      },
+      "got_map": {
+        "2020": 33.0,
+        "2021": 30.0,
+        "2022": 33.0,
+        "2023": 37.0,
+        "2024": 46.0
+      },
+      "graph_called": true,
+      "traversal_ok": true,
+      "missing_edges": [],
+      "got_text": "Qorvo's revenue concentration from Apple has changed as follows:\n\n- **Fiscal Year 2020:** 33% of total revenue (SEC 10-K accession 0001604778-20-000030)\n- **Fiscal Year 2021:** 30% of total revenue (SEC 10-K accession 0001604778-21-000032)\n- **Fiscal Year 2022:** 33% of total revenue (SEC 10-K acces",
+      "latency_s": 7.85,
+      "tool_trace": [
+        "graph_query(supplier=QRVO, customer=AAPL, fiscal_year=trend) -> 11 edges",
+        "  edge: QRVO->AAPL 50.0% FY2026 [0001628280-26-032873]",
+        "  edge: QRVO->AAPL 47.0% FY2025 [0001604778-25-000041]",
+        "  edge: QRVO->AAPL 46.0% FY2024 [0001604778-24-000036]",
+        "  edge: QRVO->AAPL 37.0% FY2023 [0001604778-23-000055]",
+        "  edge: QRVO->AAPL 33.0% FY2022 [0001604778-22-000029]",
+        "  edge: QRVO->AAPL 30.0% FY2021 [0001604778-21-000032]",
+        "  edge: QRVO->AAPL 33.0% FY2020 [0001604778-20-000030]",
+        "  edge: QRVO->AAPL 11.0% FY2019 [0001604778-19-000031]",
+        "  edge: QRVO->AAPL 12.0% FY2018 [0001604778-18-000023]",
+        "  edge: QRVO->AAPL 34.0% FY2017 [0001604778-17-000031]",
+        "  edge: QRVO->AAPL 37.0% FY2016 [0001604778-18-000023]"
+      ]
+    },
+    {
+      "id": "t4_compare_highest_apple_2022",
+      "sc_type": "T4",
+      "sc_subtype": "graph_comparison",
+      "answerable": true,
+      "correct": false,
+      "graph_called": true,
+      "traversal_ok": false,
+      "missing_edges": [
+        {
+          "supplier": "SWKS",
+          "customer": "AAPL",
+          "fiscal_year": 2022,
+          "revenue_pct": 10.0,
+          "threshold_only": true
+        }
+      ],
+      "judge_score": 3,
+      "judge_reason": "The agent correctly identified Cirrus Logic as having the highest revenue concentration from Apple in fiscal year 2022 with accurate values and citations.",
+      "got_text": "In fiscal year 2022, the revenue concentrations from Apple for the companies are as follows:\n\n1. Cirrus Logic (CRUS): 79.0% of total revenue (SEC 10-K accession 0000772406-22-000014)\n2. Qorvo (QRVO): 33.0% of total revenue (SEC 10-K accession 0001604778-22-000029)\n3. Broadcom (AVGO): 20.0% of total ",
+      "latency_s": 9.25,
+      "tool_trace": [
+        "graph_query(supplier=CRUS, customer=AAPL, fiscal_year=2022) -> 1 edges",
+        "  edge: CRUS->AAPL 79.0% FY2022 [0000772406-22-000014]",
+        "graph_query(supplier=QRVO, customer=AAPL, fiscal_year=2022) -> 1 edges",
+        "  edge: QRVO->AAPL 33.0% FY2022 [0001604778-22-000029]",
+        "graph_query(supplier=JBL, customer=AAPL, fiscal_year=2022) -> 1 edges",
+        "  edge: JBL->AAPL 19.0% FY2022 [0001193125-22-268383]",
+        "graph_query(supplier=AVGO, customer=AAPL, fiscal_year=2022) -> 1 edges",
+        "  edge: AVGO->AAPL 20.0% FY2022 [0001730168-22-000118]"
+      ]
+    },
+    {
+      "id": "t4_compare_highest_apple_2024",
+      "sc_type": "T4",
+      "sc_subtype": "graph_comparison",
+      "answerable": true,
+      "correct": false,
+      "graph_called": true,
+      "traversal_ok": false,
+      "missing_edges": [
+        {
+          "supplier": "SWKS",
+          "customer": "AAPL",
+          "fiscal_year": 2024,
+          "revenue_pct": 10.0,
+          "threshold_only": true
+        }
+      ],
+      "judge_score": 3,
+      "judge_reason": "The agent correctly identified Cirrus Logic as having the highest Apple revenue concentration in fiscal year 2024, provided accurate percentages, and cited appropriate sources.",
+      "got_text": "In fiscal year 2024, the revenue concentration from Apple was as follows for the companies in question:\n\n1. **Cirrus Logic (CRUS)**: 87.0% of total sales came from Apple. Citation: SEC 10-K accession 0000772406-24-000031.\n2. **Qorvo (QRVO)**: 46.0% of total revenue came from Apple. Citation: SEC 10-",
+      "latency_s": 10.85,
+      "tool_trace": [
+        "graph_query(supplier=CRUS, customer=AAPL, fiscal_year=2024) -> 1 edges",
+        "  edge: CRUS->AAPL 87.0% FY2024 [0000772406-24-000031]",
+        "graph_query(supplier=QRVO, customer=AAPL, fiscal_year=2024) -> 1 edges",
+        "  edge: QRVO->AAPL 46.0% FY2024 [0001604778-24-000036]",
+        "graph_query(supplier=JBL, customer=AAPL, fiscal_year=2024) -> 1 edges",
+        "  edge: JBL->AAPL 11.0% FY2024 [0001628280-24-043960]",
+        "graph_query(supplier=AVGO, customer=AAPL, fiscal_year=2024) -> NOT FOUND"
+      ]
+    },
+    {
+      "id": "t4_negative_txn_2023",
+      "sc_type": "T4",
+      "sc_subtype": "graph_negative",
+      "answerable": true,
+      "correct": true,
+      "refusal_ok": true,
+      "graph_called": true,
+      "got_text": "I cannot find any disclosures regarding Texas Instruments having a single customer accounting for more than 10% of revenue in fiscal year 2023.",
+      "latency_s": 4.11,
+      "tool_trace": [
+        "graph_query(customer=TXN, fiscal_year=2023) -> NOT FOUND"
+      ]
+    },
+    {
+      "id": "t4_negative_glw_2022",
+      "sc_type": "T4",
+      "sc_subtype": "graph_negative",
+      "answerable": true,
+      "correct": true,
+      "refusal_ok": true,
+      "graph_called": true,
+      "got_text": "I cannot find supply-chain data for Corning (GLW) in the database.",
+      "latency_s": 2.83,
+      "tool_trace": [
+        "graph_query(supplier=GLW, fiscal_year=2022) -> NOT FOUND"
+      ]
+    },
+    {
+      "id": "t4_negative_lrcx_2023",
+      "sc_type": "T4",
+      "sc_subtype": "graph_negative",
+      "answerable": true,
+      "correct": true,
+      "refusal_ok": true,
+      "graph_called": true,
+      "got_text": "I cannot find supply-chain data for Lam Research in the database for fiscal year 2023.",
+      "latency_s": 2.35,
+      "tool_trace": [
+        "graph_query(customer=LRCX, fiscal_year=2023) -> NOT FOUND"
+      ]
+    },
+    {
+      "id": "t4_negative_sanm_2023",
+      "sc_type": "T4",
+      "sc_subtype": "graph_negative",
+      "answerable": true,
+      "correct": true,
+      "refusal_ok": true,
+      "graph_called": true,
+      "got_text": "I cannot find supply-chain data for Sanmina in the database.",
+      "latency_s": 2.25,
+      "tool_trace": [
+        "graph_query(customer=SANM, fiscal_year=2023) -> NOT FOUND"
+      ]
+    },
+    {
+      "id": "t4_negative_adi_2022",
+      "sc_type": "T4",
+      "sc_subtype": "graph_negative",
+      "answerable": true,
+      "correct": true,
+      "refusal_ok": true,
+      "graph_called": true,
+      "got_text": "I cannot find supply-chain data for Analog Devices (ADI) in the database regarding Apple as a customer accounting for more than 10% of revenue in fiscal year 2022.",
+      "latency_s": 2.71,
+      "tool_trace": [
+        "graph_query(supplier=ADI, customer=AAPL, fiscal_year=2022) -> NOT FOUND"
+      ]
+    },
+    {
+      "id": "t4_negative_qcom_2022",
+      "sc_type": "T4",
+      "sc_subtype": "graph_negative",
+      "answerable": true,
+      "correct": true,
+      "refusal_ok": true,
+      "graph_called": true,
+      "got_text": "I cannot find supply-chain data for Qualcomm in the database related to Apple as a direct customer accounting for more than 10% of consolidated revenues in fiscal year 2022.",
+      "latency_s": 2.67,
+      "tool_trace": [
+        "graph_query(supplier=QCOM, customer=AAPL, fiscal_year=2022) -> NOT FOUND"
+      ]
+    },
+    {
+      "id": "t5_exposure_qrvo_apple_2024",
+      "sc_type": "T5",
+      "sc_subtype": "graph_compute",
+      "answerable": true,
+      "correct": true,
+      "expected": 1733972760,
+      "got_raw": 1733972760.0,
+      "graph_called": true,
+      "financials_called": true,
+      "traversal_ok": true,
+      "missing_edges": [],
+      "got_text": "In fiscal year 2024, Qorvo derived approximately $1,733,972,760 from Apple channels based on its disclosed concentration percentage of 46%. This figure is cited in the SEC 10-K filing (accession numbe",
+      "latency_s": 6.0,
+      "tool_trace": [
+        "graph_query(supplier=QRVO, customer=AAPL, fiscal_year=2024) -> 1 edges",
+        "  edge: QRVO->AAPL 46.0% FY2024 [0001604778-24-000036]",
+        "query_financials(QRVO, Revenue, FY2024) -> 3769506000.0",
+        "compute(revenue * pct / 100) -> 1733972760.0"
+      ]
+    },
+    {
+      "id": "t5_exposure_crus_apple_2024",
+      "sc_type": "T5",
+      "sc_subtype": "graph_compute",
+      "answerable": true,
+      "correct": true,
+      "expected": 1556334300,
+      "got_raw": 1556334300.0,
+      "graph_called": true,
+      "financials_called": true,
+      "traversal_ok": true,
+      "missing_edges": [],
+      "got_text": "In fiscal year 2024, Cirrus Logic derived approximately $1,556,334,300 from Apple, based on the concentration percentage of 87% of its total revenue. This information is cited from SEC 10-K filing acc",
+      "latency_s": 8.73,
+      "tool_trace": [
+        "graph_query(supplier=CRUS, customer=AAPL, fiscal_year=2024) -> 1 edges",
+        "  edge: CRUS->AAPL 87.0% FY2024 [0000772406-24-000031]",
+        "query_financials(CRUS, Revenue, FY2024) -> 1788890000.0",
+        "compute(revenue * pct / 100) -> 1556334300.0"
+      ]
+    },
+    {
+      "id": "t5_exposure_jbl_apple_2023",
+      "sc_type": "T5",
+      "sc_subtype": "graph_compute",
+      "answerable": true,
+      "correct": true,
+      "expected": 5899340000,
+      "got_raw": 5899340000.0,
+      "graph_called": true,
+      "financials_called": true,
+      "traversal_ok": true,
+      "missing_edges": [],
+      "got_text": "In fiscal year 2023, Jabil derived approximately $5,899,340,000 from Apple, based on a concentration percentage of 17%. This information is sourced from SEC 10-K filing accession number 0001193125-23-",
+      "latency_s": 6.77,
+      "tool_trace": [
+        "graph_query(supplier=JBL, customer=AAPL, fiscal_year=2023) -> 1 edges",
+        "  edge: JBL->AAPL 17.0% FY2023 [0001193125-23-259599]",
+        "query_financials(JBL, Revenue, FY2023) -> 34702000000.0",
+        "compute(revenue * pct / 100) -> 5899340000.0"
+      ]
+    },
+    {
+      "id": "t5_exposure_avgo_apple_2022",
+      "sc_type": "T5",
+      "sc_subtype": "graph_compute",
+      "answerable": true,
+      "correct": true,
+      "expected": 6640600000,
+      "got_raw": 6640600000.0,
+      "graph_called": true,
+      "financials_called": true,
+      "traversal_ok": true,
+      "missing_edges": [],
+      "got_text": "In fiscal year 2022, Broadcom derived approximately $6,640,600,000 in revenue from Apple, which accounted for about 20% of its total net revenue. This information is based on Broadcom's SEC 10-K filin",
+      "latency_s": 6.98,
+      "tool_trace": [
+        "graph_query(supplier=AVGO, customer=AAPL, fiscal_year=2022) -> 1 edges",
+        "  edge: AVGO->AAPL 20.0% FY2022 [0001730168-22-000118]",
+        "query_financials(AVGO, Revenue, FY2022) -> 33203000000.0",
+        "compute(revenue * pct / 100) -> 6640600000.0"
+      ]
+    },
+    {
+      "id": "t5_exposure_qrvo_apple_2022",
+      "sc_type": "T5",
+      "sc_subtype": "graph_compute",
+      "answerable": true,
+      "correct": true,
+      "expected": 1533085620,
+      "got_raw": 1533085620.0,
+      "graph_called": true,
+      "financials_called": true,
+      "traversal_ok": true,
+      "missing_edges": [],
+      "got_text": "Qorvo derived approximately $1,533,085,620 in revenue from Apple channels in fiscal year 2022. This is based on Apple accounting for 33% of Qorvo's total revenue of $4,645,714,000 in that year (SEC 10",
+      "latency_s": 6.6,
+      "tool_trace": [
+        "graph_query(supplier=QRVO, customer=AAPL, fiscal_year=2022) -> 1 edges",
+        "  edge: QRVO->AAPL 33.0% FY2022 [0001604778-22-000029]",
+        "query_financials(QRVO, Revenue, FY2022) -> 4645714000.0",
+        "compute(revenue * pct / 100) -> 1533085620.0"
+      ]
+    },
+    {
+      "id": "t5_exposure_crus_apple_2022",
+      "sc_type": "T5",
+      "sc_subtype": "graph_compute",
+      "answerable": true,
+      "correct": true,
+      "expected": 1407353400,
+      "got_raw": 1407353400.0,
+      "graph_called": true,
+      "financials_called": true,
+      "traversal_ok": true,
+      "missing_edges": [],
+      "got_text": "Cirrus Logic derived approximately $1,407,353,400 in revenue from Apple in fiscal year 2022, which ended on March 26, 2022 (SEC 10-K accession number 0000772406-22-000014).",
+      "latency_s": 6.67,
+      "tool_trace": [
+        "graph_query(supplier=CRUS, customer=AAPL, fiscal_year=2022) -> 1 edges",
+        "  edge: CRUS->AAPL 79.0% FY2022 [0000772406-22-000014]",
+        "query_financials(CRUS, Revenue, FY2022) -> 1781460000.0",
+        "compute(revenue * pct / 100) -> 1407353400.0"
+      ]
+    },
+    {
+      "id": "t5_exposure_jbl_apple_2021",
+      "sc_type": "T5",
+      "sc_subtype": "graph_compute",
+      "answerable": true,
+      "correct": true,
+      "expected": 6442700000,
+      "got_raw": 6442700000.0,
+      "graph_called": true,
+      "financials_called": true,
+      "traversal_ok": true,
+      "missing_edges": [],
+      "got_text": "In fiscal year 2021, Jabil derived approximately $6,442,700,000 (or $6.44 billion) in revenue from Apple. This is based on Jabil's total revenue of $29,285,000,000 for the year, with 22% attributed to",
+      "latency_s": 6.08,
+      "tool_trace": [
+        "graph_query(supplier=JBL, customer=AAPL, fiscal_year=2021) -> 1 edges",
+        "  edge: JBL->AAPL 22.0% FY2021 [0001193125-21-305429]",
+        "query_financials(JBL, Revenue, FY2021) -> 29285000000.0",
+        "compute(revenue * pct / 100) -> 6442700000.0"
+      ]
+    },
+    {
+      "id": "t5_exposure_crus_apple_2023",
+      "sc_type": "T5",
+      "sc_subtype": "graph_compute",
+      "answerable": true,
+      "correct": true,
+      "expected": 1575022110,
+      "got_raw": 1575022110.0,
+      "graph_called": true,
+      "financials_called": true,
+      "traversal_ok": true,
+      "missing_edges": [],
+      "got_text": "In fiscal year 2023, Cirrus Logic derived approximately $1,575,022,110 from Apple. This represents 83% of Cirrus Logic's total revenue of $1,897,617,000 for that year (SEC 10-K accession number 000077",
+      "latency_s": 8.44,
+      "tool_trace": [
+        "graph_query(supplier=CRUS, customer=AAPL, fiscal_year=2023) -> 1 edges",
+        "  edge: CRUS->AAPL 83.0% FY2023 [0000772406-23-000019]",
+        "query_financials(CRUS, Revenue, FY2023) -> 1897617000.0",
+        "compute(revenue * pct / 100) -> 1575022110.0"
+      ]
+    },
+    {
+      "id": "t5_exposure_avgo_apple_2020",
+      "sc_type": "T5",
+      "sc_subtype": "graph_compute",
+      "answerable": true,
+      "correct": true,
+      "expected": 3583200000,
+      "got_raw": 3583200000.0,
+      "graph_called": true,
+      "financials_called": true,
+      "traversal_ok": true,
+      "missing_edges": [],
+      "got_text": "Broadcom derived approximately $3,583,200,000 in revenue from Apple in fiscal year 2020, which accounted for about 15% of their total revenue. This information is based on the SEC 10-K filing accessio",
+      "latency_s": 7.23,
+      "tool_trace": [
+        "graph_query(supplier=AVGO, customer=AAPL, fiscal_year=2020) -> 1 edges",
+        "  edge: AVGO->AAPL 15.0% FY2020 [0001730168-20-000226]",
+        "query_financials(AVGO, Revenue, FY2020) -> 23888000000.0",
+        "compute(revenue * pct / 100) -> 3583200000.0"
+      ]
+    },
+    {
+      "id": "t5_cut_qrvo_apple_20pct_2024",
+      "sc_type": "T5",
+      "sc_subtype": "graph_compute",
+      "answerable": true,
+      "correct": false,
+      "expected": 346794552,
+      "got_raw": 34679455200.0,
+      "graph_called": true,
+      "financials_called": true,
+      "traversal_ok": true,
+      "missing_edges": [],
+      "got_text": "If Apple reduced its orders by 20%, Qorvo would lose approximately **$346,794,552** in revenue in fiscal year 2024, based on their disclosed Apple concentration of 46%. This calculation is based on Qo",
+      "latency_s": 6.04,
+      "tool_trace": [
+        "graph_query(customer=AAPL, fiscal_year=2024) -> 4 edges",
+        "  edge: CRUS->AAPL 87.0% FY2024 [0000772406-24-000031]",
+        "  edge: QRVO->AAPL 46.0% FY2024 [0001604778-24-000036]",
+        "  edge: JBL->AAPL 11.0% FY2024 [0001628280-24-043960]",
+        "  edge: SWKS->AAPL >10% (threshold \u2014 exact % not disclosed in 10-K text) FY2024 [0000004127-24-000131]",
+        "query_financials(QRVO, Revenue, FY2024) -> 3769506000.0",
+        "compute(revenue * pct * cut) -> 34679455200.0"
+      ]
+    },
+    {
+      "id": "t5_cut_crus_apple_20pct_2024",
+      "sc_type": "T5",
+      "sc_subtype": "graph_compute",
+      "answerable": true,
+      "correct": true,
+      "expected": 311266860,
+      "got_raw": 311266860.0,
+      "graph_called": true,
+      "financials_called": true,
+      "traversal_ok": true,
+      "missing_edges": [],
+      "got_text": "If Apple reduced its orders by 20%, Cirrus Logic would lose approximately $311,266,860 in revenue for the fiscal year 2024. This calculation was based on Cirrus Logic's revenue of $1,788,890,000, with",
+      "latency_s": 5.94,
+      "tool_trace": [
+        "graph_query(customer=AAPL, fiscal_year=2024) -> 4 edges",
+        "  edge: CRUS->AAPL 87.0% FY2024 [0000772406-24-000031]",
+        "  edge: QRVO->AAPL 46.0% FY2024 [0001604778-24-000036]",
+        "  edge: JBL->AAPL 11.0% FY2024 [0001628280-24-043960]",
+        "  edge: SWKS->AAPL >10% (threshold \u2014 exact % not disclosed in 10-K text) FY2024 [0000004127-24-000131]",
+        "query_financials(CRUS, Revenue, FY2024) -> 1788890000.0",
+        "compute(revenue * pct / 100 * cut) -> 311266860.0"
+      ]
+    },
+    {
+      "id": "t5_cut_jbl_apple_10pct_2022",
+      "sc_type": "T5",
+      "sc_subtype": "graph_compute",
+      "answerable": true,
+      "correct": true,
+      "expected": 636082000,
+      "got_raw": 636082000.0,
+      "graph_called": true,
+      "financials_called": true,
+      "traversal_ok": true,
+      "missing_edges": [],
+      "got_text": "If Apple reduced its orders by 10%, Jabil would lose approximately $636,082,000 in revenue based on its fiscal year 2022 data. This information is cited from SEC 10-K filing accession number 000119312",
+      "latency_s": 5.3,
+      "tool_trace": [
+        "graph_query(customer=AAPL, fiscal_year=2022) -> 5 edges",
+        "  edge: CRUS->AAPL 79.0% FY2022 [0000772406-22-000014]",
+        "  edge: QRVO->AAPL 33.0% FY2022 [0001604778-22-000029]",
+        "  edge: AVGO->AAPL 20.0% FY2022 [0001730168-22-000118]",
+        "  edge: JBL->AAPL 19.0% FY2022 [0001193125-22-268383]",
+        "  edge: SWKS->AAPL >10% (threshold \u2014 exact % not disclosed in 10-K text) FY2022 [0000004127-22-000038]",
+        "query_financials(JBL, Revenue, FY2022) -> 33478000000.0",
+        "compute(revenue * pct / 100 * cut) -> 636082000.0"
+      ]
+    },
+    {
+      "id": "t5_cut_avgo_apple_15pct_2022",
+      "sc_type": "T5",
+      "sc_subtype": "graph_compute",
+      "answerable": true,
+      "correct": false,
+      "expected": 996090000,
+      "got_raw": 82282500.0,
+      "graph_called": true,
+      "financials_called": true,
+      "traversal_ok": true,
+      "missing_edges": [],
+      "got_text": "If Apple reduced its orders by 15%, Broadcom (AVGO) would lose approximately $996.1 million based on its fiscal year 2022 revenue disclosure that 20% comes from Apple, as cited in SEC accession number",
+      "latency_s": 16.71,
+      "tool_trace": [
+        "graph_query(customer=AAPL, fiscal_year=2022) -> 5 edges",
+        "  edge: CRUS->AAPL 79.0% FY2022 [0000772406-22-000014]",
+        "  edge: QRVO->AAPL 33.0% FY2022 [0001604778-22-000029]",
+        "  edge: AVGO->AAPL 20.0% FY2022 [0001730168-22-000118]",
+        "  edge: JBL->AAPL 19.0% FY2022 [0001193125-22-268383]",
+        "  edge: SWKS->AAPL >10% (threshold \u2014 exact % not disclosed in 10-K text) FY2022 [0000004127-22-000038]",
+        "query_financials(AVGO, Revenue, FY2022) -> 33203000000.0",
+        "query_financials(CRUS, Revenue, FY2022) -> 1781460000.0",
+        "query_financials(QRVO, Revenue, FY2022) -> 4645714000.0",
+        "query_financials(SWKS, Revenue, FY2022) -> 5485500000.0",
+        "query_financials(JBL, Revenue, FY2022) -> 33478000000.0",
+        "compute(33203000000 * 0.20 * 0.15) -> 996090000.0",
+        "compute(1781460000 * 0.79 * 0.15) -> 211103010.0",
+        "compute(4645714000 * 0.33 * 0.15) -> 229962843.0",
+        "compute(33478000000 * 0.19 * 0.15) -> 954123000.0",
+        "compute(5485500000 * 0.10 * 0.15) -> 82282500.0"
+      ]
+    },
+    {
+      "id": "t5_cut_qrvo_apple_20pct_2022",
+      "sc_type": "T5",
+      "sc_subtype": "graph_compute",
+      "answerable": true,
+      "correct": true,
+      "expected": 306617124,
+      "got_raw": 306617124.0,
+      "graph_called": true,
+      "financials_called": true,
+      "traversal_ok": true,
+      "missing_edges": [],
+      "got_text": "If Apple reduced its orders by 20%, Qorvo would lose approximately $306.6 million in revenue for fiscal year 2022. This is based on Qorvo's revenue from Apple representing 33% of its total revenue, wh",
+      "latency_s": 6.22,
+      "tool_trace": [
+        "graph_query(customer=AAPL, fiscal_year=2022) -> 5 edges",
+        "  edge: CRUS->AAPL 79.0% FY2022 [0000772406-22-000014]",
+        "  edge: QRVO->AAPL 33.0% FY2022 [0001604778-22-000029]",
+        "  edge: AVGO->AAPL 20.0% FY2022 [0001730168-22-000118]",
+        "  edge: JBL->AAPL 19.0% FY2022 [0001193125-22-268383]",
+        "  edge: SWKS->AAPL >10% (threshold \u2014 exact % not disclosed in 10-K text) FY2022 [0000004127-22-000038]",
+        "query_financials(QRVO, Revenue, FY2022) -> 4645714000.0",
+        "compute(revenue * pct / 100 * cut) -> 306617124.0"
+      ]
+    },
+    {
+      "id": "t5_compare_crus_qrvo_2023",
+      "sc_type": "T5",
+      "sc_subtype": "graph_comparison",
+      "answerable": true,
+      "correct": false,
+      "graph_called": true,
+      "traversal_ok": true,
+      "missing_edges": [],
+      "judge_score": 0,
+      "judge_reason": "The revenue impacts provided for both companies are incorrect, with values significantly lower than the expected values.",
+      "got_text": "In the event of a 20% order cut from Apple for fiscal year 2023, the dollar impact on revenue would be:\n\n- **Cirrus Logic (CRUS)**: $315,004,422, based on 83% of total revenue. SEC citation: [0000772406-23-000019](https://www.sec.gov/Archives/edgar/data/772406/000077240623000019/crus-20230325.htm).\n",
+      "latency_s": 8.83,
+      "tool_trace": [
+        "graph_query(customer=AAPL, fiscal_year=2023) -> 5 edges",
+        "  edge: CRUS->AAPL 83.0% FY2023 [0000772406-23-000019]",
+        "  edge: QRVO->AAPL 37.0% FY2023 [0001604778-23-000055]",
+        "  edge: AVGO->AAPL 20.0% FY2023 [0001730168-23-000096]",
+        "  edge: JBL->AAPL 17.0% FY2023 [0001193125-23-259599]",
+        "  edge: SWKS->AAPL >10% (threshold \u2014 exact % not disclosed in 10-K text) FY2023 [0000004127-23-000030]",
+        "query_financials(CRUS, Revenue, FY2023) -> 1897617000.0",
+        "query_financials(QRVO, Revenue, FY2023) -> 3569399000.0",
+        "compute(revenue * (pct / 100) * 0.20) -> 315004422.0",
+        "compute(revenue * (pct / 100) * 0.20) -> 264135526.0"
+      ]
+    },
+    {
+      "id": "t5_compare_crus_qrvo_jbl_2022",
+      "sc_type": "T5",
+      "sc_subtype": "graph_comparison",
+      "answerable": true,
+      "correct": true,
+      "graph_called": true,
+      "traversal_ok": true,
+      "missing_edges": [],
+      "judge_score": 2,
+      "judge_reason": "The agent correctly ranked the companies but slightly misstated the dollar exposure values for Cirrus Logic and Qorvo; both companies' revenue contributions are cited but with some minor discrepancies.",
+      "got_text": "Here is the ranking of Cirrus Logic, Qorvo, and Jabil by their dollar exposure to Apple in fiscal year 2022, from highest to lowest:\n\n1. **Jabil (JBL)**: $6,360,820,000 (79% of revenue) \u2014 SEC 10-K filing accession 0001193125-22-268383\n2. **Qorvo (QRVO)**: $1,533,085,620 (33% of revenue) \u2014 SEC 10-K f",
+      "latency_s": 10.08,
+      "tool_trace": [
+        "graph_query(customer=AAPL, fiscal_year=2022) -> 5 edges",
+        "  edge: CRUS->AAPL 79.0% FY2022 [0000772406-22-000014]",
+        "  edge: QRVO->AAPL 33.0% FY2022 [0001604778-22-000029]",
+        "  edge: AVGO->AAPL 20.0% FY2022 [0001730168-22-000118]",
+        "  edge: JBL->AAPL 19.0% FY2022 [0001193125-22-268383]",
+        "  edge: SWKS->AAPL >10% (threshold \u2014 exact % not disclosed in 10-K text) FY2022 [0000004127-22-000038]",
+        "query_financials(CRUS, Revenue, FY2022) -> 1781460000.0",
+        "query_financials(QRVO, Revenue, FY2022) -> 4645714000.0",
+        "query_financials(JBL, Revenue, FY2022) -> 33478000000.0",
+        "compute(revenue * pct / 100) -> 1407353400.0",
+        "compute(revenue * pct / 100) -> 1533085620.0",
+        "compute(revenue * pct / 100) -> 6360820000.0"
+      ]
+    },
+    {
+      "id": "t5_compare_qrvo_crus_2024",
+      "sc_type": "T5",
+      "sc_subtype": "graph_comparison",
+      "answerable": true,
+      "correct": true,
+      "graph_called": true,
+      "traversal_ok": true,
+      "missing_edges": [],
+      "judge_score": 2,
+      "judge_reason": "The agent correctly identified the concentration of revenue exposure but provided incorrect absolute dollar amounts for Cirrus Logic and Qorvo.",
+      "got_text": "In fiscal year 2024, Cirrus Logic (CRUS) has a revenue exposure to Apple of approximately 87% of its revenue, while Qorvo (QRVO) has a revenue exposure of about 46% of its revenue.\n\n### Concentration:\n- **Cirrus Logic**: 87% of revenue from Apple\n- **Qorvo**: 46% of revenue from Apple\n\nThus, **Cirru",
+      "latency_s": 17.8,
+      "tool_trace": [
+        "graph_query(supplier=CRUS, customer=AAPL, fiscal_year=2024) -> 1 edges",
+        "  edge: CRUS->AAPL 87.0% FY2024 [0000772406-24-000031]",
+        "graph_query(supplier=QRVO, customer=AAPL, fiscal_year=2024) -> 1 edges",
+        "  edge: QRVO->AAPL 46.0% FY2024 [0001604778-24-000036]",
+        "query_financials(CRUS, Revenue, FY2024) -> 1788890000.0",
+        "query_financials(QRVO, Revenue, FY2024) -> 3769506000.0",
+        "compute(revenue * pct / 100) -> 1556334300.0",
+        "compute(revenue * pct / 100) -> 1733972760.0"
+      ]
+    },
+    {
+      "id": "t5_trend_qrvo_apple_exposure_2020_2024",
+      "sc_type": "T5",
+      "sc_subtype": "graph_trend",
+      "answerable": true,
+      "correct": false,
+      "expected": {
+        "2020": 266210340,
+        "2021": 1204592100,
+        "2022": 780647670,
+        "2023": 1320677630,
+        "2024": 299535440
+      },
+      "got_map": {
+        "2020": 33.0,
+        "2021": 30.0,
+        "2022": 33.0,
+        "2023": 37.0,
+        "2024": 46.0
+      },
+      "graph_called": true,
+      "traversal_ok": true,
+      "missing_edges": [],
+      "got_text": "Qorvo's absolute dollar exposure to Apple from fiscal year 2020 to 2024 is as follows:\n\n- **FY2020**: Revenue from Apple was **$1,068,916,530**, based on 33% of total revenue of $3,239,141,000 (SEC 10-K filing accession 0001604778-20-000030).\n- **FY2021**: Revenue from Apple was **$1,204,592,100**, ",
+      "latency_s": 25.31,
+      "tool_trace": [
+        "graph_query(supplier=QRVO, customer=AAPL, fiscal_year=trend) -> 11 edges",
+        "  edge: QRVO->AAPL 50.0% FY2026 [0001628280-26-032873]",
+        "  edge: QRVO->AAPL 47.0% FY2025 [0001604778-25-000041]",
+        "  edge: QRVO->AAPL 46.0% FY2024 [0001604778-24-000036]",
+        "  edge: QRVO->AAPL 37.0% FY2023 [0001604778-23-000055]",
+        "  edge: QRVO->AAPL 33.0% FY2022 [0001604778-22-000029]",
+        "  edge: QRVO->AAPL 30.0% FY2021 [0001604778-21-000032]",
+        "  edge: QRVO->AAPL 33.0% FY2020 [0001604778-20-000030]",
+        "  edge: QRVO->AAPL 11.0% FY2019 [0001604778-19-000031]",
+        "  edge: QRVO->AAPL 12.0% FY2018 [0001604778-18-000023]",
+        "  edge: QRVO->AAPL 34.0% FY2017 [0001604778-17-000031]",
+        "  edge: QRVO->AAPL 37.0% FY2016 [0001604778-18-000023]",
+        "query_financials(QRVO, Revenue, FY2020) -> 3239141000.0",
+        "query_financials(QRVO, Revenue, FY2021) -> 4015307000.0",
+        "query_financials(QRVO, Revenue, FY2022) -> 4645714000.0",
+        "query_financials(QRVO, Revenue, FY2023) -> 3569399000.0",
+        "query_financials(QRVO, Revenue, FY2024) -> 3769506000.0",
+        "compute(revenue * 0.33) -> 1068916530.0",
+        "compute(revenue * 0.30) -> 1204592100.0",
+        "compute(revenue * 0.33) -> 1533085620.0",
+        "compute(revenue * 0.37) -> 1320677630.0",
+        "compute(revenue * 0.46) -> 1733972760.0"
+      ]
+    },
+    {
+      "id": "t5_exposure_avgo_wt_micro_2022",
+      "sc_type": "T5",
+      "sc_subtype": "graph_compute",
+      "answerable": true,
+      "correct": false,
+      "expected": 6640600000,
+      "got_raw": null,
+      "graph_called": true,
+      "financials_called": false,
+      "traversal_ok": false,
+      "missing_edges": [
+        {
+          "supplier": "AVGO",
+          "customer": "WT Microelectronics",
+          "fiscal_year": 2022,
+          "revenue_pct": 20.0,
+          "threshold_only": false
+        }
+      ],
+      "got_text": "I cannot find supply-chain data for WT Microelectronics in the database.",
+      "latency_s": 1.89,
+      "tool_trace": [
+        "graph_query(supplier=WT, customer=AVGO, fiscal_year=2022) -> NOT FOUND"
+      ]
+    },
+    {
+      "id": "t5_compare_jbl_apple_amazon_2020",
+      "sc_type": "T5",
+      "sc_subtype": "graph_comparison",
+      "answerable": true,
+      "correct": true,
+      "graph_called": true,
+      "traversal_ok": true,
+      "missing_edges": [],
+      "judge_score": 3,
+      "judge_reason": "The answer correctly identifies the absolute revenues from Apple and Amazon, and accurately concludes that Jabil's revenue from Apple was larger, with no fabrications or omissions.",
+      "got_text": "In fiscal year 2020, Jabil's revenue from Apple was approximately $5,453,287,600, which accounted for 20% of its total revenue. In comparison, its revenue from Amazon was about $2,999,308,180, representing 11% of its total revenue. \n\nTherefore, Jabil's revenue from Apple was larger than its revenue ",
+      "latency_s": 9.25,
+      "tool_trace": [
+        "graph_query(supplier=JBL, customer=AAPL, fiscal_year=2020) -> 1 edges",
+        "  edge: JBL->AAPL 20.0% FY2020 [0001193125-20-274411]",
+        "graph_query(supplier=JBL, customer=AMZN, fiscal_year=2020) -> 1 edges",
+        "  edge: JBL->AMZN 11.0% FY2020 [0001193125-20-274411]",
+        "query_financials(JBL, Revenue, FY2020) -> 27266438000.0",
+        "query_financials(JBL, Revenue, FY2020) -> 27266438000.0",
+        "compute(revenue * 0.20) -> 5453287600.0",
+        "compute(revenue * 0.11) -> 2999308180.0"
+      ]
+    },
+    {
+      "id": "t6_reversed_apple_procurement_qrvo",
+      "sc_type": "T6",
+      "sc_subtype": "direction_reversed",
+      "answerable": false,
+      "correct": true,
+      "refusal_detected": true,
+      "got_text": "I cannot determine what percentage of Apple's procurement budget is spent on Qorvo components.",
+      "latency_s": 1.06,
+      "tool_trace": []
+    },
+    {
+      "id": "t6_reversed_apple_spend_crus",
+      "sc_type": "T6",
+      "sc_subtype": "direction_reversed",
+      "answerable": false,
+      "correct": true,
+      "refusal_detected": true,
+      "got_text": "I cannot determine that value.",
+      "latency_s": 0.85,
+      "tool_trace": []
+    },
+    {
+      "id": "t6_reversed_apple_depend_swks",
+      "sc_type": "T6",
+      "sc_subtype": "direction_reversed",
+      "answerable": false,
+      "correct": true,
+      "refusal_detected": true,
+      "got_text": "I cannot determine what share of Apple's RF component purchases comes from Skyworks. The available data only allows for the identification of revenue percentages from the supplier's perspective.",
+      "latency_s": 1.4,
+      "tool_trace": []
+    },
+    {
+      "id": "t6_reversed_apple_importance_jbl",
+      "sc_type": "T6",
+      "sc_subtype": "direction_reversed",
+      "answerable": false,
+      "correct": true,
+      "refusal_detected": true,
+      "got_text": "I cannot determine what percentage of Apple's manufacturing is handled by Jabil.",
+      "latency_s": 0.89,
+      "tool_trace": []
+    },
+    {
+      "id": "t6_reversed_apple_bom_avgo",
+      "sc_type": "T6",
+      "sc_subtype": "direction_reversed",
+      "answerable": false,
+      "correct": true,
+      "refusal_detected": true,
+      "got_text": "I cannot determine what percentage of Apple's iPhone bill of materials cost comes from Broadcom.",
+      "latency_s": 2.69,
+      "tool_trace": []
+    },
+    {
+      "id": "t6_gap_glw_named_customer_2023",
+      "sc_type": "T6",
+      "sc_subtype": "data_gap",
+      "answerable": false,
+      "correct": true,
+      "refusal_detected": true,
+      "got_text": "I cannot find supply-chain data for Corning (GLW) in the database.",
+      "latency_s": 3.08,
+      "tool_trace": [
+        "graph_query(supplier=GLW, fiscal_year=2023) -> NOT FOUND"
+      ]
+    },
+    {
+      "id": "t6_gap_txn_customer_2023",
+      "sc_type": "T6",
+      "sc_subtype": "data_gap",
+      "answerable": false,
+      "correct": true,
+      "refusal_detected": true,
+      "got_text": "I cannot find supply-chain data for Texas Instruments in the database.",
+      "latency_s": 1.78,
+      "tool_trace": [
+        "graph_query(supplier=TXN, fiscal_year=2023) -> NOT FOUND"
+      ]
+    },
+    {
+      "id": "t6_gap_swks_exact_pct_2024",
+      "sc_type": "T6",
+      "sc_subtype": "data_gap",
+      "answerable": false,
+      "correct": false,
+      "refusal_detected": false,
+      "got_text": "In fiscal year 2024, the exact percentage of Skyworks Solutions' revenue attributable to Apple is stated as \">10%\", meaning it represents more than 10% of their net revenue. The specific figure is not",
+      "latency_s": 3.14,
+      "tool_trace": [
+        "graph_query(supplier=SWKS, customer=AAPL, fiscal_year=2024) -> 1 edges",
+        "  edge: SWKS->AAPL >10% (threshold \u2014 exact % not disclosed in 10-K text) FY2024 [0000004127-24-000131]"
+      ]
+    },
+    {
+      "id": "t6_gap_swks_exact_pct_2022",
+      "sc_type": "T6",
+      "sc_subtype": "data_gap",
+      "answerable": false,
+      "correct": false,
+      "refusal_detected": false,
+      "got_text": "In FY2022, more than 10% of Skyworks' revenue came from Apple. The exact percentage was not disclosed in the 10-K. The citation for this information is SEC 10-K accession number 0000004127-22-000038.",
+      "latency_s": 2.5,
+      "tool_trace": [
+        "graph_query(supplier=SWKS, customer=AAPL, fiscal_year=2022) -> 1 edges",
+        "  edge: SWKS->AAPL >10% (threshold \u2014 exact % not disclosed in 10-K text) FY2022 [0000004127-22-000038]"
+      ]
+    },
+    {
+      "id": "t6_oos_tsmc_apple_2024",
+      "sc_type": "T6",
+      "sc_subtype": "out_of_scope",
+      "answerable": false,
+      "correct": true,
+      "refusal_detected": true,
+      "got_text": "I cannot find supply-chain data for TSMC in the database.",
+      "latency_s": 2.89,
+      "tool_trace": [
+        "graph_query(supplier=TSMC, customer=AAPL, fiscal_year=2024) -> NOT FOUND"
+      ]
+    },
+    {
+      "id": "t6_oos_foxconn_apple_2023",
+      "sc_type": "T6",
+      "sc_subtype": "out_of_scope",
+      "answerable": false,
+      "correct": true,
+      "refusal_detected": true,
+      "got_text": "I cannot find supply-chain data for Foxconn in the database.",
+      "latency_s": 1.76,
+      "tool_trace": [
+        "graph_query(supplier=FOXCONN, customer=AAPL, fiscal_year=2023) -> NOT FOUND"
+      ]
+    },
+    {
+      "id": "t6_oos_mediatek_customer_2023",
+      "sc_type": "T6",
+      "sc_subtype": "out_of_scope",
+      "answerable": false,
+      "correct": true,
+      "refusal_detected": true,
+      "got_text": "I cannot find supply-chain data for MediaTek in the database, indicating that Apple is not listed as a major customer for fiscal year 2023.",
+      "latency_s": 2.29,
+      "tool_trace": [
+        "graph_query(supplier=MTK, customer=AAPL, fiscal_year=2023) -> NOT FOUND"
+      ]
+    },
+    {
+      "id": "t6_metric_qrvo_fcf_2024",
+      "sc_type": "T6",
+      "sc_subtype": "metric_unavailable",
+      "answerable": false,
+      "correct": true,
+      "refusal_detected": true,
+      "got_text": "I cannot determine that value.",
+      "latency_s": 0.69,
+      "tool_trace": []
+    },
+    {
+      "id": "t6_metric_crus_div_payout_2024",
+      "sc_type": "T6",
+      "sc_subtype": "metric_unavailable",
+      "answerable": false,
+      "correct": true,
+      "refusal_detected": true,
+      "got_text": "I cannot determine the dividend payout ratio for Cirrus Logic for fiscal year 2024, as that metric is not available in the dataset.",
+      "latency_s": 1.23,
+      "tool_trace": []
+    },
+    {
+      "id": "t6_metric_aapl_china_rev_2024",
+      "sc_type": "T6",
+      "sc_subtype": "metric_unavailable",
+      "answerable": false,
+      "correct": true,
+      "refusal_detected": true,
+      "got_text": "I cannot determine that value.",
+      "latency_s": 1.28,
+      "tool_trace": []
+    }
+  ]
+}

@@ -1,0 +1,3674 @@
+{
+  "dataset": "2026-06-12T14:59:45.462647Z",
+  "dataset_version": "1.0",
+  "condition": "A",
+  "n_total": 125,
+  "T1_accuracy": 30.0,
+  "T2_accuracy": 6.7,
+  "T4_accuracy": 0.0,
+  "T5_accuracy": 0.0,
+  "T6_accuracy": 60.0,
+  "graph_fact_accuracy": 0.0,
+  "graph_lookup_accuracy": 0.0,
+  "graph_trend_accuracy": 0.0,
+  "graph_comparison_accuracy": 0.0,
+  "graph_negative_accuracy": 0.0,
+  "graph_compute_accuracy": 0.0,
+  "overall_accuracy": 16.0,
+  "avg_judge_score": 1.33,
+  "avg_latency_s": 16.19,
+  "total_latency_s": 2023.6,
+  "input_tokens": 10293977,
+  "output_tokens": 34394,
+  "estimated_cost_usd": 1.5647,
+  "results": [
+    {
+      "id": "t1_aapl_revenue_2024",
+      "sc_type": "T1",
+      "sc_subtype": "",
+      "answerable": true,
+      "correct": false,
+      "expected": 391035000000.0,
+      "got_raw": null,
+      "sql_called": false,
+      "got_text": "I cannot find the exact revenue for Apple in fiscal year 2024 in the database. Please check back later or look for other reliable financial information sources.",
+      "latency_s": 53.25,
+      "tool_trace": [
+        "retrieve_text('Apple revenue') -> 5 chunks",
+        "retrieve_text('Apple revenue FY 2024') -> 5 chunks",
+        "retrieve_text('Apple total revenue FY 2024') -> 5 chunks",
+        "retrieve_text('Apple total revenue FY 2024') -> 5 chunks",
+        "retrieve_text('Apple FY 2024 revenue total') -> 5 chunks",
+        "retrieve_text('Apple revenue fiscal year 2024') -> 5 chunks",
+        "retrieve_text('Apple revenue fiscal year 2024') -> 5 chunks",
+        "retrieve_text('Apple revenue FY 2024') -> 5 chunks",
+        "retrieve_text('Apple fiscal year 2024 revenue') -> 5 chunks"
+      ]
+    },
+    {
+      "id": "t1_aapl_netincome_2022",
+      "sc_type": "T1",
+      "sc_subtype": "",
+      "answerable": true,
+      "correct": true,
+      "expected": 99803000000.0,
+      "got_raw": 99.8,
+      "sql_called": false,
+      "got_text": "Apple's net income for fiscal year 2022 was $99.8 billion. \n\nThis figure is derived from the following data points:\n- Provision for income taxes was $19.3 billion (accession number 0000320193-22-00010",
+      "latency_s": 17.24,
+      "tool_trace": [
+        "retrieve_text('net income') -> 5 chunks",
+        "retrieve_text('net income') -> 3 chunks",
+        "retrieve_text('net income') -> 5 chunks",
+        "retrieve_text('net income') -> 10 chunks",
+        "retrieve_text('net income') -> 15 chunks",
+        "retrieve_text('net income') -> 20 chunks",
+        "retrieve_text('net income') -> 5 chunks",
+        "retrieve_text('fiscal year 2022 net income') -> 5 chunks",
+        "retrieve_text('net income 2022') -> 5 chunks"
+      ]
+    },
+    {
+      "id": "t1_crus_revenue_2024",
+      "sc_type": "T1",
+      "sc_subtype": "",
+      "answerable": true,
+      "correct": true,
+      "expected": 1788890000.0,
+      "got_raw": 1.79,
+      "sql_called": false,
+      "got_text": "Cirrus Logic reported total revenue of $1.79 billion for fiscal year 2024, which ended on March 30, 2024 (SEC filing accession number 0000772406-24-000031).",
+      "latency_s": 12.04,
+      "tool_trace": [
+        "retrieve_text('revenue') -> 5 chunks",
+        "retrieve_text('total revenue') -> 5 chunks",
+        "retrieve_text('fiscal year 2024 total revenue') -> 5 chunks",
+        "retrieve_text('Cirrus Logic revenue FY2024') -> 5 chunks",
+        "retrieve_text('net sales for FY 2024') -> 5 chunks",
+        "retrieve_text('total revenue CRUS fiscal year 2024') -> 5 chunks",
+        "retrieve_text('Cirrus Logic Inc revenue') -> 5 chunks"
+      ]
+    },
+    {
+      "id": "t1_crus_operatingincome_2023",
+      "sc_type": "T1",
+      "sc_subtype": "",
+      "answerable": true,
+      "correct": false,
+      "expected": 249031000.0,
+      "got_raw": 352.8,
+      "sql_called": false,
+      "got_text": "In fiscal year 2023, Cirrus Logic reported an operating income of $352.8 million (in thousands) according to their consolidated financial statements. This figure can be found in their SEC filing (acce",
+      "latency_s": 15.72,
+      "tool_trace": [
+        "retrieve_text('Cirrus Logic operating income') -> 5 chunks",
+        "retrieve_text('Cirrus Logic fiscal year 2023 operating income') -> 5 chunks",
+        "retrieve_text('Cirrus Logic fiscal year 2023 income from operations') -> 5 chunks",
+        "retrieve_text('Cirrus Logic fiscal year 2023 financial results') -> 5 chunks",
+        "retrieve_text('Cirrus Logic fiscal year 2023 financial statements') -> 5 chunks",
+        "retrieve_text('Cirrus Logic fiscal year 2023 results') -> 5 chunks",
+        "retrieve_text('Cirrus Logic income from operations fiscal year 2023') -> 5 chunks"
+      ]
+    },
+    {
+      "id": "t1_qrvo_revenue_2023",
+      "sc_type": "T1",
+      "sc_subtype": "",
+      "answerable": true,
+      "correct": false,
+      "expected": 3569399000.0,
+      "got_raw": 10.0,
+      "sql_called": false,
+      "got_text": "[Circuit breaker] Could not produce a final answer within 10 tool-call rounds. Partial steps are recorded.",
+      "latency_s": 13.92,
+      "tool_trace": [
+        "retrieve_text('Qorvo revenue') -> 5 chunks",
+        "retrieve_text('Qorvo fiscal year 2023 revenue') -> 5 chunks",
+        "retrieve_text('Qorvo fiscal year 2023 financial results') -> 5 chunks",
+        "retrieve_text('Qorvo financial results for fiscal year 2023') -> 5 chunks",
+        "retrieve_text('Qorvo 2023 revenue figures') -> 5 chunks",
+        "retrieve_text('Qorvo FY2023 revenue') -> 5 chunks",
+        "retrieve_text('Qorvo revenue for fiscal year 2023') -> 5 chunks",
+        "retrieve_text('Qorvo revenue FY2023') -> 5 chunks",
+        "retrieve_text('Qorvo complete FY2023 revenue') -> 5 chunks",
+        "retrieve_text('Qorvo Fiscal Year 2023 total revenue') -> 5 chunks"
+      ]
+    },
+    {
+      "id": "t1_qrvo_grossprofit_2022",
+      "sc_type": "T1",
+      "sc_subtype": "",
+      "answerable": true,
+      "correct": false,
+      "expected": 2286168000.0,
+      "got_raw": 1146966000.0,
+      "sql_called": false,
+      "got_text": "Qorvo's gross profit for fiscal year 2022 was $1,146,966,000. This figure is cited from the SEC filing with accession number 0001604778-18-000023.",
+      "latency_s": 11.46,
+      "tool_trace": [
+        "retrieve_text('gross profit') -> 5 chunks",
+        "retrieve_text('gross profit') -> 5 chunks",
+        "retrieve_text('gross profit') -> 5 chunks",
+        "retrieve_text('gross profit') -> 5 chunks",
+        "retrieve_text('gross profit') -> 5 chunks",
+        "retrieve_text('gross profit') -> 5 chunks",
+        "retrieve_text('gross profit') -> 5 chunks",
+        "retrieve_text('gross profit') -> 5 chunks"
+      ]
+    },
+    {
+      "id": "t1_swks_revenue_2024",
+      "sc_type": "T1",
+      "sc_subtype": "",
+      "answerable": true,
+      "correct": false,
+      "expected": 4178000000.0,
+      "got_raw": 10.0,
+      "sql_called": false,
+      "got_text": "[Circuit breaker] Could not produce a final answer within 10 tool-call rounds. Partial steps are recorded.",
+      "latency_s": 12.22,
+      "tool_trace": [
+        "retrieve_text('Skyworks's revenue') -> 5 chunks",
+        "retrieve_text('Skyworks revenue FY2024') -> 5 chunks",
+        "retrieve_text('Skyworks revenue') -> 5 chunks",
+        "retrieve_text('Skyworks Solutions total revenue FY2024') -> 5 chunks",
+        "retrieve_text('Skyworks revenue for FY2024') -> 5 chunks",
+        "retrieve_text('Skyworks Solutions revenue FY2024') -> 5 chunks",
+        "retrieve_text('Skyworks revenue fiscal year 2024') -> 5 chunks",
+        "retrieve_text('Skyworks FY2024 revenue') -> 5 chunks",
+        "retrieve_text('Skyworks revenue 2024') -> 5 chunks",
+        "retrieve_text('Skyworks Solutions total revenue') -> 5 chunks"
+      ]
+    },
+    {
+      "id": "t1_swks_netincome_2023",
+      "sc_type": "T1",
+      "sc_subtype": "",
+      "answerable": true,
+      "correct": false,
+      "expected": 982800000.0,
+      "got_raw": 10.0,
+      "sql_called": false,
+      "got_text": "[Circuit breaker] Could not produce a final answer within 10 tool-call rounds. Partial steps are recorded.",
+      "latency_s": 11.67,
+      "tool_trace": [
+        "retrieve_text('net income') -> 5 chunks",
+        "retrieve_text('net income') -> 5 chunks",
+        "retrieve_text('net income') -> 5 chunks",
+        "retrieve_text('net income') -> 5 chunks",
+        "retrieve_text('net income') -> 5 chunks",
+        "retrieve_text('net income for fiscal year 2023') -> 5 chunks",
+        "retrieve_text('net income 2023') -> 5 chunks",
+        "retrieve_text('2023') -> 5 chunks",
+        "retrieve_text('net income') -> 5 chunks",
+        "retrieve_text('2023 net income') -> 5 chunks"
+      ]
+    },
+    {
+      "id": "t1_avgo_revenue_2024",
+      "sc_type": "T1",
+      "sc_subtype": "",
+      "answerable": true,
+      "correct": false,
+      "expected": 51574000000.0,
+      "got_raw": 10.0,
+      "sql_called": false,
+      "got_text": "[Circuit breaker] Could not produce a final answer within 10 tool-call rounds. Partial steps are recorded.",
+      "latency_s": 11.74,
+      "tool_trace": [
+        "retrieve_text('revenue') -> 5 chunks",
+        "retrieve_text('net revenue') -> 5 chunks",
+        "retrieve_text('2024 revenue') -> 5 chunks",
+        "retrieve_text('revenues fiscal year 2024') -> 5 chunks",
+        "retrieve_text('net revenue for fiscal year 2024') -> 5 chunks",
+        "retrieve_text('2024 revenue') -> 5 chunks",
+        "retrieve_text('net revenue for fiscal year 2024') -> 5 chunks",
+        "retrieve_text('2024 fiscal year revenue') -> 5 chunks",
+        "retrieve_text('Broadcom revenue fiscal year 2024') -> 5 chunks",
+        "retrieve_text('total revenue 2024') -> 5 chunks"
+      ]
+    },
+    {
+      "id": "t1_avgo_rd_2023",
+      "sc_type": "T1",
+      "sc_subtype": "",
+      "answerable": true,
+      "correct": false,
+      "expected": 5253000000.0,
+      "got_raw": null,
+      "sql_called": false,
+      "got_text": "I am unable to determine Broadcom's specific R&D spending for fiscal year 2023 as the required data is not available in the database.",
+      "latency_s": 26.47,
+      "tool_trace": [
+        "retrieve_text('R&D spending') -> 5 chunks",
+        "retrieve_text('Research and Development expense') -> 5 chunks",
+        "retrieve_text('R&D') -> 5 chunks",
+        "retrieve_text('R&D expenses for fiscal year 2023') -> 5 chunks",
+        "retrieve_text('R&D spending') -> 5 chunks",
+        "retrieve_text('R&D expenses 2023') -> 5 chunks",
+        "retrieve_text('total research and development expenses for 2023') -> 5 chunks",
+        "retrieve_text('R&D budget 2023') -> 5 chunks",
+        "retrieve_text('total research and development') -> 5 chunks"
+      ]
+    },
+    {
+      "id": "t1_qcom_revenue_2024",
+      "sc_type": "T1",
+      "sc_subtype": "",
+      "answerable": true,
+      "correct": true,
+      "expected": 38962000000.0,
+      "got_raw": 39.0,
+      "sql_called": false,
+      "got_text": "Qualcomm's revenue for fiscal year 2024 was $39.0 billion, which represented a 9% increase compared to $35.8 billion in fiscal year 2023. This information is cited from SEC filing accession number 000",
+      "latency_s": 8.11,
+      "tool_trace": [
+        "retrieve_text('Qualcomm revenue') -> 5 chunks",
+        "retrieve_text('Qualcomm revenue 2024') -> 5 chunks",
+        "retrieve_text('Qualcomm fiscal year 2024 financial results') -> 5 chunks"
+      ]
+    },
+    {
+      "id": "t1_qcom_operatingincome_2023",
+      "sc_type": "T1",
+      "sc_subtype": "",
+      "answerable": true,
+      "correct": false,
+      "expected": 7788000000.0,
+      "got_raw": 10.0,
+      "sql_called": false,
+      "got_text": "[Circuit breaker] Could not produce a final answer within 10 tool-call rounds. Partial steps are recorded.",
+      "latency_s": 14.33,
+      "tool_trace": [
+        "retrieve_text('operating income') -> 5 chunks",
+        "retrieve_text('operating income') -> 5 chunks",
+        "retrieve_text('operating income') -> 5 chunks",
+        "retrieve_text('operating income') -> 5 chunks",
+        "retrieve_text('operating income') -> 5 chunks",
+        "retrieve_text('operating income') -> 5 chunks",
+        "retrieve_text('operating income') -> 5 chunks",
+        "retrieve_text('operating income') -> 5 chunks",
+        "retrieve_text('operating income') -> 5 chunks",
+        "retrieve_text('operating income') -> 5 chunks"
+      ]
+    },
+    {
+      "id": "t1_glw_revenue_2023",
+      "sc_type": "T1",
+      "sc_subtype": "",
+      "answerable": true,
+      "correct": false,
+      "expected": 12588000000.0,
+      "got_raw": 10.0,
+      "sql_called": false,
+      "got_text": "Corning's revenue for fiscal year 2023 cannot be determined from the available data in the SEC 10-K filings. The most recent data from their filings only provide insights up until the end of 2022. If ",
+      "latency_s": 23.44,
+      "tool_trace": [
+        "retrieve_text('Corning revenue') -> 5 chunks",
+        "retrieve_text('Corning revenue') -> 5 chunks",
+        "retrieve_text('Corning revenue') -> 5 chunks",
+        "retrieve_text('Corning revenue') -> 5 chunks",
+        "retrieve_text('Corning revenue') -> 5 chunks",
+        "retrieve_text('Corning revenue') -> 5 chunks",
+        "retrieve_text('Corning revenue for 2023') -> 5 chunks",
+        "retrieve_text('Corning revenue for fiscal 2023') -> 5 chunks"
+      ]
+    },
+    {
+      "id": "t1_glw_netincome_2022",
+      "sc_type": "T1",
+      "sc_subtype": "",
+      "answerable": true,
+      "correct": true,
+      "expected": 1316000000.0,
+      "got_raw": 1316.0,
+      "sql_called": false,
+      "got_text": "Corning's net income in fiscal year 2022 was $1,316 million. This figure is cited from their 10-K filing (SEC accession number 0001437749-23-003123).",
+      "latency_s": 11.78,
+      "tool_trace": [
+        "retrieve_text('Corning net income') -> 5 chunks",
+        "retrieve_text('Corning net income 2022') -> 5 chunks"
+      ]
+    },
+    {
+      "id": "t1_adi_revenue_2024",
+      "sc_type": "T1",
+      "sc_subtype": "",
+      "answerable": true,
+      "correct": false,
+      "expected": 9427157000.0,
+      "got_raw": null,
+      "sql_called": false,
+      "got_text": "I cannot determine the revenue for Analog Devices in fiscal year 2024 as it has not been explicitly provided in the results returned. My searches yielded no specific numerical result regarding revenue",
+      "latency_s": 14.55,
+      "tool_trace": [
+        "retrieve_text('annual revenue') -> 5 chunks",
+        "retrieve_text('annual revenue') -> 5 chunks",
+        "retrieve_text('fiscal year 2024 revenue') -> 5 chunks",
+        "retrieve_text('fiscal year 2024 revenue') -> 5 chunks",
+        "retrieve_text('fiscal year 2024 revenue') -> 5 chunks",
+        "retrieve_text('fiscal year 2024 revenue') -> 5 chunks",
+        "retrieve_text('fiscal year 2024 revenue') -> 5 chunks",
+        "retrieve_text('fiscal year 2024 revenue') -> 5 chunks"
+      ]
+    },
+    {
+      "id": "t1_adi_grossprofit_2023",
+      "sc_type": "T1",
+      "sc_subtype": "",
+      "answerable": true,
+      "correct": false,
+      "expected": 7877218000.0,
+      "got_raw": 10.0,
+      "sql_called": false,
+      "got_text": "[Circuit breaker] Could not produce a final answer within 10 tool-call rounds. Partial steps are recorded.",
+      "latency_s": 22.23,
+      "tool_trace": [
+        "retrieve_text('gross profit') -> 5 chunks",
+        "retrieve_text('gross profit') -> 5 chunks",
+        "retrieve_text('financial performance') -> 5 chunks",
+        "retrieve_text('2023 gross profit') -> 5 chunks",
+        "retrieve_text('financial results fiscal year 2023') -> 1 chunks",
+        "retrieve_text('ADI fiscal year 2023 financials') -> 5 chunks",
+        "retrieve_text('Analog Devices 2023 gross profit') -> 5 chunks",
+        "retrieve_text('fiscal year 2023 revenue gross profit') -> 5 chunks",
+        "retrieve_text('Analog Devices financial results for the year ending October') -> 5 chunks",
+        "retrieve_text('Analog Devices 2023 gross profit') -> 5 chunks"
+      ]
+    },
+    {
+      "id": "t1_txn_revenue_2023",
+      "sc_type": "T1",
+      "sc_subtype": "",
+      "answerable": true,
+      "correct": false,
+      "expected": 17519000000.0,
+      "got_raw": 15.78,
+      "sql_called": false,
+      "got_text": "Texas Instruments's revenue for fiscal year 2023 was $15.78 billion. This figure is cited from their Management Discussion and Analysis (MD&A) section of the SEC filing (accession number 0001564590-19",
+      "latency_s": 14.55,
+      "tool_trace": [
+        "retrieve_text('revenue') -> 5 chunks",
+        "retrieve_text('Fiscal Year 2023 revenue') -> 3 chunks",
+        "retrieve_text('revenue 2023') -> 5 chunks",
+        "retrieve_text('Texas Instruments 2023 revenue') -> 5 chunks",
+        "retrieve_text('Texas Instruments revenue fiscal year 2023') -> 5 chunks",
+        "retrieve_text('Texas Instruments revenue summary 2023') -> 5 chunks",
+        "retrieve_text('2023 revenue') -> 5 chunks",
+        "retrieve_text('Texas Instruments total revenue fiscal year 2023') -> 5 chunks"
+      ]
+    },
+    {
+      "id": "t1_txn_operatingincome_2022",
+      "sc_type": "T1",
+      "sc_subtype": "",
+      "answerable": true,
+      "correct": false,
+      "expected": 10140000000.0,
+      "got_raw": 6.08,
+      "sql_called": false,
+      "got_text": "Texas Instruments's operating income for fiscal year 2022 was $6.08 billion. This figure represents 40.7% of their revenue for that year. The information can be found in their SEC filing with accessio",
+      "latency_s": 16.38,
+      "tool_trace": [
+        "retrieve_text('operating income') -> 5 chunks",
+        "retrieve_text('operating income') -> 5 chunks",
+        "retrieve_text('operating income') -> 5 chunks",
+        "retrieve_text('2022') -> 5 chunks",
+        "retrieve_text('operating income 2022') -> 5 chunks"
+      ]
+    },
+    {
+      "id": "t1_mchp_revenue_2024",
+      "sc_type": "T1",
+      "sc_subtype": "",
+      "answerable": true,
+      "correct": false,
+      "expected": 7634400000.0,
+      "got_raw": 10.0,
+      "sql_called": false,
+      "got_text": "[Circuit breaker] Could not produce a final answer within 10 tool-call rounds. Partial steps are recorded.",
+      "latency_s": 23.31,
+      "tool_trace": [
+        "retrieve_text('Microchip Technology revenue') -> 5 chunks",
+        "retrieve_text('Microchip Technology revenue FY 2024') -> 5 chunks",
+        "retrieve_text('Microchip Technology revenue reported') -> 5 chunks",
+        "retrieve_text('Microchip Technology annual revenue 2024') -> 5 chunks",
+        "retrieve_text('Microchip Technology 2024 revenue') -> 5 chunks",
+        "retrieve_text('Microchip Technology annual report revenue 2024') -> 5 chunks",
+        "retrieve_text('Microchip Technology annual revenue 2024') -> 5 chunks",
+        "retrieve_text('Microchip Technology revenue for fiscal year 2024') -> 5 chunks",
+        "retrieve_text('Microchip Technology total revenue FY 2024') -> 5 chunks",
+        "retrieve_text('Microchip Technology net revenue FY 2024') -> 5 chunks"
+      ]
+    },
+    {
+      "id": "t1_mchp_netincome_2023",
+      "sc_type": "T1",
+      "sc_subtype": "",
+      "answerable": true,
+      "correct": false,
+      "expected": 2237700000.0,
+      "got_raw": 465.2,
+      "sql_called": false,
+      "got_text": "Microchip Technology's net income for fiscal year 2023 was $465.2 million. This information is sourced from SEC filing accession number 0000827054-24-000098.",
+      "latency_s": 3.78,
+      "tool_trace": [
+        "retrieve_text('net income') -> 5 chunks",
+        "retrieve_text('net income') -> 5 chunks"
+      ]
+    },
+    {
+      "id": "t1_on_revenue_2023",
+      "sc_type": "T1",
+      "sc_subtype": "",
+      "answerable": true,
+      "correct": true,
+      "expected": 8253000000.0,
+      "got_raw": 8253.0,
+      "sql_called": false,
+      "got_text": "onsemi's revenue for fiscal year 2023 was $8,253.0 million. This figure is cited in the SEC filing accession number 0001628280-24-003201.",
+      "latency_s": 3.29,
+      "tool_trace": [
+        "retrieve_text('revenue') -> 5 chunks"
+      ]
+    },
+    {
+      "id": "t1_on_grossprofit_2022",
+      "sc_type": "T1",
+      "sc_subtype": "",
+      "answerable": true,
+      "correct": true,
+      "expected": 4077200000.0,
+      "got_raw": 4077.2,
+      "sql_called": false,
+      "got_text": "onsemi's gross profit for fiscal year 2022 was $4,077.2 million. This information can be referenced in the SEC filing (accession number 0001628280-23-002350).",
+      "latency_s": 6.08,
+      "tool_trace": [
+        "retrieve_text('gross profit') -> 5 chunks",
+        "retrieve_text('gross profit') -> 5 chunks",
+        "retrieve_text('gross profit') -> 5 chunks",
+        "retrieve_text('gross profit') -> 5 chunks"
+      ]
+    },
+    {
+      "id": "t1_lrcx_revenue_2024",
+      "sc_type": "T1",
+      "sc_subtype": "",
+      "answerable": true,
+      "correct": false,
+      "expected": 14905386000.0,
+      "got_raw": 10.0,
+      "sql_called": false,
+      "got_text": "[Circuit breaker] Could not produce a final answer within 10 tool-call rounds. Partial steps are recorded.",
+      "latency_s": 18.07,
+      "tool_trace": [
+        "retrieve_text('Lam Research revenue') -> 5 chunks",
+        "retrieve_text('Lam Research 2024') -> 5 chunks",
+        "retrieve_text('Lam Research financial information') -> 5 chunks",
+        "retrieve_text('Lam Research fiscal year 2024 financial results') -> 5 chunks",
+        "retrieve_text('Lam Research 2024 revenue') -> 5 chunks",
+        "retrieve_text('2024 revenue for Lam Research Corporation') -> 5 chunks",
+        "retrieve_text('Lam Research fiscal year 2024 revenue') -> 5 chunks",
+        "retrieve_text('Lam Research Corporation fiscal year 2024') -> 5 chunks",
+        "retrieve_text('Lam Research Corporation 2024 financial results') -> 5 chunks",
+        "retrieve_text('Lam Research Corporation fiscal year 2024 financial report') -> 5 chunks"
+      ]
+    },
+    {
+      "id": "t1_lrcx_operatingcashflow_2023",
+      "sc_type": "T1",
+      "sc_subtype": "",
+      "answerable": true,
+      "correct": false,
+      "expected": 5178938000.0,
+      "got_raw": null,
+      "sql_called": false,
+      "got_text": "I cannot determine that value.",
+      "latency_s": 0.86,
+      "tool_trace": []
+    },
+    {
+      "id": "t1_aph_revenue_2024",
+      "sc_type": "T1",
+      "sc_subtype": "",
+      "answerable": true,
+      "correct": false,
+      "expected": 15222700000.0,
+      "got_raw": null,
+      "sql_called": false,
+      "got_text": "I cannot determine the revenue for Amphenol in fiscal year 2024 from the available data.",
+      "latency_s": 15.24,
+      "tool_trace": [
+        "retrieve_text('Amphenol revenue') -> 5 chunks",
+        "retrieve_text('Amphenol revenue fiscal year 2024') -> 5 chunks",
+        "retrieve_text('Amphenol net sales 2024') -> 5 chunks",
+        "retrieve_text('Amphenol total revenue 2024') -> 5 chunks",
+        "retrieve_text('Amphenol total revenue') -> 5 chunks",
+        "retrieve_text('Amphenol revenue fiscal year 2024') -> 5 chunks",
+        "retrieve_text('Amphenol revenue') -> 5 chunks"
+      ]
+    },
+    {
+      "id": "t1_aph_netincome_2023",
+      "sc_type": "T1",
+      "sc_subtype": "",
+      "answerable": true,
+      "correct": false,
+      "expected": 1928000000.0,
+      "got_raw": 10.0,
+      "sql_called": false,
+      "got_text": "[Circuit breaker] Could not produce a final answer within 10 tool-call rounds. Partial steps are recorded.",
+      "latency_s": 16.1,
+      "tool_trace": [
+        "retrieve_text('net income') -> 5 chunks",
+        "retrieve_text('net income') -> 5 chunks",
+        "retrieve_text('net income') -> 5 chunks",
+        "retrieve_text('net income') -> 5 chunks",
+        "retrieve_text('net income') -> 5 chunks",
+        "retrieve_text('net income') -> 5 chunks",
+        "retrieve_text('net income') -> 5 chunks",
+        "retrieve_text('net income') -> 5 chunks",
+        "retrieve_text('net income') -> 5 chunks",
+        "retrieve_text('net income') -> 5 chunks"
+      ]
+    },
+    {
+      "id": "t1_jbl_revenue_2024",
+      "sc_type": "T1",
+      "sc_subtype": "",
+      "answerable": true,
+      "correct": true,
+      "expected": 28883000000.0,
+      "got_raw": 28883.0,
+      "sql_called": false,
+      "got_text": "Jabil's revenue for fiscal year 2024 was $28,883 million. This revenue figure is from the fiscal year ended August 31, 2024, with SEC citation from accession number 0001628280-24-043960.",
+      "latency_s": 6.21,
+      "tool_trace": [
+        "retrieve_text('revenue') -> 5 chunks",
+        "retrieve_text('revenue') -> 3 chunks",
+        "retrieve_text('fiscal year 2024') -> 5 chunks"
+      ]
+    },
+    {
+      "id": "t1_jbl_grossprofit_2023",
+      "sc_type": "T1",
+      "sc_subtype": "",
+      "answerable": true,
+      "correct": true,
+      "expected": 2867000000.0,
+      "got_raw": 2867.0,
+      "sql_called": false,
+      "got_text": "Jabil's gross profit for fiscal year 2023 was $2,867 million. This figure is sourced from their SEC filing (accession number 0001628280-25-045293).",
+      "latency_s": 4.06,
+      "tool_trace": [
+        "retrieve_text('Jabil's gross profit') -> 5 chunks",
+        "retrieve_text('Jabil gross profit 2023') -> 5 chunks"
+      ]
+    },
+    {
+      "id": "t1_sanm_revenue_2024",
+      "sc_type": "T1",
+      "sc_subtype": "",
+      "answerable": true,
+      "correct": true,
+      "expected": 7568328000.0,
+      "got_raw": 7568328000.0,
+      "sql_called": false,
+      "got_text": "Sanmina's revenue for fiscal year 2024 was $7,568,328,000 (approximately $7.57 billion), as reported in their consolidated statements of income for the year ended September 28, 2024 (SEC filing access",
+      "latency_s": 10.79,
+      "tool_trace": [
+        "retrieve_text('Sanmina revenue') -> 5 chunks",
+        "retrieve_text('Sanmina fiscal year 2024') -> 5 chunks"
+      ]
+    },
+    {
+      "id": "t1_sanm_netincome_2023",
+      "sc_type": "T1",
+      "sc_subtype": "",
+      "answerable": true,
+      "correct": false,
+      "expected": 309970000.0,
+      "got_raw": 10.0,
+      "sql_called": false,
+      "got_text": "[Circuit breaker] Could not produce a final answer within 10 tool-call rounds. Partial steps are recorded.",
+      "latency_s": 16.06,
+      "tool_trace": [
+        "retrieve_text('net income') -> 5 chunks",
+        "retrieve_text('net income') -> 5 chunks",
+        "retrieve_text('net income') -> 5 chunks",
+        "retrieve_text('net income') -> 5 chunks",
+        "retrieve_text('net income') -> 5 chunks",
+        "retrieve_text('net income') -> 5 chunks",
+        "retrieve_text('net income') -> 5 chunks",
+        "retrieve_text('net income') -> 5 chunks",
+        "retrieve_text('net income') -> 5 chunks",
+        "retrieve_text('net income') -> 5 chunks"
+      ]
+    },
+    {
+      "id": "t2_aapl_gross_margin_2024",
+      "sc_type": "T2",
+      "sc_subtype": "",
+      "answerable": true,
+      "correct": false,
+      "expected": 46.2063,
+      "got_raw": 394000.0,
+      "input_values_ok": "GrossProfit",
+      "input_detail": "Revenue",
+      "sql_called": false,
+      "compute_called": false,
+      "got_text": "For fiscal year 2024, Apple's gross margin percentage cannot be determined from the available data as the specific percentage value was not located in the filings. However, I can provide you with the ",
+      "latency_s": 17.77,
+      "tool_trace": [
+        "retrieve_text('gross margin') -> 5 chunks",
+        "retrieve_text('revenue') -> 5 chunks",
+        "retrieve_text('gross margin percent') -> 5 chunks",
+        "retrieve_text('2024 revenue') -> 5 chunks",
+        "retrieve_text('gross margin percentage for fiscal year 2024') -> 5 chunks",
+        "retrieve_text('revenue for fiscal year 2024') -> 5 chunks",
+        "retrieve_text('gross margin percentage 2024') -> 5 chunks",
+        "retrieve_text('2024 revenue') -> 5 chunks",
+        "retrieve_text('fiscal year 2024 gross margin percentage') -> 5 chunks",
+        "retrieve_text('fiscal year 2024 revenue') -> 5 chunks",
+        "retrieve_text('fiscal year 2024 gross profit percentage') -> 5 chunks",
+        "retrieve_text('fiscal year 2024 total revenue') -> 5 chunks"
+      ]
+    },
+    {
+      "id": "t2_qrvo_gross_margin_2023",
+      "sc_type": "T2",
+      "sc_subtype": "",
+      "answerable": true,
+      "correct": false,
+      "expected": 36.335,
+      "got_raw": null,
+      "input_values_ok": "GrossProfit",
+      "input_detail": "Revenue",
+      "sql_called": false,
+      "compute_called": false,
+      "got_text": "I was unable to retrieve specific figures for Qorvo's revenue and gross profit for fiscal year 2023 successfully. Therefore, I cannot calculate the gross margin percentage for that year. \n\nIf you woul",
+      "latency_s": 50.89,
+      "tool_trace": [
+        "retrieve_text('gross margin') -> 5 chunks",
+        "retrieve_text('revenue') -> 5 chunks",
+        "retrieve_text('gross profit') -> 5 chunks",
+        "retrieve_text('fiscal year 2023 revenue') -> 5 chunks",
+        "retrieve_text('fiscal year 2023 gross profit') -> 5 chunks",
+        "retrieve_text('fiscal year 2023 gross profit') -> 5 chunks",
+        "retrieve_text('fiscal year 2023 revenue') -> 5 chunks",
+        "retrieve_text('fiscal year 2023 revenue') -> 5 chunks",
+        "retrieve_text('fiscal year 2023 gross profit') -> 5 chunks",
+        "retrieve_text('fiscal year 2023 revenue') -> 5 chunks",
+        "retrieve_text('fiscal year 2023 gross profit') -> 5 chunks",
+        "retrieve_text('fiscal year 2023 revenue') -> 5 chunks",
+        "retrieve_text('fiscal year 2023 gross profit') -> 5 chunks",
+        "retrieve_text('fiscal year 2023 revenue') -> 5 chunks",
+        "retrieve_text('fiscal year 2023 gross profit') -> 5 chunks",
+        "retrieve_text('fiscal year 2023 revenue') -> 5 chunks",
+        "retrieve_text('fiscal year 2023 gross profit') -> 5 chunks",
+        "retrieve_text('fiscal year 2023 revenue') -> 5 chunks",
+        "retrieve_text('fiscal year 2023 gross profit') -> 5 chunks"
+      ]
+    },
+    {
+      "id": "t2_crus_gross_margin_2024",
+      "sc_type": "T2",
+      "sc_subtype": "",
+      "answerable": true,
+      "correct": true,
+      "expected": 51.209,
+      "got_raw": 51.2,
+      "input_values_ok": "GrossProfit",
+      "input_detail": "Revenue",
+      "sql_called": false,
+      "compute_called": false,
+      "got_text": "Cirrus Logic's gross margin percentage for fiscal year 2024 was **51.2%**. This is cited from the consolidated statements of income, indicating an increase from the previous year's gross margin of 50.",
+      "latency_s": 15.69,
+      "tool_trace": [
+        "retrieve_text('gross margin') -> 5 chunks",
+        "retrieve_text('revenue') -> 5 chunks",
+        "retrieve_text('gross profit') -> 5 chunks",
+        "retrieve_text('Net sales') -> 5 chunks",
+        "retrieve_text('Cost of sales') -> 5 chunks",
+        "retrieve_text('Net Income') -> 5 chunks",
+        "retrieve_text('Total Assets') -> 5 chunks",
+        "retrieve_text('research and development expense') -> 5 chunks",
+        "retrieve_text('Cost of sales') -> 5 chunks",
+        "retrieve_text('Cost of sales') -> 5 chunks",
+        "retrieve_text('gross profit') -> 5 chunks"
+      ]
+    },
+    {
+      "id": "t2_avgo_gross_margin_2024",
+      "sc_type": "T2",
+      "sc_subtype": "",
+      "answerable": true,
+      "correct": false,
+      "expected": 63.0337,
+      "got_raw": 1.0,
+      "input_values_ok": "GrossProfit",
+      "input_detail": "Revenue",
+      "sql_called": false,
+      "compute_called": false,
+      "got_text": "To calculate Broadcom's gross margin percentage for fiscal year 2024, I have retrieved the relevant figures:\n\n1. **Revenue**: Unfortunately, I cannot find the specific revenue figure for fiscal year 2",
+      "latency_s": 14.2,
+      "tool_trace": [
+        "retrieve_text('Broadcom's gross margin percentage') -> 5 chunks",
+        "retrieve_text('Broadcom's revenue') -> 5 chunks",
+        "retrieve_text('Broadcom's gross profit') -> 5 chunks",
+        "retrieve_text('Broadcom's gross profit and revenue for fiscal year 2024') -> 5 chunks",
+        "retrieve_text('Broadcom fiscal year 2024') -> 5 chunks",
+        "retrieve_text('Broadcom revenue for fiscal year 2024') -> 5 chunks",
+        "retrieve_text('Broadcom gross profit for fiscal year 2024') -> 5 chunks",
+        "retrieve_text('Broadcom net income for fiscal year 2024') -> 5 chunks",
+        "retrieve_text('Broadcom operating income for fiscal year 2024') -> 5 chunks"
+      ]
+    },
+    {
+      "id": "t2_swks_gross_margin_2023",
+      "sc_type": "T2",
+      "sc_subtype": "",
+      "answerable": true,
+      "correct": false,
+      "expected": 44.156,
+      "got_raw": 1.0,
+      "input_values_ok": "GrossProfit",
+      "input_detail": "Revenue",
+      "sql_called": false,
+      "compute_called": false,
+      "got_text": "Skyworks's gross margin percentage for fiscal year 2023 can be calculated using the figures retrieved.\n\n1. **Gross Profit**: $3,651 million (found using SEC filing accession 0000004127-17-000033).\n2. ",
+      "latency_s": 63.06,
+      "tool_trace": [
+        "retrieve_text('gross margin') -> 5 chunks",
+        "retrieve_text('revenue') -> 5 chunks",
+        "retrieve_text('gross profit') -> 5 chunks",
+        "retrieve_text('revenue') -> 5 chunks",
+        "retrieve_text('gross profit') -> 5 chunks",
+        "retrieve_text('total revenue') -> 5 chunks",
+        "retrieve_text('total gross profit') -> 5 chunks",
+        "retrieve_text('gross profit') -> 5 chunks",
+        "retrieve_text('revenue') -> 5 chunks",
+        "retrieve_text('gross profit') -> 5 chunks",
+        "retrieve_text('revenue') -> 5 chunks",
+        "retrieve_text('gross profit for 2023') -> 5 chunks",
+        "retrieve_text('revenue for 2023') -> 5 chunks"
+      ]
+    },
+    {
+      "id": "t2_jbl_gross_margin_2024",
+      "sc_type": "T2",
+      "sc_subtype": "",
+      "answerable": true,
+      "correct": false,
+      "expected": 9.265,
+      "got_raw": 1.0,
+      "input_values_ok": "GrossProfit",
+      "input_detail": "Revenue",
+      "sql_called": false,
+      "compute_called": false,
+      "got_text": "To calculate Jabil's gross margin percentage for fiscal year 2024, we need the gross profit and total revenue for that year.\n\n1. **Gross Profit for FY 2024**:\n   - Gross profit: $2,646 million (found ",
+      "latency_s": 80.95,
+      "tool_trace": [
+        "retrieve_text('gross margin') -> 5 chunks",
+        "retrieve_text('revenue') -> 5 chunks",
+        "retrieve_text('gross profit') -> 5 chunks",
+        "retrieve_text('revenue') -> 5 chunks",
+        "retrieve_text('revenue') -> 5 chunks",
+        "retrieve_text('gross profit') -> 5 chunks",
+        "retrieve_text('gross profit') -> 5 chunks",
+        "retrieve_text('revenue') -> 5 chunks",
+        "retrieve_text('gross profit') -> 5 chunks",
+        "retrieve_text('revenue') -> 5 chunks",
+        "retrieve_text('revenue') -> 5 chunks",
+        "retrieve_text('gross profit') -> 5 chunks",
+        "retrieve_text('gross profit') -> 5 chunks",
+        "retrieve_text('revenue') -> 5 chunks",
+        "retrieve_text('gross profit') -> 5 chunks",
+        "retrieve_text('revenue') -> 5 chunks",
+        "retrieve_text('gross profit') -> 5 chunks",
+        "retrieve_text('revenue') -> 5 chunks"
+      ]
+    },
+    {
+      "id": "t2_adi_gross_margin_2023",
+      "sc_type": "T2",
+      "sc_subtype": "",
+      "answerable": true,
+      "correct": false,
+      "expected": 64.0136,
+      "got_raw": 7318286000.0,
+      "input_values_ok": "GrossProfit",
+      "input_detail": "Revenue",
+      "sql_called": false,
+      "compute_called": false,
+      "got_text": "I currently cannot find the gross margin percentage for Analog Devices in fiscal year 2023. However, I can provide the total revenue for that fiscal year.\n\nThe total revenue for Analog Devices in fisc",
+      "latency_s": 12.06,
+      "tool_trace": [
+        "retrieve_text('gross margin') -> 5 chunks",
+        "retrieve_text('revenue') -> 5 chunks",
+        "retrieve_text('gross margin') -> 5 chunks",
+        "retrieve_text('revenue') -> 5 chunks",
+        "retrieve_text('fiscal year 2023 financial results') -> 1 chunks",
+        "retrieve_text('fiscal year 2023 revenue') -> 5 chunks",
+        "retrieve_text('fiscal 2023 revenue') -> 5 chunks",
+        "retrieve_text('fiscal 2023 gross margin') -> 5 chunks"
+      ]
+    },
+    {
+      "id": "t2_txn_gross_margin_2023",
+      "sc_type": "T2",
+      "sc_subtype": "",
+      "answerable": true,
+      "correct": false,
+      "expected": 62.8974,
+      "got_raw": 100.0,
+      "input_values_ok": "GrossProfit",
+      "input_detail": "Revenue",
+      "sql_called": false,
+      "compute_called": false,
+      "got_text": "Texas Instruments's gross margin percentage for fiscal year 2023 cannot be definitively calculated from the available data as specific gross profit for 2023 and total revenue for 2023 have not yet bee",
+      "latency_s": 21.65,
+      "tool_trace": [
+        "retrieve_text('Gross margin') -> 5 chunks",
+        "retrieve_text('Revenue') -> 5 chunks",
+        "retrieve_text('2023') -> 5 chunks",
+        "retrieve_text('2022') -> 5 chunks",
+        "retrieve_text('Gross profit') -> 5 chunks",
+        "retrieve_text('Revenue') -> 5 chunks",
+        "retrieve_text('Gross Profit') -> 5 chunks",
+        "retrieve_text('Total Revenue') -> 5 chunks",
+        "retrieve_text('Gross Profit') -> 5 chunks",
+        "retrieve_text('Total Revenue') -> 5 chunks",
+        "retrieve_text('Total Revenue') -> 5 chunks",
+        "retrieve_text('Gross Profit') -> 5 chunks",
+        "retrieve_text('Gross Profit 2022') -> 5 chunks",
+        "retrieve_text('Total Revenue 2022') -> 5 chunks"
+      ]
+    },
+    {
+      "id": "t2_on_gross_margin_2023",
+      "sc_type": "T2",
+      "sc_subtype": "",
+      "answerable": true,
+      "correct": true,
+      "expected": 47.0556,
+      "got_raw": 47.1,
+      "input_values_ok": "GrossProfit",
+      "input_detail": "Revenue",
+      "sql_called": false,
+      "compute_called": false,
+      "got_text": "Onsemi's gross margin percentage for the fiscal year 2023 was **47.1%**. This figure is cited from the SEC filing accession number **0001628280-24-003201**.",
+      "latency_s": 7.64,
+      "tool_trace": [
+        "retrieve_text('gross margin') -> 5 chunks",
+        "retrieve_text('revenue') -> 5 chunks",
+        "retrieve_text('gross margin') -> 5 chunks"
+      ]
+    },
+    {
+      "id": "t2_lrcx_gross_margin_2024",
+      "sc_type": "T2",
+      "sc_subtype": "",
+      "answerable": true,
+      "correct": false,
+      "expected": 47.3171,
+      "got_raw": null,
+      "input_values_ok": "GrossProfit",
+      "input_detail": "Revenue",
+      "sql_called": false,
+      "compute_called": false,
+      "got_text": "To calculate Lam Research's gross margin percentage for fiscal year 2024, we need the gross profit and revenue figures for that year. However, I cannot find specific financial data for fiscal year 202",
+      "latency_s": 37.0,
+      "tool_trace": [
+        "retrieve_text('gross margin') -> 5 chunks",
+        "retrieve_text('revenue') -> 5 chunks",
+        "retrieve_text('gross profit') -> 5 chunks",
+        "retrieve_text('revenue') -> 5 chunks",
+        "retrieve_text('gross profit') -> 5 chunks",
+        "retrieve_text('revenue') -> 5 chunks",
+        "retrieve_text('gross profit') -> 5 chunks",
+        "retrieve_text('gross profit') -> 5 chunks",
+        "retrieve_text('revenue') -> 5 chunks"
+      ]
+    },
+    {
+      "id": "t2_qrvo_rd_intensity_2024",
+      "sc_type": "T2",
+      "sc_subtype": "",
+      "answerable": true,
+      "correct": false,
+      "expected": 18.0992,
+      "got_raw": 1.0,
+      "input_values_ok": "R&D",
+      "input_detail": "Revenue",
+      "sql_called": false,
+      "compute_called": false,
+      "got_text": "To find Qorvo's R&D spending as a percentage of revenue for fiscal year 2024, we can extract the relevant figures and perform the calculation. \n\n1. **Total Revenue for FY 2024**: I currently cannot fi",
+      "latency_s": 15.52,
+      "tool_trace": [
+        "retrieve_text('Qorvo R&D spending') -> 5 chunks",
+        "retrieve_text('Qorvo revenue') -> 5 chunks",
+        "retrieve_text('Qorvo R&D expenses') -> 5 chunks",
+        "retrieve_text('Qorvo fiscal year 2024') -> 5 chunks",
+        "retrieve_text('Qorvo R&D spending') -> 5 chunks",
+        "retrieve_text('Qorvo revenue fiscal year 2024') -> 5 chunks",
+        "retrieve_text('Qorvo R&D expenditure') -> 5 chunks",
+        "retrieve_text('Qorvo total revenue FY 2024') -> 5 chunks",
+        "retrieve_text('Qorvo total revenue 2024') -> 5 chunks",
+        "retrieve_text('Qorvo R&D expense FY 2024') -> 5 chunks",
+        "retrieve_text('Qorvo R&D expense 2024') -> 5 chunks",
+        "retrieve_text('Qorvo revenue 2024') -> 5 chunks"
+      ]
+    },
+    {
+      "id": "t2_crus_rd_intensity_2024",
+      "sc_type": "T2",
+      "sc_subtype": "",
+      "answerable": true,
+      "correct": false,
+      "expected": 23.8402,
+      "got_raw": 426.5,
+      "input_values_ok": "R&D",
+      "input_detail": "Revenue",
+      "sql_called": false,
+      "compute_called": false,
+      "got_text": "In fiscal year 2024, Cirrus Logic's research and development (R&D) expenses were $426.5 million. The revenue for the same period cannot be determined from the available data. \n\nTo calculate the R&D sp",
+      "latency_s": 25.87,
+      "tool_trace": [
+        "retrieve_text('R&D spending') -> 5 chunks",
+        "retrieve_text('Revenue') -> 5 chunks",
+        "retrieve_text('R&D') -> 5 chunks",
+        "retrieve_text('Revenue') -> 5 chunks",
+        "retrieve_text('Fiscal Year 2024 revenue') -> 5 chunks",
+        "retrieve_text('Fiscal Year 2024 R&D') -> 5 chunks",
+        "retrieve_text('Fiscal Year 2024 revenue') -> 5 chunks",
+        "retrieve_text('Fiscal Year 2024 R&D') -> 5 chunks",
+        "retrieve_text('Fiscal Year 2024 revenue') -> 5 chunks",
+        "retrieve_text('Fiscal Year 2024 R&D') -> 5 chunks",
+        "retrieve_text('fiscal year 2024 revenue') -> 5 chunks",
+        "retrieve_text('fiscal year 2024 R&D') -> 5 chunks",
+        "retrieve_text('fiscal year 2024 revenue') -> 5 chunks",
+        "retrieve_text('fiscal year 2024 R&D') -> 5 chunks",
+        "retrieve_text('fiscal year 2024 revenue') -> 5 chunks",
+        "retrieve_text('fiscal year 2024 R&D') -> 5 chunks"
+      ]
+    },
+    {
+      "id": "t2_swks_rd_intensity_2023",
+      "sc_type": "T2",
+      "sc_subtype": "",
+      "answerable": true,
+      "correct": false,
+      "expected": 12.7148,
+      "got_raw": 1.0,
+      "input_values_ok": "R&D",
+      "input_detail": "Revenue",
+      "sql_called": false,
+      "compute_called": false,
+      "got_text": "To determine Skyworks's R&D spending as a percentage of revenue in fiscal year 2023, we need the exact figures for R&D spending and total revenue.\n\n### Step 1: Gather Financial Data\n- **Total Revenue ",
+      "latency_s": 16.98,
+      "tool_trace": [
+        "retrieve_text('R&D spending') -> 5 chunks",
+        "retrieve_text('Revenue') -> 5 chunks",
+        "retrieve_text('R&D') -> 5 chunks",
+        "retrieve_text('fiscal year 2023 revenue') -> 5 chunks",
+        "retrieve_text('fiscal year 2023 R&D spending') -> 5 chunks",
+        "retrieve_text('fiscal year 2023 revenue') -> 5 chunks",
+        "retrieve_text('R&D spending 2023') -> 5 chunks",
+        "retrieve_text('fiscal year 2023 revenue') -> 5 chunks",
+        "retrieve_text('R&D expenses for 2023') -> 5 chunks",
+        "retrieve_text('total revenue for 2023') -> 5 chunks"
+      ]
+    },
+    {
+      "id": "t2_avgo_rd_intensity_2023",
+      "sc_type": "T2",
+      "sc_subtype": "",
+      "answerable": true,
+      "correct": false,
+      "expected": 14.6654,
+      "got_raw": null,
+      "input_values_ok": "R&D",
+      "input_detail": "Revenue",
+      "sql_called": false,
+      "compute_called": false,
+      "got_text": "I cannot determine Broadcom's R&D spending or total revenue as a percentage of revenue for fiscal year 2023 based on the retrieved data. If you need further insight or information, let me know!",
+      "latency_s": 35.87,
+      "tool_trace": [
+        "retrieve_text('R&D spending') -> 5 chunks",
+        "retrieve_text('revenue') -> 5 chunks",
+        "retrieve_text('R&D') -> 5 chunks",
+        "retrieve_text('revenue') -> 5 chunks",
+        "retrieve_text('R&D spending for fiscal year 2023') -> 5 chunks",
+        "retrieve_text('revenue for fiscal year 2023') -> 5 chunks",
+        "retrieve_text('R&D spending for fiscal year 2023') -> 5 chunks",
+        "retrieve_text('revenue for fiscal year 2023') -> 5 chunks",
+        "retrieve_text('total revenue for fiscal year 2023') -> 5 chunks",
+        "retrieve_text('R&D for fiscal year 2023') -> 5 chunks"
+      ]
+    },
+    {
+      "id": "t2_txn_rd_intensity_2024",
+      "sc_type": "T2",
+      "sc_subtype": "",
+      "answerable": true,
+      "correct": false,
+      "expected": 12.5248,
+      "got_raw": 10.0,
+      "input_values_ok": "R&D",
+      "input_detail": "Revenue",
+      "sql_called": false,
+      "compute_called": false,
+      "got_text": "[Circuit breaker] Could not produce a final answer within 10 tool-call rounds. Partial steps are recorded.",
+      "latency_s": 19.79,
+      "tool_trace": [
+        "retrieve_text('R&D spending') -> 5 chunks",
+        "retrieve_text('Revenue') -> 5 chunks",
+        "retrieve_text('R&D spending') -> 5 chunks",
+        "retrieve_text('Revenue') -> 5 chunks",
+        "retrieve_text('R&D spending') -> 5 chunks",
+        "retrieve_text('Revenue') -> 5 chunks",
+        "retrieve_text('R&D') -> 5 chunks",
+        "retrieve_text('Revenue') -> 5 chunks",
+        "retrieve_text('R&D spending') -> 5 chunks",
+        "retrieve_text('Revenue') -> 5 chunks",
+        "retrieve_text('R&D') -> 5 chunks",
+        "retrieve_text('Revenue') -> 5 chunks",
+        "retrieve_text('R&D spending') -> 5 chunks",
+        "retrieve_text('Revenue') -> 5 chunks",
+        "retrieve_text('R&D') -> 5 chunks",
+        "retrieve_text('Revenue') -> 5 chunks",
+        "retrieve_text('revenue') -> 5 chunks",
+        "retrieve_text('R&D') -> 5 chunks",
+        "retrieve_text('R&D spending') -> 5 chunks",
+        "retrieve_text('Revenue') -> 5 chunks"
+      ]
+    },
+    {
+      "id": "t2_qcom_rd_intensity_2023",
+      "sc_type": "T2",
+      "sc_subtype": "",
+      "answerable": true,
+      "correct": false,
+      "expected": 24.6175,
+      "got_raw": 8.818,
+      "input_values_ok": "R&D",
+      "input_detail": "Revenue",
+      "sql_called": false,
+      "compute_called": false,
+      "got_text": "Qualcomm's Research and Development (R&D) spending for fiscal year 2023 was $8.818 billion, and its revenue for the same fiscal year was $35.820 billion. \n\nTo calculate R&D spending as a percentage of",
+      "latency_s": 15.25,
+      "tool_trace": [
+        "retrieve_text('R&D spending') -> 5 chunks",
+        "retrieve_text('revenue') -> 5 chunks",
+        "retrieve_text('R&D spending fiscal year 2023') -> 5 chunks",
+        "retrieve_text('revenue fiscal year 2023') -> 5 chunks",
+        "retrieve_text('R&D spending fiscal year 2023') -> 5 chunks",
+        "retrieve_text('revenue fiscal year 2023') -> 5 chunks",
+        "retrieve_text('Qualcomm R&D expenditures for fiscal year 2023') -> 5 chunks",
+        "retrieve_text('Qualcomm revenue for fiscal year 2023') -> 5 chunks"
+      ]
+    },
+    {
+      "id": "t2_adi_rd_intensity_2024",
+      "sc_type": "T2",
+      "sc_subtype": "",
+      "answerable": true,
+      "correct": false,
+      "expected": 15.7827,
+      "got_raw": null,
+      "input_values_ok": "R&D",
+      "input_detail": "Revenue",
+      "sql_called": false,
+      "compute_called": false,
+      "got_text": "I cannot determine Analog Devices's R&D spending as a percentage of revenue for fiscal year 2024. No relevant data was found in the database.",
+      "latency_s": 10.48,
+      "tool_trace": [
+        "retrieve_text('R&D spending') -> 5 chunks",
+        "retrieve_text('Revenue') -> 5 chunks",
+        "retrieve_text('Revenue') -> 5 chunks",
+        "retrieve_text('R&D expenses') -> 5 chunks",
+        "retrieve_text('R&D') -> 5 chunks",
+        "retrieve_text('Revenue') -> 5 chunks",
+        "retrieve_text('R&D expenditures') -> 5 chunks",
+        "retrieve_text('Revenue') -> 5 chunks"
+      ]
+    },
+    {
+      "id": "t2_mchp_rd_intensity_2023",
+      "sc_type": "T2",
+      "sc_subtype": "",
+      "answerable": true,
+      "correct": false,
+      "expected": 13.252,
+      "got_raw": 1.12,
+      "input_values_ok": "R&D",
+      "input_detail": "Revenue",
+      "sql_called": false,
+      "compute_called": false,
+      "got_text": "In fiscal year 2023, Microchip Technology's R&D expenses were $1.12 billion, which represented 13.3% of their net sales. This information can be cited from their SEC filing accession number 0000827054",
+      "latency_s": 35.08,
+      "tool_trace": [
+        "retrieve_text('R&D spending') -> 5 chunks",
+        "retrieve_text('Revenue') -> 5 chunks",
+        "retrieve_text('Research and Development') -> 5 chunks",
+        "retrieve_text('Annual revenue') -> 5 chunks",
+        "retrieve_text('Annual revenue 2023') -> 5 chunks",
+        "retrieve_text('R&D expenses 2023') -> 5 chunks"
+      ]
+    },
+    {
+      "id": "t2_qrvo_revenue_yoy_2022_2023",
+      "sc_type": "T2",
+      "sc_subtype": "",
+      "answerable": true,
+      "correct": false,
+      "expected": -23.1679,
+      "got_raw": 10.0,
+      "input_values_ok": "Revenue_2023",
+      "input_detail": "Revenue_2022",
+      "sql_called": false,
+      "compute_called": false,
+      "got_text": "[Circuit breaker] Could not produce a final answer within 10 tool-call rounds. Partial steps are recorded.",
+      "latency_s": 69.11,
+      "tool_trace": [
+        "retrieve_text('fiscal year 2022 revenue') -> 5 chunks",
+        "retrieve_text('fiscal year 2023 revenue') -> 5 chunks",
+        "retrieve_text('Qorvo fiscal year 2022 revenue') -> 5 chunks",
+        "retrieve_text('Qorvo fiscal year 2023 revenue') -> 5 chunks",
+        "retrieve_text('Qorvo fiscal year 2022 revenue') -> 5 chunks",
+        "retrieve_text('Qorvo fiscal year 2023 revenue') -> 5 chunks",
+        "retrieve_text('fiscal year 2022 revenue') -> 5 chunks",
+        "retrieve_text('fiscal year 2023 revenue') -> 5 chunks",
+        "retrieve_text('Qorvo fiscal year 2022 revenue') -> 5 chunks",
+        "retrieve_text('Qorvo fiscal year 2023 revenue') -> 5 chunks",
+        "retrieve_text('Qorvo fiscal year 2022 revenue') -> 5 chunks",
+        "retrieve_text('Qorvo fiscal year 2023 revenue') -> 5 chunks",
+        "retrieve_text('Qorvo fiscal year 2022 revenue') -> 5 chunks",
+        "retrieve_text('Qorvo fiscal year 2023 revenue') -> 5 chunks",
+        "retrieve_text('Qorvo fiscal year 2022 revenue') -> 5 chunks",
+        "retrieve_text('Qorvo fiscal year 2023 revenue') -> 5 chunks",
+        "retrieve_text('Qorvo fiscal year 2022 revenue') -> 5 chunks",
+        "retrieve_text('Qorvo fiscal year 2023 revenue') -> 5 chunks",
+        "retrieve_text('Qorvo fiscal year 2022 revenue') -> 5 chunks",
+        "retrieve_text('Qorvo fiscal year 2023 revenue') -> 5 chunks"
+      ]
+    },
+    {
+      "id": "t2_crus_revenue_yoy_2022_2023",
+      "sc_type": "T2",
+      "sc_subtype": "",
+      "answerable": true,
+      "correct": false,
+      "expected": 6.5203,
+      "got_raw": 1.78,
+      "input_values_ok": "Revenue_2023",
+      "input_detail": "Revenue_2022",
+      "sql_called": false,
+      "compute_called": false,
+      "got_text": "Cirrus Logic's revenue for fiscal year 2022 was $1.78 billion, while the revenue for fiscal year 2023 was $1.90 billion. \n\nTo calculate the percentage change from fiscal year 2022 to fiscal year 2023,",
+      "latency_s": 13.99,
+      "tool_trace": [
+        "retrieve_text('Cirrus Logic fiscal year 2022 revenue') -> 5 chunks",
+        "retrieve_text('Cirrus Logic fiscal year 2023 revenue') -> 5 chunks",
+        "retrieve_text('Cirrus Logic revenue FY2022') -> 5 chunks",
+        "retrieve_text('Cirrus Logic revenue FY2023') -> 5 chunks",
+        "retrieve_text('Cirrus Logic revenue FY2023') -> 5 chunks",
+        "retrieve_text('Cirrus Logic revenue FY2022') -> 5 chunks",
+        "retrieve_text('Cirrus Logic net sales FY2022') -> 5 chunks",
+        "retrieve_text('Cirrus Logic net sales FY2023') -> 5 chunks"
+      ]
+    },
+    {
+      "id": "t2_jbl_revenue_yoy_2022_2023",
+      "sc_type": "T2",
+      "sc_subtype": "",
+      "answerable": true,
+      "correct": false,
+      "expected": 3.6561,
+      "got_raw": 33478.0,
+      "input_values_ok": "Revenue_2023",
+      "input_detail": "Revenue_2022",
+      "sql_called": false,
+      "compute_called": false,
+      "got_text": "Jabil's revenue for fiscal year 2022 was $33,478 million, and for fiscal year 2023, it was $34,702 million. \n\nTo calculate the percentage change in revenue from fiscal year 2022 to 2023:\n\n\\[\n\\text{Per",
+      "latency_s": 33.35,
+      "tool_trace": [
+        "retrieve_text('Jabil revenue fiscal year 2022') -> 5 chunks",
+        "retrieve_text('Jabil revenue fiscal year 2023') -> 5 chunks",
+        "retrieve_text('Jabil revenue fiscal year 2023') -> 5 chunks",
+        "retrieve_text('Jabil revenue fiscal year 2023') -> 5 chunks"
+      ]
+    },
+    {
+      "id": "t2_aapl_revenue_yoy_2023_2024",
+      "sc_type": "T2",
+      "sc_subtype": "",
+      "answerable": true,
+      "correct": false,
+      "expected": 2.022,
+      "got_raw": 10.0,
+      "input_values_ok": "Revenue_2024",
+      "input_detail": "Revenue_2023",
+      "sql_called": false,
+      "compute_called": false,
+      "got_text": "[Circuit breaker] Could not produce a final answer within 10 tool-call rounds. Partial steps are recorded.",
+      "latency_s": 79.64,
+      "tool_trace": [
+        "retrieve_text('Apple revenue fiscal year 2023') -> 5 chunks",
+        "retrieve_text('Apple revenue fiscal year 2024') -> 5 chunks",
+        "retrieve_text('Apple revenue') -> 5 chunks",
+        "retrieve_text('Apple total revenue fiscal year 2023') -> 5 chunks",
+        "retrieve_text('Apple total revenue fiscal year 2024') -> 5 chunks",
+        "retrieve_text('Apple total revenue') -> 5 chunks",
+        "retrieve_text('Apple revenue fiscal year 2023') -> 5 chunks",
+        "retrieve_text('Apple revenue fiscal year 2024') -> 5 chunks",
+        "retrieve_text('Apple total revenue fiscal year 2023') -> 5 chunks",
+        "retrieve_text('Apple total revenue fiscal year 2024') -> 5 chunks",
+        "retrieve_text('Apple revenue FY 2023') -> 5 chunks",
+        "retrieve_text('Apple revenue FY 2024') -> 5 chunks",
+        "retrieve_text('Apple total revenue FY 2023') -> 5 chunks",
+        "retrieve_text('Apple total revenue FY 2024') -> 5 chunks",
+        "retrieve_text('Apple revenue FY 2023') -> 5 chunks",
+        "retrieve_text('Apple revenue FY 2024') -> 5 chunks",
+        "retrieve_text('total revenue fiscal year 2023') -> 5 chunks",
+        "retrieve_text('total revenue fiscal year 2024') -> 5 chunks",
+        "retrieve_text('Apple total revenue FY 2023') -> 5 chunks",
+        "retrieve_text('Apple total revenue FY 2024') -> 5 chunks",
+        "retrieve_text('Apple FY 2023 revenue') -> 5 chunks",
+        "retrieve_text('Apple FY 2024 revenue') -> 5 chunks"
+      ]
+    },
+    {
+      "id": "t2_swks_revenue_yoy_2022_2023",
+      "sc_type": "T2",
+      "sc_subtype": "",
+      "answerable": true,
+      "correct": false,
+      "expected": -12.9997,
+      "got_raw": 3651.0,
+      "input_values_ok": "Revenue_2023",
+      "input_detail": "Revenue_2022",
+      "sql_called": false,
+      "compute_called": false,
+      "got_text": "I found the revenue data for Skyworks Solutions, Inc. for fiscal years 2022 and 2023:\n\n- **Fiscal Year 2022 Revenue:** Approximately $3,651 million (SEC filing accession 0000004127-17-000033).\n- **Fis",
+      "latency_s": 8.77,
+      "tool_trace": [
+        "retrieve_text('Skyworks Solutions, Inc. fiscal year 2022 revenue') -> 4 chunks",
+        "retrieve_text('Skyworks Solutions, Inc. fiscal year 2023 revenue') -> 4 chunks",
+        "retrieve_text('Skyworks Solutions, Inc. fiscal year 2022 revenue') -> 4 chunks",
+        "retrieve_text('Skyworks Solutions, Inc. fiscal year 2023 revenue') -> 4 chunks"
+      ]
+    },
+    {
+      "id": "t2_on_revenue_yoy_2021_2022",
+      "sc_type": "T2",
+      "sc_subtype": "",
+      "answerable": true,
+      "correct": false,
+      "expected": 23.5378,
+      "got_raw": 6739.8,
+      "input_values_ok": "Revenue_2022",
+      "input_detail": "Revenue_2021",
+      "sql_called": false,
+      "compute_called": false,
+      "got_text": "To calculate the percentage change in onsemi's revenue from fiscal year 2021 to 2022, I gathered the revenue data:\n\n- **Revenue for FY 2021:** $6,739.8 million (SEC filing accession 0001628280-22-0024",
+      "latency_s": 19.44,
+      "tool_trace": [
+        "retrieve_text('onsemi 2021 revenue') -> 5 chunks",
+        "retrieve_text('onsemi 2022 revenue') -> 5 chunks",
+        "retrieve_text('onsemi revenue 2021') -> 5 chunks",
+        "retrieve_text('onsemi revenue 2022') -> 5 chunks",
+        "retrieve_text('onsemi consolidate financial statements 2022') -> 5 chunks",
+        "retrieve_text('onsemi consolidate financial statements 2021') -> 5 chunks",
+        "retrieve_text('onsemi revenue FY 2021') -> 5 chunks",
+        "retrieve_text('onsemi revenue FY 2022') -> 5 chunks",
+        "retrieve_text('onsemi revenue 2021') -> 5 chunks",
+        "retrieve_text('onsemi revenue 2022') -> 5 chunks",
+        "retrieve_text('onsemi revenue FY 2021') -> 5 chunks",
+        "retrieve_text('onsemi revenue FY 2022') -> 5 chunks"
+      ]
+    },
+    {
+      "id": "t2_lrcx_revenue_yoy_2023_2024",
+      "sc_type": "T2",
+      "sc_subtype": "",
+      "answerable": true,
+      "correct": false,
+      "expected": -14.477,
+      "got_raw": 10.0,
+      "input_values_ok": "Revenue_2024",
+      "input_detail": "Revenue_2023",
+      "sql_called": false,
+      "compute_called": false,
+      "got_text": "[Circuit breaker] Could not produce a final answer within 10 tool-call rounds. Partial steps are recorded.",
+      "latency_s": 71.03,
+      "tool_trace": [
+        "retrieve_text('revenue') -> 5 chunks",
+        "retrieve_text('revenue') -> 5 chunks",
+        "retrieve_text('revenue') -> 5 chunks",
+        "retrieve_text('revenue') -> 5 chunks",
+        "retrieve_text('revenue') -> 5 chunks",
+        "retrieve_text('revenue') -> 5 chunks",
+        "retrieve_text('revenue') -> 5 chunks",
+        "retrieve_text('revenue') -> 5 chunks",
+        "retrieve_text('revenue') -> 5 chunks",
+        "retrieve_text('revenue') -> 5 chunks",
+        "retrieve_text('revenue') -> 5 chunks",
+        "retrieve_text('revenue') -> 5 chunks",
+        "retrieve_text('revenue') -> 5 chunks",
+        "retrieve_text('revenue') -> 5 chunks",
+        "retrieve_text('revenue') -> 5 chunks",
+        "retrieve_text('revenue') -> 5 chunks",
+        "retrieve_text('revenue') -> 5 chunks",
+        "retrieve_text('revenue') -> 5 chunks",
+        "retrieve_text('revenue') -> 5 chunks",
+        "retrieve_text('revenue') -> 5 chunks"
+      ]
+    },
+    {
+      "id": "t2_aapl_operating_margin_2023",
+      "sc_type": "T2",
+      "sc_subtype": "",
+      "answerable": true,
+      "correct": false,
+      "expected": 29.8214,
+      "got_raw": 10.0,
+      "input_values_ok": "OperatingIncome",
+      "input_detail": "Revenue",
+      "sql_called": false,
+      "compute_called": false,
+      "got_text": "[Circuit breaker] Could not produce a final answer within 10 tool-call rounds. Partial steps are recorded.",
+      "latency_s": 21.64,
+      "tool_trace": [
+        "retrieve_text('Operating Income') -> 5 chunks",
+        "retrieve_text('Revenue') -> 5 chunks",
+        "retrieve_text('Operating Income') -> 5 chunks",
+        "retrieve_text('Revenue') -> 5 chunks",
+        "retrieve_text('Operating Income') -> 5 chunks",
+        "retrieve_text('Revenue') -> 5 chunks",
+        "retrieve_text('Operating Income') -> 5 chunks",
+        "retrieve_text('Revenue') -> 5 chunks",
+        "retrieve_text('Operating Income') -> 5 chunks",
+        "retrieve_text('Revenue') -> 5 chunks",
+        "retrieve_text('Operating Income') -> 5 chunks",
+        "retrieve_text('Revenue') -> 5 chunks",
+        "retrieve_text('Operating Income') -> 5 chunks",
+        "retrieve_text('Revenue') -> 5 chunks",
+        "retrieve_text('Operating Income for 2023') -> 5 chunks",
+        "retrieve_text('Revenue for 2023') -> 5 chunks",
+        "retrieve_text('Net Income 2023') -> 5 chunks",
+        "retrieve_text('Operating Income 2023') -> 5 chunks",
+        "retrieve_text('Revenue 2023') -> 5 chunks",
+        "retrieve_text('Net Income') -> 5 chunks",
+        "retrieve_text('Operating Income') -> 5 chunks",
+        "retrieve_text('Revenue') -> 5 chunks"
+      ]
+    },
+    {
+      "id": "t2_qcom_operating_margin_2022",
+      "sc_type": "T2",
+      "sc_subtype": "",
+      "answerable": true,
+      "correct": false,
+      "expected": 35.8824,
+      "got_raw": 44.2,
+      "input_values_ok": "OperatingIncome",
+      "input_detail": "Revenue",
+      "sql_called": false,
+      "compute_called": false,
+      "got_text": "In fiscal year 2022, Qualcomm reported the following:\n\n- **Total Revenue**: $44.2 billion (SEC filing accession 0000804328-22-000021)\n- **Operating Income**: I could not find the specific figure for Q",
+      "latency_s": 31.89,
+      "tool_trace": [
+        "retrieve_text('Qualcomm fiscal year 2022 operating income') -> 5 chunks",
+        "retrieve_text('Qualcomm fiscal year 2022 revenue') -> 5 chunks",
+        "retrieve_text('Qualcomm fiscal year 2022 operating income') -> 5 chunks",
+        "retrieve_text('Qualcomm fiscal year 2022 revenue') -> 5 chunks",
+        "retrieve_text('Qualcomm fiscal year 2022 operating income') -> 5 chunks",
+        "retrieve_text('Qualcomm fiscal year 2022 revenue') -> 5 chunks",
+        "retrieve_text('Qualcomm fiscal year 2022 operating income') -> 5 chunks",
+        "retrieve_text('Qualcomm fiscal year 2022 total revenue') -> 5 chunks",
+        "retrieve_text('Qualcomm fiscal year 2022 operating income') -> 5 chunks",
+        "retrieve_text('Qualcomm fiscal year 2022 revenue') -> 5 chunks",
+        "retrieve_text('Qualcomm fiscal year 2022 operating income') -> 5 chunks",
+        "retrieve_text('Qualcomm fiscal year 2022 total revenue') -> 5 chunks",
+        "retrieve_text('Qualcomm fiscal year 2022 net income') -> 5 chunks",
+        "retrieve_text('Qualcomm fiscal year 2022 total revenue') -> 5 chunks",
+        "retrieve_text('Qualcomm fiscal year 2022 operating income') -> 5 chunks",
+        "retrieve_text('Qualcomm fiscal year 2022 total revenue') -> 5 chunks",
+        "retrieve_text('Qualcomm fiscal year 2022 operating income') -> 5 chunks",
+        "retrieve_text('Qualcomm fiscal year 2022 total revenue') -> 5 chunks"
+      ]
+    },
+    {
+      "id": "t2_glw_operating_margin_2023",
+      "sc_type": "T2",
+      "sc_subtype": "",
+      "answerable": true,
+      "correct": false,
+      "expected": 7.0702,
+      "got_raw": 2.79,
+      "input_values_ok": "OperatingIncome",
+      "input_detail": "Revenue",
+      "sql_called": false,
+      "compute_called": false,
+      "got_text": "Corning's operating income for the fiscal year 2023 was $2.79 billion, while the revenue was $14.55 billion. \n\nTo calculate the operating margin percentage:\n- Operating Margin = (Operating Income / Re",
+      "latency_s": 11.91,
+      "tool_trace": [
+        "retrieve_text('Operating Income') -> 5 chunks",
+        "retrieve_text('Revenue') -> 5 chunks",
+        "retrieve_text('Operating Income') -> 5 chunks",
+        "retrieve_text('Revenue') -> 5 chunks",
+        "retrieve_text('Revenue') -> 5 chunks",
+        "retrieve_text('Operating Income') -> 5 chunks",
+        "retrieve_text('Revenue') -> 5 chunks",
+        "retrieve_text('Operating Income') -> 5 chunks"
+      ]
+    },
+    {
+      "id": "t2_txn_operating_margin_2022",
+      "sc_type": "T2",
+      "sc_subtype": "",
+      "answerable": true,
+      "correct": false,
+      "expected": 50.6291,
+      "got_raw": 10.0,
+      "input_values_ok": "OperatingIncome",
+      "input_detail": "Revenue",
+      "sql_called": false,
+      "compute_called": false,
+      "got_text": "[Circuit breaker] Could not produce a final answer within 10 tool-call rounds. Partial steps are recorded.",
+      "latency_s": 45.54,
+      "tool_trace": [
+        "retrieve_text('operating margin') -> 5 chunks",
+        "retrieve_text('operating income') -> 5 chunks",
+        "retrieve_text('revenue') -> 5 chunks",
+        "retrieve_text('operating margin') -> 5 chunks",
+        "retrieve_text('operating income') -> 5 chunks",
+        "retrieve_text('revenue') -> 5 chunks",
+        "retrieve_text('operating income') -> 5 chunks",
+        "retrieve_text('revenue') -> 5 chunks",
+        "retrieve_text('operating margin') -> 5 chunks",
+        "retrieve_text('operating income') -> 5 chunks",
+        "retrieve_text('revenue') -> 5 chunks",
+        "retrieve_text('operating income') -> 5 chunks",
+        "retrieve_text('revenue') -> 5 chunks",
+        "retrieve_text('operating margin') -> 5 chunks",
+        "retrieve_text('revenue') -> 5 chunks",
+        "retrieve_text('operating income') -> 5 chunks",
+        "retrieve_text('revenue') -> 5 chunks",
+        "retrieve_text('operating income') -> 5 chunks",
+        "retrieve_text('revenue') -> 5 chunks",
+        "retrieve_text('operating income') -> 5 chunks",
+        "retrieve_text('revenue') -> 5 chunks",
+        "retrieve_text('operating income') -> 5 chunks"
+      ]
+    },
+    {
+      "id": "t2_sanm_operating_margin_2024",
+      "sc_type": "T2",
+      "sc_subtype": "",
+      "answerable": true,
+      "correct": false,
+      "expected": 4.4329,
+      "got_raw": 4.4,
+      "input_values_ok": "OperatingIncome",
+      "input_detail": "Revenue",
+      "sql_called": false,
+      "compute_called": false,
+      "got_text": "Sanmina's operating margin for fiscal year 2024 was **4.4%**. This is based on an operating income of **$335,494,000** and revenues of **$7,568,328,000** (accession number 0000897723-24-000056).",
+      "latency_s": 45.33,
+      "tool_trace": [
+        "retrieve_text('operating income') -> 5 chunks",
+        "retrieve_text('revenue') -> 5 chunks",
+        "retrieve_text('operating income') -> 5 chunks",
+        "retrieve_text('revenue') -> 5 chunks",
+        "retrieve_text('operating income') -> 5 chunks",
+        "retrieve_text('revenue') -> 5 chunks",
+        "retrieve_text('operating margin') -> 5 chunks",
+        "retrieve_text('revenue') -> 5 chunks",
+        "retrieve_text('operating income') -> 5 chunks",
+        "retrieve_text('revenue') -> 5 chunks"
+      ]
+    },
+    {
+      "id": "t4_fact_crus_aapl_2024",
+      "sc_type": "T4",
+      "sc_subtype": "graph_fact",
+      "answerable": true,
+      "correct": false,
+      "expected": 87.0,
+      "got_raw": 87.0,
+      "graph_called": false,
+      "traversal_ok": false,
+      "missing_edges": [
+        {
+          "supplier": "CRUS",
+          "customer": "AAPL",
+          "fiscal_year": 2024,
+          "revenue_pct": 87.0,
+          "threshold_only": false
+        }
+      ],
+      "got_text": "In fiscal year 2024, Cirrus Logic reported that Apple Inc. represented approximately **87%** of the company's total net sales. This significant dependence on Apple reflects the company's reliance on a",
+      "latency_s": 16.49,
+      "tool_trace": [
+        "retrieve_text('percentage of Cirrus Logic's revenue from Apple') -> 5 chunks",
+        "retrieve_text('Cirrus Logic revenue from Apple in fiscal year 2024') -> 5 chunks",
+        "retrieve_text('Cirrus Logic revenue from Apple fiscal year 2024') -> 5 chunks",
+        "retrieve_text('Cirrus Logic's major customers') -> 5 chunks",
+        "retrieve_text('Apple') -> 5 chunks"
+      ]
+    },
+    {
+      "id": "t4_fact_qrvo_aapl_2024",
+      "sc_type": "T4",
+      "sc_subtype": "graph_fact",
+      "answerable": true,
+      "correct": false,
+      "expected": 46.0,
+      "got_raw": 46.0,
+      "graph_called": false,
+      "traversal_ok": false,
+      "missing_edges": [
+        {
+          "supplier": "QRVO",
+          "customer": "AAPL",
+          "fiscal_year": 2024,
+          "revenue_pct": 46.0,
+          "threshold_only": false
+        }
+      ],
+      "got_text": "In fiscal year 2024, Qorvo generated 46% of its total revenue from Apple Inc. (Apple) through sales to multiple contract manufacturers. This percentage represents an increase from 37% in fiscal year 2",
+      "latency_s": 5.67,
+      "tool_trace": [
+        "retrieve_text('percentage of Qorvo's revenue from Apple') -> 5 chunks",
+        "retrieve_text('Qorvo revenue from Apple fiscal year 2024') -> 5 chunks"
+      ]
+    },
+    {
+      "id": "t4_fact_jbl_aapl_2023",
+      "sc_type": "T4",
+      "sc_subtype": "graph_fact",
+      "answerable": true,
+      "correct": false,
+      "expected": 17.0,
+      "got_raw": 10.0,
+      "graph_called": false,
+      "traversal_ok": false,
+      "missing_edges": [
+        {
+          "supplier": "JBL",
+          "customer": "AAPL",
+          "fiscal_year": 2023,
+          "revenue_pct": 17.0,
+          "threshold_only": false
+        }
+      ],
+      "got_text": "For fiscal year 2023, Jabil did not disclose a percentage of revenue coming from Apple. The available information indicates that Apple's contribution was less than 10% of total net revenue for that ye",
+      "latency_s": 7.3,
+      "tool_trace": [
+        "retrieve_text('percentage of revenue from Apple') -> 5 chunks",
+        "retrieve_text('Jabil revenue Apple 2023') -> 5 chunks",
+        "retrieve_text('customer revenue by segment') -> 5 chunks",
+        "retrieve_text('Apple revenue percentage 2023') -> 5 chunks"
+      ]
+    },
+    {
+      "id": "t4_fact_avgo_aapl_2022",
+      "sc_type": "T4",
+      "sc_subtype": "graph_fact",
+      "answerable": true,
+      "correct": false,
+      "expected": 20.0,
+      "got_raw": 20.0,
+      "graph_called": false,
+      "traversal_ok": false,
+      "missing_edges": [
+        {
+          "supplier": "AVGO",
+          "customer": "AAPL",
+          "fiscal_year": 2022,
+          "revenue_pct": 20.0,
+          "threshold_only": false
+        }
+      ],
+      "got_text": "In fiscal year 2022, approximately **20%** of Broadcom's revenue came from Apple Inc. This figure is reported in the context of their overall revenue concentration, indicating that aggregate sales to ",
+      "latency_s": 15.81,
+      "tool_trace": [
+        "retrieve_text('Broadcom revenue from Apple') -> 5 chunks",
+        "retrieve_text('Broadcom total revenue') -> 3 chunks",
+        "retrieve_text('Broadcom fiscal year 2022 revenue') -> 5 chunks",
+        "retrieve_text('Broadcom fiscal year 2022 revenue from Apple') -> 5 chunks",
+        "retrieve_text('Broadcom fiscal year 2022 total revenue') -> 5 chunks",
+        "retrieve_text('Broadcom fiscal year 2022 net revenue dollar amount') -> 5 chunks"
+      ]
+    },
+    {
+      "id": "t4_fact_crus_aapl_2022",
+      "sc_type": "T4",
+      "sc_subtype": "graph_fact",
+      "answerable": true,
+      "correct": false,
+      "expected": 79.0,
+      "got_raw": null,
+      "graph_called": false,
+      "traversal_ok": false,
+      "missing_edges": [
+        {
+          "supplier": "CRUS",
+          "customer": "AAPL",
+          "fiscal_year": 2022,
+          "revenue_pct": 79.0,
+          "threshold_only": false
+        }
+      ],
+      "got_text": "I cannot find the specific percentage of Cirrus Logic's revenue that came from Apple in fiscal year 2022 in the database.",
+      "latency_s": 11.29,
+      "tool_trace": [
+        "retrieve_text('percentage of revenue from Apple') -> 5 chunks",
+        "retrieve_text('Cirrus Logic revenue from Apple') -> 5 chunks",
+        "retrieve_text('Cirrus Logic revenue from Apple fiscal year 2022') -> 5 chunks",
+        "retrieve_text('Cirrus Logic Apple customer revenue percentage') -> 5 chunks"
+      ]
+    },
+    {
+      "id": "t4_fact_qrvo_aapl_2022",
+      "sc_type": "T4",
+      "sc_subtype": "graph_fact",
+      "answerable": true,
+      "correct": false,
+      "expected": 33.0,
+      "got_raw": 33.0,
+      "graph_called": false,
+      "traversal_ok": false,
+      "missing_edges": [
+        {
+          "supplier": "QRVO",
+          "customer": "AAPL",
+          "fiscal_year": 2022,
+          "revenue_pct": 33.0,
+          "threshold_only": false
+        }
+      ],
+      "got_text": "In fiscal year 2022, approximately **33%** of Qorvo's total revenue came from Apple Inc. This information comes from Qorvo's filing (accession number 0001604778-22-000029). \n\nIf you need the total rev",
+      "latency_s": 6.77,
+      "tool_trace": [
+        "retrieve_text('Qorvo revenue from Apple') -> 5 chunks",
+        "retrieve_text('Qorvo revenue') -> 5 chunks",
+        "retrieve_text('Qorvo total revenue fiscal year 2022') -> 5 chunks"
+      ]
+    },
+    {
+      "id": "t4_fact_jbl_aapl_2021",
+      "sc_type": "T4",
+      "sc_subtype": "graph_fact",
+      "answerable": true,
+      "correct": false,
+      "expected": 22.0,
+      "got_raw": 10.0,
+      "graph_called": false,
+      "traversal_ok": false,
+      "missing_edges": [
+        {
+          "supplier": "JBL",
+          "customer": "AAPL",
+          "fiscal_year": 2021,
+          "revenue_pct": 22.0,
+          "threshold_only": false
+        }
+      ],
+      "got_text": "In fiscal year 2021, Jabil's revenue from Apple was less than 10% of its total net revenue. This information is supported by SEC filing accession number 0001193125-22-268383, where it specifies that s",
+      "latency_s": 5.27,
+      "tool_trace": [
+        "retrieve_text('percentage of revenue from Apple') -> 5 chunks",
+        "retrieve_text('Apple revenue percentage') -> 5 chunks"
+      ]
+    },
+    {
+      "id": "t4_fact_avgo_aapl_2021",
+      "sc_type": "T4",
+      "sc_subtype": "graph_fact",
+      "answerable": true,
+      "correct": false,
+      "expected": 20.0,
+      "got_raw": 20.0,
+      "graph_called": false,
+      "traversal_ok": false,
+      "missing_edges": [
+        {
+          "supplier": "AVGO",
+          "customer": "AAPL",
+          "fiscal_year": 2021,
+          "revenue_pct": 20.0,
+          "threshold_only": false
+        }
+      ],
+      "got_text": "I cannot find the exact percentage of Broadcom's revenue that came from Apple in fiscal year 2021 in the available data. However, it does indicate that aggregate sales to Apple accounted for approxima",
+      "latency_s": 5.73,
+      "tool_trace": [
+        "retrieve_text('percentage of revenue from Apple') -> 5 chunks"
+      ]
+    },
+    {
+      "id": "t4_fact_adi_aapl_2017",
+      "sc_type": "T4",
+      "sc_subtype": "graph_fact",
+      "answerable": true,
+      "correct": false,
+      "expected": 14.0,
+      "got_raw": 14.0,
+      "graph_called": false,
+      "traversal_ok": false,
+      "missing_edges": [
+        {
+          "supplier": "ADI",
+          "customer": "AAPL",
+          "fiscal_year": 2017,
+          "revenue_pct": 14.0,
+          "threshold_only": false
+        }
+      ],
+      "got_text": "In fiscal year 2017, approximately 14% of Analog Devices' revenue came from Apple Inc. This is based on the SEC filing with accession number 0000006281-18-000126.",
+      "latency_s": 3.53,
+      "tool_trace": [
+        "retrieve_text('percentage of Analog Devices' revenue from Apple in fiscal y') -> 5 chunks"
+      ]
+    },
+    {
+      "id": "t4_fact_qrvo_aapl_2020",
+      "sc_type": "T4",
+      "sc_subtype": "graph_fact",
+      "answerable": true,
+      "correct": false,
+      "expected": 33.0,
+      "got_raw": 33.0,
+      "graph_called": false,
+      "traversal_ok": false,
+      "missing_edges": [
+        {
+          "supplier": "QRVO",
+          "customer": "AAPL",
+          "fiscal_year": 2020,
+          "revenue_pct": 33.0,
+          "threshold_only": false
+        }
+      ],
+      "got_text": "In fiscal year 2020, Qorvo reported that approximately 33% of its total revenue came from Apple. This information is cited from the SEC filing accession number 0001604778-20-000030.",
+      "latency_s": 3.98,
+      "tool_trace": [
+        "retrieve_text('revenue from Apple') -> 5 chunks"
+      ]
+    },
+    {
+      "id": "t4_fact_qrvo_huawei_2019",
+      "sc_type": "T4",
+      "sc_subtype": "graph_fact",
+      "answerable": true,
+      "correct": false,
+      "expected": 13.0,
+      "got_raw": 10.0,
+      "graph_called": false,
+      "traversal_ok": false,
+      "missing_edges": [
+        {
+          "supplier": "QRVO",
+          "customer": "Huawei",
+          "fiscal_year": 2019,
+          "revenue_pct": 13.0,
+          "threshold_only": false
+        }
+      ],
+      "got_text": "In fiscal year 2019, Huawei accounted for approximately **10%** of Qorvo's total revenue. This information is cited from SEC filing accession number **0001604778-20-000030**.",
+      "latency_s": 3.32,
+      "tool_trace": [
+        "retrieve_text('percentage of revenue from Huawei') -> 5 chunks"
+      ]
+    },
+    {
+      "id": "t4_fact_avgo_wt_microelectronics_2022",
+      "sc_type": "T4",
+      "sc_subtype": "graph_fact",
+      "answerable": true,
+      "correct": false,
+      "expected": 20.0,
+      "got_raw": 10.0,
+      "graph_called": false,
+      "traversal_ok": false,
+      "missing_edges": [
+        {
+          "supplier": "AVGO",
+          "customer": "WT Microelectronics",
+          "fiscal_year": 2022,
+          "revenue_pct": 20.0,
+          "threshold_only": false
+        }
+      ],
+      "got_text": "I cannot determine the percentage of Broadcom's revenue that came from WT Microelectronics in fiscal year 2022. The 10-K filings do not provide specific information regarding the revenue contribution ",
+      "latency_s": 12.82,
+      "tool_trace": [
+        "retrieve_text('WT Microelectronics revenue percentage') -> 5 chunks",
+        "retrieve_text('revenues from WT Microelectronics') -> 5 chunks",
+        "retrieve_text('Broadcom WT Microelectronics revenue relationship') -> 5 chunks",
+        "retrieve_text('proportion of revenue from WT Microelectronics') -> 5 chunks"
+      ]
+    },
+    {
+      "id": "t4_fact_qrvo_005930.ks_2022",
+      "sc_type": "T4",
+      "sc_subtype": "graph_fact",
+      "answerable": true,
+      "correct": false,
+      "expected": 11.0,
+      "got_raw": 11.0,
+      "graph_called": false,
+      "traversal_ok": false,
+      "missing_edges": [
+        {
+          "supplier": "QRVO",
+          "customer": "005930.KS",
+          "fiscal_year": 2022,
+          "revenue_pct": 11.0,
+          "threshold_only": false
+        }
+      ],
+      "got_text": "In fiscal year 2022, Samsung accounted for 11% of Qorvo's total revenue. This information is sourced from their SEC filing (accession number 0001604778-22-000029).",
+      "latency_s": 5.21,
+      "tool_trace": [
+        "retrieve_text('percentage of revenue from Samsung') -> 5 chunks"
+      ]
+    },
+    {
+      "id": "t4_fact_qrvo_005930.ks_2023",
+      "sc_type": "T4",
+      "sc_subtype": "graph_fact",
+      "answerable": true,
+      "correct": false,
+      "expected": 12.0,
+      "got_raw": 12.0,
+      "graph_called": false,
+      "traversal_ok": false,
+      "missing_edges": [
+        {
+          "supplier": "QRVO",
+          "customer": "005930.KS",
+          "fiscal_year": 2023,
+          "revenue_pct": 12.0,
+          "threshold_only": false
+        }
+      ],
+      "got_text": "In fiscal year 2023, Samsung accounted for 12% of Qorvo's total revenue. This information is based on their SEC filing (accession number 0001604778-24-000036).",
+      "latency_s": 2.67,
+      "tool_trace": [
+        "retrieve_text('percentage of revenue from Samsung') -> 5 chunks"
+      ]
+    },
+    {
+      "id": "t4_fact_qrvo_005930.ks_2024",
+      "sc_type": "T4",
+      "sc_subtype": "graph_fact",
+      "answerable": true,
+      "correct": false,
+      "expected": 12.0,
+      "got_raw": 12.0,
+      "graph_called": false,
+      "traversal_ok": false,
+      "missing_edges": [
+        {
+          "supplier": "QRVO",
+          "customer": "005930.KS",
+          "fiscal_year": 2024,
+          "revenue_pct": 12.0,
+          "threshold_only": false
+        }
+      ],
+      "got_text": "In fiscal year 2024, Samsung accounted for **12%** of Qorvo's total revenue. This information is sourced from the SEC filing with accession number **0001604778-25-000041**.",
+      "latency_s": 3.15,
+      "tool_trace": [
+        "retrieve_text('Qorvo revenue percentage from Samsung') -> 5 chunks"
+      ]
+    },
+    {
+      "id": "t4_fact_avgo_wt_microelectronics_2021",
+      "sc_type": "T4",
+      "sc_subtype": "graph_fact",
+      "answerable": true,
+      "correct": false,
+      "expected": 18.0,
+      "got_raw": null,
+      "graph_called": false,
+      "traversal_ok": false,
+      "missing_edges": [
+        {
+          "supplier": "AVGO",
+          "customer": "WT Microelectronics",
+          "fiscal_year": 2021,
+          "revenue_pct": 18.0,
+          "threshold_only": false
+        }
+      ],
+      "got_text": "I cannot determine the percentage of Broadcom's revenue that came from WT Microelectronics in fiscal year 2021. The specific revenue contributions from WT Microelectronics were not disclosed in the fi",
+      "latency_s": 6.85,
+      "tool_trace": [
+        "retrieve_text('percentage of Broadcom's revenue from WT Microelectronics') -> 5 chunks",
+        "retrieve_text('WT Microelectronics revenue') -> 5 chunks",
+        "retrieve_text('Broadcom WT Microelectronics revenue fiscal year 2021') -> 5 chunks",
+        "retrieve_text('Broadcom revenue fiscal year 2021') -> 5 chunks"
+      ]
+    },
+    {
+      "id": "t4_lookup_apple_suppliers_2021",
+      "sc_type": "T4",
+      "sc_subtype": "graph_lookup",
+      "answerable": true,
+      "correct": false,
+      "expected": [
+        "CRUS",
+        "QRVO",
+        "JBL",
+        "AVGO",
+        "SWKS"
+      ],
+      "found_in_response": [],
+      "missing": [
+        "JBL",
+        "AVGO",
+        "QRVO",
+        "CRUS",
+        "SWKS"
+      ],
+      "graph_called": false,
+      "got_text": "ERROR: Index not built. Call build() first.",
+      "latency_s": 1.3,
+      "tool_trace": []
+    },
+    {
+      "id": "t4_lookup_apple_suppliers_2022",
+      "sc_type": "T4",
+      "sc_subtype": "graph_lookup",
+      "answerable": true,
+      "correct": false,
+      "expected": [
+        "CRUS",
+        "QRVO",
+        "AVGO",
+        "JBL",
+        "SWKS"
+      ],
+      "found_in_response": [],
+      "missing": [
+        "JBL",
+        "AVGO",
+        "QRVO",
+        "CRUS",
+        "SWKS"
+      ],
+      "graph_called": false,
+      "got_text": "ERROR: Index not built. Call build() first.",
+      "latency_s": 1.17,
+      "tool_trace": []
+    },
+    {
+      "id": "t4_lookup_apple_suppliers_2023",
+      "sc_type": "T4",
+      "sc_subtype": "graph_lookup",
+      "answerable": true,
+      "correct": false,
+      "expected": [
+        "CRUS",
+        "QRVO",
+        "AVGO",
+        "JBL",
+        "SWKS"
+      ],
+      "found_in_response": [
+        "AVGO"
+      ],
+      "missing": [
+        "JBL",
+        "SWKS",
+        "QRVO",
+        "CRUS"
+      ],
+      "graph_called": false,
+      "got_text": "In fiscal year 2023, the following companies disclosed Apple as a significant (>10%) revenue customer:\n\n1. **Broadcom Inc. (AVGO)**: Aggregate sales to Apple Inc. accounted for approximately 20% of their net revenue. \n   - SEC citation: SEC filing accession 0001730168-23-000096.\n\n2. **Qualcomm Inc. ",
+      "latency_s": 5.62,
+      "tool_trace": [
+        "retrieve_text('significant customer Apple') -> 5 chunks"
+      ]
+    },
+    {
+      "id": "t4_lookup_apple_suppliers_2024",
+      "sc_type": "T4",
+      "sc_subtype": "graph_lookup",
+      "answerable": true,
+      "correct": false,
+      "expected": [
+        "CRUS",
+        "QRVO",
+        "JBL",
+        "SWKS"
+      ],
+      "found_in_response": [],
+      "missing": [
+        "JBL",
+        "SWKS",
+        "QRVO",
+        "CRUS"
+      ],
+      "graph_called": false,
+      "got_text": "ERROR: Index not built. Call build() first.",
+      "latency_s": 1.94,
+      "tool_trace": []
+    },
+    {
+      "id": "t4_trend_crus_apple_2020_2024",
+      "sc_type": "T4",
+      "sc_subtype": "graph_trend",
+      "answerable": true,
+      "correct": false,
+      "expected": {
+        "2020": 79.0,
+        "2021": 83.0,
+        "2022": 79.0,
+        "2023": 83.0,
+        "2024": 87.0
+      },
+      "got_map": {
+        "2020": 2024.0
+      },
+      "graph_called": false,
+      "traversal_ok": false,
+      "missing_edges": [
+        {
+          "supplier": "CRUS",
+          "customer": "AAPL",
+          "fiscal_year": 2020,
+          "revenue_pct": 79.0,
+          "threshold_only": false
+        },
+        {
+          "supplier": "CRUS",
+          "customer": "AAPL",
+          "fiscal_year": 2021,
+          "revenue_pct": 83.0,
+          "threshold_only": false
+        },
+        {
+          "supplier": "CRUS",
+          "customer": "AAPL",
+          "fiscal_year": 2022,
+          "revenue_pct": 79.0,
+          "threshold_only": false
+        },
+        {
+          "supplier": "CRUS",
+          "customer": "AAPL",
+          "fiscal_year": 2023,
+          "revenue_pct": 83.0,
+          "threshold_only": false
+        },
+        {
+          "supplier": "CRUS",
+          "customer": "AAPL",
+          "fiscal_year": 2024,
+          "revenue_pct": 87.0,
+          "threshold_only": false
+        }
+      ],
+      "got_text": "I found the following information regarding Cirrus Logic's revenue concentration from Apple for the fiscal years 2020 to 2024:\n\n1. **Fiscal Year 2020**: Information regarding the exact percentage of revenue from Apple is not available in the documented sources.\n2. **Fiscal Year 2021**: Information r",
+      "latency_s": 11.67,
+      "tool_trace": [
+        "retrieve_text('Cirrus Logic revenue concentration from Apple') -> 5 chunks",
+        "retrieve_text('Cirrus Logic revenue concentration from Apple') -> 5 chunks",
+        "retrieve_text('Cirrus Logic revenue concentration from Apple 2020') -> 5 chunks",
+        "retrieve_text('Cirrus Logic revenue concentration from Apple 2021') -> 5 chunks",
+        "retrieve_text('Cirrus Logic revenue concentration from Apple 2022') -> 5 chunks",
+        "retrieve_text('Cirrus Logic revenue concentration from Apple 2023') -> 5 chunks",
+        "retrieve_text('Cirrus Logic revenue concentration from Apple 2024') -> 5 chunks"
+      ]
+    },
+    {
+      "id": "t4_trend_qrvo_apple_2020_2024",
+      "sc_type": "T4",
+      "sc_subtype": "graph_trend",
+      "answerable": true,
+      "correct": false,
+      "expected": {
+        "2020": 33.0,
+        "2021": 30.0,
+        "2022": 33.0,
+        "2023": 37.0,
+        "2024": 46.0
+      },
+      "got_map": {
+        "2020": 43.0,
+        "2021": 44.0,
+        "2023": 46.0,
+        "2024": 47.0
+      },
+      "graph_called": false,
+      "traversal_ok": false,
+      "missing_edges": [
+        {
+          "supplier": "QRVO",
+          "customer": "AAPL",
+          "fiscal_year": 2020,
+          "revenue_pct": 33.0,
+          "threshold_only": false
+        },
+        {
+          "supplier": "QRVO",
+          "customer": "AAPL",
+          "fiscal_year": 2021,
+          "revenue_pct": 30.0,
+          "threshold_only": false
+        },
+        {
+          "supplier": "QRVO",
+          "customer": "AAPL",
+          "fiscal_year": 2022,
+          "revenue_pct": 33.0,
+          "threshold_only": false
+        },
+        {
+          "supplier": "QRVO",
+          "customer": "AAPL",
+          "fiscal_year": 2023,
+          "revenue_pct": 37.0,
+          "threshold_only": false
+        },
+        {
+          "supplier": "QRVO",
+          "customer": "AAPL",
+          "fiscal_year": 2024,
+          "revenue_pct": 46.0,
+          "threshold_only": false
+        }
+      ],
+      "got_text": "Qorvo's revenue concentration from Apple has varied over the years. Here are the details for each fiscal year you asked about:\n\n- **Fiscal Year 2020**: Revenue from Apple represented approximately **43%** of total revenue (SEC Accession Number: 0001604778-17-000031).\n- **Fiscal Year 2021**: Revenue ",
+      "latency_s": 15.86,
+      "tool_trace": [
+        "retrieve_text('Qorvo's revenue concentration from Apple') -> 5 chunks",
+        "retrieve_text('Qorvo revenue from Apple') -> 5 chunks",
+        "retrieve_text('Qorvo revenue concentration from major customers') -> 5 chunks"
+      ]
+    },
+    {
+      "id": "t4_compare_highest_apple_2022",
+      "sc_type": "T4",
+      "sc_subtype": "graph_comparison",
+      "answerable": true,
+      "correct": false,
+      "graph_called": false,
+      "traversal_ok": false,
+      "missing_edges": [
+        {
+          "supplier": "CRUS",
+          "customer": "AAPL",
+          "fiscal_year": 2022,
+          "revenue_pct": 79.0,
+          "threshold_only": false
+        },
+        {
+          "supplier": "QRVO",
+          "customer": "AAPL",
+          "fiscal_year": 2022,
+          "revenue_pct": 33.0,
+          "threshold_only": false
+        },
+        {
+          "supplier": "JBL",
+          "customer": "AAPL",
+          "fiscal_year": 2022,
+          "revenue_pct": 19.0,
+          "threshold_only": false
+        },
+        {
+          "supplier": "AVGO",
+          "customer": "AAPL",
+          "fiscal_year": 2022,
+          "revenue_pct": 20.0,
+          "threshold_only": false
+        },
+        {
+          "supplier": "SWKS",
+          "customer": "AAPL",
+          "fiscal_year": 2022,
+          "revenue_pct": 10.0,
+          "threshold_only": true
+        }
+      ],
+      "judge_score": 3,
+      "judge_reason": "The agent correctly identified Cirrus Logic as having the highest Apple revenue concentration in fiscal year 2022, providing accurate percentages and citations for all companies.",
+      "got_text": "Based on the data collected for fiscal year 2022:\n\n1. **Cirrus Logic (CRUS)**: Apple represented approximately 83% of total net sales (accession number 0000772406-23-000019).\n2. **Qorvo (QRVO)**: Apple accounted for approximately 20% of total revenue (accession number 0001604778-22-000118).\n3. **Jab",
+      "latency_s": 17.5,
+      "tool_trace": [
+        "retrieve_text('Apple revenue concentration') -> 5 chunks",
+        "retrieve_text('Apple revenue concentration') -> 5 chunks",
+        "retrieve_text('Apple revenue concentration') -> 5 chunks",
+        "retrieve_text('Apple revenue concentration') -> 5 chunks"
+      ]
+    },
+    {
+      "id": "t4_compare_highest_apple_2024",
+      "sc_type": "T4",
+      "sc_subtype": "graph_comparison",
+      "answerable": true,
+      "correct": false,
+      "graph_called": false,
+      "traversal_ok": false,
+      "missing_edges": [
+        {
+          "supplier": "CRUS",
+          "customer": "AAPL",
+          "fiscal_year": 2024,
+          "revenue_pct": 87.0,
+          "threshold_only": false
+        },
+        {
+          "supplier": "QRVO",
+          "customer": "AAPL",
+          "fiscal_year": 2024,
+          "revenue_pct": 46.0,
+          "threshold_only": false
+        },
+        {
+          "supplier": "JBL",
+          "customer": "AAPL",
+          "fiscal_year": 2024,
+          "revenue_pct": 11.0,
+          "threshold_only": false
+        },
+        {
+          "supplier": "SWKS",
+          "customer": "AAPL",
+          "fiscal_year": 2024,
+          "revenue_pct": 10.0,
+          "threshold_only": true
+        }
+      ],
+      "judge_score": 3,
+      "judge_reason": "The agent correctly identified Cirrus Logic (CRUS) as having the highest revenue concentration from Apple with accurate figures and citations.",
+      "got_text": "Based on the information retrieved from the SEC filings for each of the companies in relation to their revenue concentration from Apple Inc. for fiscal year 2024:\n\n1. **Cirrus Logic (CRUS)**: Apple represented approximately **91%** of Cirrus Logic's total net sales. (SEC filing accession 0000772406-",
+      "latency_s": 21.06,
+      "tool_trace": [
+        "retrieve_text('Apple revenue concentration') -> 5 chunks",
+        "retrieve_text('Apple revenue concentration') -> 5 chunks",
+        "retrieve_text('Apple revenue concentration') -> 5 chunks",
+        "retrieve_text('Apple revenue concentration') -> 5 chunks"
+      ]
+    },
+    {
+      "id": "t4_negative_txn_2023",
+      "sc_type": "T4",
+      "sc_subtype": "graph_negative",
+      "answerable": true,
+      "correct": false,
+      "refusal_ok": false,
+      "graph_called": false,
+      "got_text": "Texas Instruments disclosed that they are not dependent on any single customer accounting for more than 10% of revenue in fiscal year 2023. Their broad portfolio and market reach ensure diverse custom",
+      "latency_s": 3.43,
+      "tool_trace": [
+        "retrieve_text('single customer accounting for more than 10% of revenue') -> 5 chunks"
+      ]
+    },
+    {
+      "id": "t4_negative_glw_2022",
+      "sc_type": "T4",
+      "sc_subtype": "graph_negative",
+      "answerable": true,
+      "correct": false,
+      "refusal_ok": false,
+      "graph_called": false,
+      "got_text": "Yes, Corning disclosed that in fiscal year 2022, there was one customer that individually accounted for more than 10% of segment net sales, contributing significantly to their total revenue. Specifica",
+      "latency_s": 6.87,
+      "tool_trace": [
+        "retrieve_text('customer accounting for more than 10% of revenue') -> 5 chunks"
+      ]
+    },
+    {
+      "id": "t4_negative_lrcx_2023",
+      "sc_type": "T4",
+      "sc_subtype": "graph_negative",
+      "answerable": true,
+      "correct": false,
+      "refusal_ok": false,
+      "graph_called": false,
+      "got_text": "Yes, Lam Research disclosed that it had a named customer accounting for more than 10% of revenue in fiscal year 2023. This information is detailed in their MD&A section of the 10-K filing for that yea",
+      "latency_s": 3.05,
+      "tool_trace": [
+        "retrieve_text('named customer accounting for more than 10% of revenue') -> 5 chunks"
+      ]
+    },
+    {
+      "id": "t4_negative_sanm_2023",
+      "sc_type": "T4",
+      "sc_subtype": "graph_negative",
+      "answerable": true,
+      "correct": false,
+      "refusal_ok": false,
+      "graph_called": false,
+      "got_text": "Yes, Sanmina disclosed that they have historically depended on a relatively small number of customers for a significant percentage of their sales. Specifically, they mentioned that sales to their ten ",
+      "latency_s": 3.72,
+      "tool_trace": [
+        "retrieve_text('single named customer accounting for more than 10% of revenu') -> 5 chunks"
+      ]
+    },
+    {
+      "id": "t4_negative_adi_2022",
+      "sc_type": "T4",
+      "sc_subtype": "graph_negative",
+      "answerable": true,
+      "correct": false,
+      "refusal_ok": false,
+      "graph_called": false,
+      "got_text": "Yes, Analog Devices disclosed that Apple accounted for more than 10% of its revenue in fiscal year 2022. However, the specific percentage for that year is not mentioned in the retrieved texts; they pr",
+      "latency_s": 5.89,
+      "tool_trace": [
+        "retrieve_text('Apple customer revenue 10%') -> 5 chunks"
+      ]
+    },
+    {
+      "id": "t4_negative_qcom_2022",
+      "sc_type": "T4",
+      "sc_subtype": "graph_negative",
+      "answerable": true,
+      "correct": false,
+      "refusal_ok": false,
+      "graph_called": false,
+      "got_text": "Yes, Qualcomm disclosed that suppliers to Apple accounted for more than 10% of consolidated revenues in fiscal year 2017 and fiscal year 2018. Specifically, in fiscal 2017, revenues from suppliers to ",
+      "latency_s": 4.11,
+      "tool_trace": [
+        "retrieve_text('Apple accounting for more than 10% of consolidated revenues') -> 5 chunks"
+      ]
+    },
+    {
+      "id": "t5_exposure_qrvo_apple_2024",
+      "sc_type": "T5",
+      "sc_subtype": "graph_compute",
+      "answerable": true,
+      "correct": false,
+      "expected": 1733972760,
+      "got_raw": 10.0,
+      "graph_called": false,
+      "financials_called": false,
+      "traversal_ok": false,
+      "missing_edges": [
+        {
+          "supplier": "QRVO",
+          "customer": "AAPL",
+          "fiscal_year": 2024,
+          "revenue_pct": 46.0,
+          "threshold_only": false
+        }
+      ],
+      "got_text": "[Circuit breaker] Could not produce a final answer within 10 tool-call rounds. Partial steps are recorded.",
+      "latency_s": 20.43,
+      "tool_trace": [
+        "retrieve_text('revenue from Apple') -> 5 chunks",
+        "retrieve_text('Qorvo revenue') -> 5 chunks",
+        "retrieve_text('Qorvo total revenue') -> 5 chunks",
+        "retrieve_text('Qorvo fiscal year 2024 total revenue') -> 5 chunks",
+        "retrieve_text('Qorvo fiscal year 2024 financials') -> 5 chunks",
+        "retrieve_text('Qorvo fiscal year 2024 revenue') -> 5 chunks",
+        "retrieve_text('Qorvo revenue fiscal year 2024') -> 5 chunks",
+        "retrieve_text('Qorvo total revenue FY 2024') -> 5 chunks",
+        "retrieve_text('Qorvo total revenue FY 2024') -> 5 chunks",
+        "retrieve_text('Qorvo financial results 2024') -> 5 chunks"
+      ]
+    },
+    {
+      "id": "t5_exposure_crus_apple_2024",
+      "sc_type": "T5",
+      "sc_subtype": "graph_compute",
+      "answerable": true,
+      "correct": false,
+      "expected": 1556334300,
+      "got_raw": 1.79,
+      "graph_called": false,
+      "financials_called": false,
+      "traversal_ok": false,
+      "missing_edges": [
+        {
+          "supplier": "CRUS",
+          "customer": "AAPL",
+          "fiscal_year": 2024,
+          "revenue_pct": 87.0,
+          "threshold_only": false
+        }
+      ],
+      "got_text": "In fiscal year 2024, Cirrus Logic reported net sales of $1.79 billion (accession number: 0000772406-24-000031). Apple accounted for approximately 87% of Cirrus Logic's total sales during that fiscal y",
+      "latency_s": 8.88,
+      "tool_trace": [
+        "retrieve_text('Cirrus Logic revenue from Apple') -> 5 chunks",
+        "retrieve_text('concentration of revenue from Apple') -> 5 chunks",
+        "retrieve_text('total revenue Cirrus Logic fiscal year 2024') -> 5 chunks",
+        "retrieve_text('Cirrus Logic revenue concentration percentage Apple fiscal y') -> 5 chunks"
+      ]
+    },
+    {
+      "id": "t5_exposure_jbl_apple_2023",
+      "sc_type": "T5",
+      "sc_subtype": "graph_compute",
+      "answerable": true,
+      "correct": false,
+      "expected": 5899340000,
+      "got_raw": 34702.0,
+      "graph_called": false,
+      "financials_called": false,
+      "traversal_ok": false,
+      "missing_edges": [
+        {
+          "supplier": "JBL",
+          "customer": "AAPL",
+          "fiscal_year": 2023,
+          "revenue_pct": 17.0,
+          "threshold_only": false
+        }
+      ],
+      "got_text": "In fiscal year 2023, Jabil reported a net revenue of $34,702 million (or $34.702 billion) with Apple Inc. accounting for approximately 24% of this revenue. To calculate the revenue Jabil derived from ",
+      "latency_s": 8.66,
+      "tool_trace": [
+        "retrieve_text('revenue from Apple') -> 5 chunks",
+        "retrieve_text('concentration of revenue') -> 5 chunks",
+        "retrieve_text('revenue Apple Jabil 2023 percentage') -> 5 chunks",
+        "retrieve_text('Jabil revenue FY2023') -> 5 chunks",
+        "retrieve_text('Jabil concentration of revenue from Apple 2023') -> 5 chunks"
+      ]
+    },
+    {
+      "id": "t5_exposure_avgo_apple_2022",
+      "sc_type": "T5",
+      "sc_subtype": "graph_compute",
+      "answerable": true,
+      "correct": false,
+      "expected": 6640600000,
+      "got_raw": 10.0,
+      "graph_called": false,
+      "financials_called": false,
+      "traversal_ok": false,
+      "missing_edges": [
+        {
+          "supplier": "AVGO",
+          "customer": "AAPL",
+          "fiscal_year": 2022,
+          "revenue_pct": 20.0,
+          "threshold_only": false
+        }
+      ],
+      "got_text": "[Circuit breaker] Could not produce a final answer within 10 tool-call rounds. Partial steps are recorded.",
+      "latency_s": 13.08,
+      "tool_trace": [
+        "retrieve_text('revenue from Apple') -> 5 chunks",
+        "retrieve_text('revenue') -> 5 chunks",
+        "retrieve_text('fiscal year 2022 revenue') -> 5 chunks",
+        "retrieve_text('fiscal year 2022') -> 5 chunks",
+        "retrieve_text('fiscal year 2022 revenue total') -> 5 chunks",
+        "retrieve_text('total revenue') -> 5 chunks",
+        "retrieve_text('net revenue fiscal year 2022') -> 5 chunks",
+        "retrieve_text('total revenue fiscal year 2022') -> 5 chunks",
+        "retrieve_text('total revenue') -> 5 chunks",
+        "retrieve_text('net revenue') -> 5 chunks",
+        "retrieve_text('fiscal year 2022') -> 5 chunks"
+      ]
+    },
+    {
+      "id": "t5_exposure_qrvo_apple_2022",
+      "sc_type": "T5",
+      "sc_subtype": "graph_compute",
+      "answerable": true,
+      "correct": false,
+      "expected": 1533085620,
+      "got_raw": 10.0,
+      "graph_called": false,
+      "financials_called": false,
+      "traversal_ok": false,
+      "missing_edges": [
+        {
+          "supplier": "QRVO",
+          "customer": "AAPL",
+          "fiscal_year": 2022,
+          "revenue_pct": 33.0,
+          "threshold_only": false
+        }
+      ],
+      "got_text": "[Circuit breaker] Could not produce a final answer within 10 tool-call rounds. Partial steps are recorded.",
+      "latency_s": 11.94,
+      "tool_trace": [
+        "retrieve_text('Qorvo revenue from Apple') -> 5 chunks",
+        "retrieve_text('Qorvo revenue total fiscal year 2022') -> 5 chunks",
+        "retrieve_text('Qorvo revenue from customers fiscal year 2022') -> 5 chunks",
+        "retrieve_text('Qorvo total revenue fiscal year 2022') -> 5 chunks",
+        "retrieve_text('Qorvo revenue fiscal year 2022') -> 5 chunks",
+        "retrieve_text('Qorvo fiscal year 2022 revenue') -> 5 chunks",
+        "retrieve_text('Qorvo total revenue fiscal year 2022') -> 5 chunks",
+        "retrieve_text('Qorvo revenue from Apple channels') -> 5 chunks",
+        "retrieve_text('Qorvo revenue from Apple total') -> 5 chunks",
+        "retrieve_text('Qorvo year 2022 total revenue') -> 5 chunks"
+      ]
+    },
+    {
+      "id": "t5_exposure_crus_apple_2022",
+      "sc_type": "T5",
+      "sc_subtype": "graph_compute",
+      "answerable": true,
+      "correct": false,
+      "expected": 1407353400,
+      "got_raw": 1.41,
+      "graph_called": false,
+      "financials_called": false,
+      "traversal_ok": false,
+      "missing_edges": [
+        {
+          "supplier": "CRUS",
+          "customer": "AAPL",
+          "fiscal_year": 2022,
+          "revenue_pct": 79.0,
+          "threshold_only": false
+        }
+      ],
+      "got_text": "In fiscal year 2022, Cirrus Logic derived approximately **$1.41 billion** from sales to Apple Inc. This figure represents around **79%** of the company's total net sales for that fiscal year, which we",
+      "latency_s": 12.08,
+      "tool_trace": [
+        "retrieve_text('revenue from Apple') -> 5 chunks",
+        "retrieve_text('total sales') -> 5 chunks",
+        "retrieve_text('net sales') -> 5 chunks",
+        "retrieve_text('customers') -> 5 chunks",
+        "retrieve_text('percentage of sales from Apple 2022') -> 5 chunks",
+        "retrieve_text('percent Apple sales FY2022') -> 5 chunks",
+        "retrieve_text('sales to Apple in fiscal 2022') -> 5 chunks"
+      ]
+    },
+    {
+      "id": "t5_exposure_jbl_apple_2021",
+      "sc_type": "T5",
+      "sc_subtype": "graph_compute",
+      "answerable": true,
+      "correct": false,
+      "expected": 6442700000,
+      "got_raw": 29285.0,
+      "graph_called": false,
+      "financials_called": false,
+      "traversal_ok": false,
+      "missing_edges": [
+        {
+          "supplier": "JBL",
+          "customer": "AAPL",
+          "fiscal_year": 2021,
+          "revenue_pct": 22.0,
+          "threshold_only": false
+        }
+      ],
+      "got_text": "In fiscal year 2021, Jabil derived **$29,285 million** in net revenue across all customers, but the specific revenue from Apple is not disclosed separately. The company typically mentions significant ",
+      "latency_s": 10.69,
+      "tool_trace": [
+        "retrieve_text('revenue from Apple') -> 5 chunks",
+        "retrieve_text('2021 revenue from Apple') -> 5 chunks",
+        "retrieve_text('Apple') -> 5 chunks",
+        "retrieve_text('Jabil revenue with Apple fiscal year 2021') -> 5 chunks",
+        "retrieve_text('Apple sales percentage 2021') -> 5 chunks"
+      ]
+    },
+    {
+      "id": "t5_exposure_crus_apple_2023",
+      "sc_type": "T5",
+      "sc_subtype": "graph_compute",
+      "answerable": true,
+      "correct": false,
+      "expected": 1575022110,
+      "got_raw": 83.0,
+      "graph_called": false,
+      "financials_called": false,
+      "traversal_ok": false,
+      "missing_edges": [
+        {
+          "supplier": "CRUS",
+          "customer": "AAPL",
+          "fiscal_year": 2023,
+          "revenue_pct": 83.0,
+          "threshold_only": false
+        }
+      ],
+      "got_text": "In fiscal year 2023, Cirrus Logic's revenue from Apple, which represented approximately 83% of the company's total net sales, was derived from total net sales of $1.90 billion. \n\nTo calculate the reve",
+      "latency_s": 9.13,
+      "tool_trace": [
+        "retrieve_text('revenue from Apple') -> 5 chunks",
+        "retrieve_text('total sales') -> 5 chunks",
+        "retrieve_text('net sales') -> 5 chunks",
+        "retrieve_text('net sales') -> 5 chunks",
+        "retrieve_text('fiscal year 2023') -> 5 chunks"
+      ]
+    },
+    {
+      "id": "t5_exposure_avgo_apple_2020",
+      "sc_type": "T5",
+      "sc_subtype": "graph_compute",
+      "answerable": true,
+      "correct": false,
+      "expected": 3583200000,
+      "got_raw": 10.0,
+      "graph_called": false,
+      "financials_called": false,
+      "traversal_ok": false,
+      "missing_edges": [
+        {
+          "supplier": "AVGO",
+          "customer": "AAPL",
+          "fiscal_year": 2020,
+          "revenue_pct": 15.0,
+          "threshold_only": false
+        }
+      ],
+      "got_text": "[Circuit breaker] Could not produce a final answer within 10 tool-call rounds. Partial steps are recorded.",
+      "latency_s": 28.73,
+      "tool_trace": [
+        "retrieve_text('concentration percentage Apple') -> 5 chunks",
+        "retrieve_text('net revenue') -> 5 chunks",
+        "retrieve_text('net revenue fiscal year 2020') -> 5 chunks",
+        "retrieve_text('net revenue fiscal year 2020') -> 5 chunks",
+        "retrieve_text('sales to Apple percent fiscal year 2020') -> 5 chunks",
+        "retrieve_text('net revenue fiscal year 2020 Broadcom') -> 5 chunks",
+        "retrieve_text('net revenue fiscal year 2020') -> 5 chunks",
+        "retrieve_text('net revenue fiscal year 2020') -> 5 chunks",
+        "retrieve_text('sales to Apple percent fiscal year 2020') -> 5 chunks",
+        "retrieve_text('net revenue for fiscal year 2020') -> 5 chunks",
+        "retrieve_text('net revenue fiscal year 2020 Broadcom') -> 5 chunks",
+        "retrieve_text('sales to Apple percent fiscal year 2020') -> 5 chunks",
+        "retrieve_text('net revenue fiscal year 2020 Broadcom') -> 5 chunks"
+      ]
+    },
+    {
+      "id": "t5_cut_qrvo_apple_20pct_2024",
+      "sc_type": "T5",
+      "sc_subtype": "graph_compute",
+      "answerable": true,
+      "correct": false,
+      "expected": 346794552,
+      "got_raw": 10.0,
+      "graph_called": false,
+      "financials_called": false,
+      "traversal_ok": false,
+      "missing_edges": [
+        {
+          "supplier": "QRVO",
+          "customer": "AAPL",
+          "fiscal_year": 2024,
+          "revenue_pct": 46.0,
+          "threshold_only": false
+        }
+      ],
+      "got_text": "[Circuit breaker] Could not produce a final answer within 10 tool-call rounds. Partial steps are recorded.",
+      "latency_s": 15.19,
+      "tool_trace": [
+        "retrieve_text('Apple concentration Qorvo') -> 5 chunks",
+        "retrieve_text('Qorvo fiscal year 2024 total revenue') -> 5 chunks",
+        "retrieve_text('Qorvo fiscal year 2024 total revenue') -> 5 chunks",
+        "retrieve_text('Qorvo fiscal year 2024 total revenue') -> 5 chunks",
+        "retrieve_text('Qorvo fiscal year 2024 total revenue') -> 5 chunks",
+        "retrieve_text('Qorvo fiscal year 2024 total revenue') -> 5 chunks",
+        "retrieve_text('Qorvo fiscal year 2024 total revenue') -> 5 chunks",
+        "retrieve_text('Qorvo total revenue fiscal year 2024') -> 5 chunks",
+        "retrieve_text('Qorvo total revenue fiscal year 2024') -> 5 chunks",
+        "retrieve_text('Qorvo total revenue fiscal year 2024') -> 5 chunks"
+      ]
+    },
+    {
+      "id": "t5_cut_crus_apple_20pct_2024",
+      "sc_type": "T5",
+      "sc_subtype": "graph_compute",
+      "answerable": true,
+      "correct": false,
+      "expected": 311266860,
+      "got_raw": 20.0,
+      "graph_called": false,
+      "financials_called": false,
+      "traversal_ok": false,
+      "missing_edges": [
+        {
+          "supplier": "CRUS",
+          "customer": "AAPL",
+          "fiscal_year": 2024,
+          "revenue_pct": 87.0,
+          "threshold_only": false
+        }
+      ],
+      "got_text": "To calculate the potential revenue loss for Cirrus Logic if Apple reduces its orders by 20%, we first need to identify the revenue figures.\n\n1. According to the retrieved information, it is stated tha",
+      "latency_s": 39.38,
+      "tool_trace": [
+        "retrieve_text('Apple Cirrus Logic') -> 5 chunks",
+        "retrieve_text('relationship between Apple and Cirrus Logic') -> 5 chunks",
+        "retrieve_text('dependency on Apple') -> 5 chunks",
+        "retrieve_text('Cirrus Logic revenue March 30 2024') -> 5 chunks",
+        "retrieve_text('Net sales Cirrus Logic March 30, 2024') -> 5 chunks",
+        "retrieve_text('Cirrus Logic annual report March 30 2024') -> 5 chunks",
+        "retrieve_text('Cirrus Logic revenue') -> 5 chunks",
+        "retrieve_text('Cirrus Logic March 30 2024 revenue sales') -> 5 chunks",
+        "retrieve_text('Cirrus Logic revenue for March 30 2024') -> 5 chunks",
+        "retrieve_text('Cirrus Logic March 30 2024') -> 5 chunks",
+        "retrieve_text('relationship Cirrus Logic Apple Inc. revenue') -> 5 chunks",
+        "retrieve_text('Cirrus Logic March 30 2024 total revenue') -> 5 chunks"
+      ]
+    },
+    {
+      "id": "t5_cut_jbl_apple_10pct_2022",
+      "sc_type": "T5",
+      "sc_subtype": "graph_compute",
+      "answerable": true,
+      "correct": false,
+      "expected": 636082000,
+      "got_raw": 10.0,
+      "graph_called": false,
+      "financials_called": false,
+      "traversal_ok": false,
+      "missing_edges": [
+        {
+          "supplier": "JBL",
+          "customer": "AAPL",
+          "fiscal_year": 2022,
+          "revenue_pct": 19.0,
+          "threshold_only": false
+        }
+      ],
+      "got_text": "[Circuit breaker] Could not produce a final answer within 10 tool-call rounds. Partial steps are recorded.",
+      "latency_s": 13.87,
+      "tool_trace": [
+        "retrieve_text('Apple') -> 5 chunks",
+        "retrieve_text('Jabil's fiscal year 2022 revenue') -> 5 chunks",
+        "retrieve_text('Jabil's fiscal year 2022 revenue') -> 5 chunks",
+        "retrieve_text('Apple revenue') -> 5 chunks",
+        "retrieve_text('Jabil's fiscal year 2022 revenue') -> 5 chunks",
+        "retrieve_text('Apple fiscal year 2022 revenue') -> 5 chunks",
+        "retrieve_text('Apple fiscal year 2022 revenue') -> 5 chunks",
+        "retrieve_text('Jabil revenue impact from Apple') -> 5 chunks",
+        "retrieve_text('Apple fiscal year 2022 revenue') -> 5 chunks",
+        "retrieve_text('Jabil fiscal year 2022 revenue') -> 5 chunks",
+        "retrieve_text('Apple fiscal year 2022 revenue') -> 5 chunks",
+        "retrieve_text('Apple revenue') -> 5 chunks",
+        "retrieve_text('Jabil fiscal year 2022 revenue') -> 5 chunks"
+      ]
+    },
+    {
+      "id": "t5_cut_avgo_apple_15pct_2022",
+      "sc_type": "T5",
+      "sc_subtype": "graph_compute",
+      "answerable": true,
+      "correct": false,
+      "expected": 996090000,
+      "got_raw": 10.0,
+      "graph_called": false,
+      "financials_called": false,
+      "traversal_ok": false,
+      "missing_edges": [
+        {
+          "supplier": "AVGO",
+          "customer": "AAPL",
+          "fiscal_year": 2022,
+          "revenue_pct": 20.0,
+          "threshold_only": false
+        }
+      ],
+      "got_text": "[Circuit breaker] Could not produce a final answer within 10 tool-call rounds. Partial steps are recorded.",
+      "latency_s": 15.52,
+      "tool_trace": [
+        "retrieve_text('supplier relationship between Broadcom and Apple') -> 5 chunks",
+        "retrieve_text('Broadcom's revenue from Apple') -> 5 chunks",
+        "retrieve_text('Broadcom's total revenue for fiscal year 2022') -> 5 chunks",
+        "retrieve_text('Broadcom total revenue for fiscal year 2022') -> 5 chunks",
+        "retrieve_text('Broadcom total revenue for fiscal year 2022') -> 5 chunks",
+        "retrieve_text('Broadcom revenue percentage from Apple for fiscal year 2022') -> 5 chunks",
+        "retrieve_text('Broadcom's total revenue for fiscal year 2022') -> 5 chunks",
+        "retrieve_text('Broadcom's total revenue for fiscal year 2022') -> 5 chunks",
+        "retrieve_text('Broadcom total revenue for fiscal year 2022') -> 5 chunks",
+        "retrieve_text('Broadcom total revenue for fiscal year 2022') -> 5 chunks",
+        "retrieve_text('Broadcom revenue from Apple for fiscal year 2022') -> 5 chunks",
+        "retrieve_text('Broadcom total revenue for fiscal year 2022') -> 5 chunks",
+        "retrieve_text('Broadcom's total revenue for fiscal year 2022') -> 5 chunks",
+        "retrieve_text('Broadcom revenue from Apple for fiscal year 2022') -> 5 chunks"
+      ]
+    },
+    {
+      "id": "t5_cut_qrvo_apple_20pct_2022",
+      "sc_type": "T5",
+      "sc_subtype": "graph_compute",
+      "answerable": true,
+      "correct": false,
+      "expected": 306617124,
+      "got_raw": 10.0,
+      "graph_called": false,
+      "financials_called": false,
+      "traversal_ok": false,
+      "missing_edges": [
+        {
+          "supplier": "QRVO",
+          "customer": "AAPL",
+          "fiscal_year": 2022,
+          "revenue_pct": 33.0,
+          "threshold_only": false
+        }
+      ],
+      "got_text": "[Circuit breaker] Could not produce a final answer within 10 tool-call rounds. Partial steps are recorded.",
+      "latency_s": 23.1,
+      "tool_trace": [
+        "retrieve_text('Qorvo revenue from Apple') -> 5 chunks",
+        "retrieve_text('Qorvo suppliers') -> 5 chunks",
+        "retrieve_text('Qorvo revenue for fiscal year 2022') -> 5 chunks",
+        "retrieve_text('Qorvo revenue from Apple in fiscal year 2022') -> 5 chunks",
+        "retrieve_text('Qorvo total revenue for fiscal year 2022') -> 5 chunks",
+        "retrieve_text('Qorvo revenue for fiscal year 2022') -> 5 chunks",
+        "retrieve_text('Qorvo revenue from Apple for fiscal year 2022') -> 5 chunks",
+        "retrieve_text('Qorvo total revenue for fiscal year 2022') -> 5 chunks",
+        "retrieve_text('Qorvo revenue from Apple for fiscal year 2022') -> 5 chunks",
+        "retrieve_text('Qorvo revenue from Apple for fiscal year 2022') -> 5 chunks",
+        "retrieve_text('Qorvo revenue for fiscal year 2022') -> 5 chunks",
+        "retrieve_text('Qorvo revenue from Apple in fiscal year 2022') -> 5 chunks",
+        "retrieve_text('Qorvo total revenue for fiscal year 2022') -> 5 chunks",
+        "retrieve_text('Qorvo revenue from Apple in fiscal year 2022') -> 5 chunks",
+        "retrieve_text('Qorvo total revenue for fiscal year 2022') -> 5 chunks"
+      ]
+    },
+    {
+      "id": "t5_compare_crus_qrvo_2023",
+      "sc_type": "T5",
+      "sc_subtype": "graph_comparison",
+      "answerable": true,
+      "correct": false,
+      "graph_called": false,
+      "traversal_ok": false,
+      "missing_edges": [
+        {
+          "supplier": "CRUS",
+          "customer": "AAPL",
+          "fiscal_year": 2023,
+          "revenue_pct": 83.0,
+          "threshold_only": false
+        },
+        {
+          "supplier": "QRVO",
+          "customer": "AAPL",
+          "fiscal_year": 2023,
+          "revenue_pct": 37.0,
+          "threshold_only": false
+        }
+      ],
+      "judge_score": 0,
+      "judge_reason": "The agent failed to provide any answer or analysis regarding the question, resulting in a complete lack of relevant information.",
+      "got_text": "[Circuit breaker] Could not produce a final answer within 10 tool-call rounds. Partial steps are recorded.",
+      "latency_s": 68.51,
+      "tool_trace": [
+        "retrieve_text('Apple') -> 5 chunks",
+        "retrieve_text('Apple') -> 5 chunks",
+        "retrieve_text('customer revenue') -> 5 chunks",
+        "retrieve_text('customer revenue') -> 5 chunks",
+        "retrieve_text('Cirrus Logic revenue') -> 5 chunks",
+        "retrieve_text('Qorvo revenue') -> 5 chunks",
+        "retrieve_text('total revenue FY 2023') -> 5 chunks",
+        "retrieve_text('total revenue FY 2023') -> 5 chunks",
+        "retrieve_text('Qorvo revenue FY 2023') -> 5 chunks",
+        "retrieve_text('Cirrus Logic revenue FY 2023') -> 5 chunks",
+        "retrieve_text('revenue from Apple') -> 5 chunks",
+        "retrieve_text('revenue from Apple') -> 5 chunks",
+        "retrieve_text('revenue from Apple FY 2023') -> 5 chunks",
+        "retrieve_text('revenue from Apple FY 2023') -> 5 chunks",
+        "retrieve_text('Cirrus Logic revenue from Apple') -> 5 chunks",
+        "retrieve_text('Qorvo revenue from Apple') -> 5 chunks",
+        "retrieve_text('Qorvo total revenue FY 2023') -> 5 chunks",
+        "retrieve_text('Cirrus Logic total revenue FY 2023') -> 5 chunks",
+        "retrieve_text('Qorvo total revenue FY 2023') -> 5 chunks",
+        "retrieve_text('Cirrus Logic total revenue FY 2023') -> 5 chunks",
+        "retrieve_text('revenue from Apple FY 2023') -> 5 chunks",
+        "retrieve_text('revenue from Apple FY 2023') -> 5 chunks"
+      ]
+    },
+    {
+      "id": "t5_compare_crus_qrvo_jbl_2022",
+      "sc_type": "T5",
+      "sc_subtype": "graph_comparison",
+      "answerable": true,
+      "correct": false,
+      "graph_called": false,
+      "traversal_ok": false,
+      "missing_edges": [
+        {
+          "supplier": "CRUS",
+          "customer": "AAPL",
+          "fiscal_year": 2022,
+          "revenue_pct": 79.0,
+          "threshold_only": false
+        },
+        {
+          "supplier": "QRVO",
+          "customer": "AAPL",
+          "fiscal_year": 2022,
+          "revenue_pct": 33.0,
+          "threshold_only": false
+        },
+        {
+          "supplier": "JBL",
+          "customer": "AAPL",
+          "fiscal_year": 2022,
+          "revenue_pct": 19.0,
+          "threshold_only": false
+        }
+      ],
+      "judge_score": 0,
+      "judge_reason": "The agent did not provide a final answer and failed to rank the companies by their dollar exposure to Apple.",
+      "got_text": "[Circuit breaker] Could not produce a final answer within 10 tool-call rounds. Partial steps are recorded.",
+      "latency_s": 37.75,
+      "tool_trace": [
+        "retrieve_text('revenue percentage from Apple') -> 1 chunks",
+        "retrieve_text('revenue percentage from Apple') -> 1 chunks",
+        "retrieve_text('revenue percentage from Apple') -> 1 chunks",
+        "retrieve_text('total revenue') -> 1 chunks",
+        "retrieve_text('total revenue') -> 1 chunks",
+        "retrieve_text('total revenue') -> 1 chunks",
+        "retrieve_text('total revenue') -> 1 chunks",
+        "retrieve_text('total revenue') -> 1 chunks",
+        "retrieve_text('total revenue') -> 1 chunks",
+        "retrieve_text('total revenue') -> 1 chunks",
+        "retrieve_text('total revenue') -> 1 chunks",
+        "retrieve_text('total revenue') -> 1 chunks",
+        "retrieve_text('total revenue') -> 1 chunks",
+        "retrieve_text('total revenue') -> 1 chunks",
+        "retrieve_text('total revenue') -> 1 chunks",
+        "retrieve_text('total revenue') -> 1 chunks",
+        "retrieve_text('total revenue') -> 1 chunks",
+        "retrieve_text('total revenue') -> 1 chunks",
+        "retrieve_text('total revenue') -> 1 chunks",
+        "retrieve_text('total revenue') -> 1 chunks",
+        "retrieve_text('total revenue') -> 1 chunks",
+        "retrieve_text('total revenue') -> 1 chunks",
+        "retrieve_text('total revenue') -> 1 chunks",
+        "retrieve_text('total revenue') -> 1 chunks",
+        "retrieve_text('total revenue') -> 1 chunks",
+        "retrieve_text('total revenue') -> 1 chunks",
+        "retrieve_text('total revenue') -> 1 chunks",
+        "retrieve_text('net revenue') -> 1 chunks",
+        "retrieve_text('net revenue') -> 1 chunks",
+        "retrieve_text('net revenue') -> 1 chunks"
+      ]
+    },
+    {
+      "id": "t5_compare_qrvo_crus_2024",
+      "sc_type": "T5",
+      "sc_subtype": "graph_comparison",
+      "answerable": true,
+      "correct": false,
+      "graph_called": false,
+      "traversal_ok": false,
+      "missing_edges": [
+        {
+          "supplier": "QRVO",
+          "customer": "AAPL",
+          "fiscal_year": 2024,
+          "revenue_pct": 46.0,
+          "threshold_only": false
+        },
+        {
+          "supplier": "CRUS",
+          "customer": "AAPL",
+          "fiscal_year": 2024,
+          "revenue_pct": 87.0,
+          "threshold_only": false
+        }
+      ],
+      "judge_score": 2,
+      "judge_reason": "The answer correctly identifies the concentration and absolute dollar exposure but contains inaccurate total revenue figures for both companies.",
+      "got_text": "In fiscal year 2024, the comparative analysis of Cirrus Logic (CRUS) and Qorvo (QRVO) regarding their revenue exposure to Apple reveals the following:\n\n### Cirrus Logic's Revenue Exposure\n- **Percentage of Revenue from Apple**: Cirrus Logic derived approximately **87%** of its total revenue from App",
+      "latency_s": 13.83,
+      "tool_trace": [
+        "retrieve_text('Apple revenue exposure') -> 5 chunks",
+        "retrieve_text('Apple revenue exposure') -> 5 chunks",
+        "retrieve_text('Cirrus Logic revenue') -> 5 chunks",
+        "retrieve_text('Qorvo revenue') -> 5 chunks",
+        "retrieve_text('Cirrus Logic revenue fiscal year 2024') -> 5 chunks",
+        "retrieve_text('Qorvo revenue fiscal year 2024') -> 5 chunks"
+      ]
+    },
+    {
+      "id": "t5_trend_qrvo_apple_exposure_2020_2024",
+      "sc_type": "T5",
+      "sc_subtype": "graph_trend",
+      "answerable": true,
+      "correct": false,
+      "expected": {
+        "2020": 266210340,
+        "2021": 1204592100,
+        "2022": 780647670,
+        "2023": 1320677630,
+        "2024": 299535440
+      },
+      "got_map": {
+        "2020": 2024.0
+      },
+      "graph_called": false,
+      "traversal_ok": false,
+      "missing_edges": [
+        {
+          "supplier": "QRVO",
+          "customer": "AAPL",
+          "fiscal_year": 2020,
+          "revenue_pct": 33.0,
+          "threshold_only": false
+        },
+        {
+          "supplier": "QRVO",
+          "customer": "AAPL",
+          "fiscal_year": 2020,
+          "revenue_pct": 33.0,
+          "threshold_only": false
+        },
+        {
+          "supplier": "QRVO",
+          "customer": "AAPL",
+          "fiscal_year": 2020,
+          "revenue_pct": 33.0,
+          "threshold_only": false
+        },
+        {
+          "supplier": "QRVO",
+          "customer": "AAPL",
+          "fiscal_year": 2020,
+          "revenue_pct": 33.0,
+          "threshold_only": false
+        },
+        {
+          "supplier": "QRVO",
+          "customer": "AAPL",
+          "fiscal_year": 2020,
+          "revenue_pct": 33.0,
+          "threshold_only": false
+        },
+        {
+          "supplier": "QRVO",
+          "customer": "AAPL",
+          "fiscal_year": 2020,
+          "revenue_pct": 33.0,
+          "threshold_only": false
+        },
+        {
+          "supplier": "QRVO",
+          "customer": "AAPL",
+          "fiscal_year": 2020,
+          "revenue_pct": 33.0,
+          "threshold_only": false
+        },
+        {
+          "supplier": "QRVO",
+          "customer": "AAPL",
+          "fiscal_year": 2020,
+          "revenue_pct": 33.0,
+          "threshold_only": false
+        },
+        {
+          "supplier": "QRVO",
+          "customer": "AAPL",
+          "fiscal_year": 2020,
+          "revenue_pct": 33.0,
+          "threshold_only": false
+        },
+        {
+          "supplier": "QRVO",
+          "customer": "AAPL",
+          "fiscal_year": 2020,
+          "revenue_pct": 33.0,
+          "threshold_only": false
+        },
+        {
+          "supplier": "QRVO",
+          "customer": "AAPL",
+          "fiscal_year": 2020,
+          "revenue_pct": 33.0,
+          "threshold_only": false
+        },
+        {
+          "supplier": "QRVO",
+          "customer": "AAPL",
+          "fiscal_year": 2020,
+          "revenue_pct": 33.0,
+          "threshold_only": false
+        },
+        {
+          "supplier": "QRVO",
+          "customer": "AAPL",
+          "fiscal_year": 2020,
+          "revenue_pct": 33.0,
+          "threshold_only": false
+        },
+        {
+          "supplier": "QRVO",
+          "customer": "AAPL",
+          "fiscal_year": 2020,
+          "revenue_pct": 33.0,
+          "threshold_only": false
+        },
+        {
+          "supplier": "QRVO",
+          "customer": "AAPL",
+          "fiscal_year": 2020,
+          "revenue_pct": 33.0,
+          "threshold_only": false
+        },
+        {
+          "supplier": "QRVO",
+          "customer": "AAPL",
+          "fiscal_year": 2021,
+          "revenue_pct": 30.0,
+          "threshold_only": false
+        },
+        {
+          "supplier": "QRVO",
+          "customer": "AAPL",
+          "fiscal_year": 2021,
+          "revenue_pct": 30.0,
+          "threshold_only": false
+        },
+        {
+          "supplier": "QRVO",
+          "customer": "AAPL",
+          "fiscal_year": 2021,
+          "revenue_pct": 30.0,
+          "threshold_only": false
+        },
+        {
+          "supplier": "QRVO",
+          "customer": "AAPL",
+          "fiscal_year": 2021,
+          "revenue_pct": 30.0,
+          "threshold_only": false
+        },
+        {
+          "supplier": "QRVO",
+          "customer": "AAPL",
+          "fiscal_year": 2021,
+          "revenue_pct": 30.0,
+          "threshold_only": false
+        },
+        {
+          "supplier": "QRVO",
+          "customer": "AAPL",
+          "fiscal_year": 2021,
+          "revenue_pct": 30.0,
+          "threshold_only": false
+        },
+        {
+          "supplier": "QRVO",
+          "customer": "AAPL",
+          "fiscal_year": 2021,
+          "revenue_pct": 30.0,
+          "threshold_only": false
+        },
+        {
+          "supplier": "QRVO",
+          "customer": "AAPL",
+          "fiscal_year": 2021,
+          "revenue_pct": 30.0,
+          "threshold_only": false
+        },
+        {
+          "supplier": "QRVO",
+          "customer": "AAPL",
+          "fiscal_year": 2021,
+          "revenue_pct": 30.0,
+          "threshold_only": false
+        },
+        {
+          "supplier": "QRVO",
+          "customer": "AAPL",
+          "fiscal_year": 2022,
+          "revenue_pct": 33.0,
+          "threshold_only": false
+        },
+        {
+          "supplier": "QRVO",
+          "customer": "AAPL",
+          "fiscal_year": 2022,
+          "revenue_pct": 33.0,
+          "threshold_only": false
+        },
+        {
+          "supplier": "QRVO",
+          "customer": "AAPL",
+          "fiscal_year": 2022,
+          "revenue_pct": 33.0,
+          "threshold_only": false
+        },
+        {
+          "supplier": "QRVO",
+          "customer": "AAPL",
+          "fiscal_year": 2022,
+          "revenue_pct": 33.0,
+          "threshold_only": false
+        },
+        {
+          "supplier": "QRVO",
+          "customer": "AAPL",
+          "fiscal_year": 2022,
+          "revenue_pct": 33.0,
+          "threshold_only": false
+        },
+        {
+          "supplier": "QRVO",
+          "customer": "AAPL",
+          "fiscal_year": 2022,
+          "revenue_pct": 33.0,
+          "threshold_only": false
+        },
+        {
+          "supplier": "QRVO",
+          "customer": "AAPL",
+          "fiscal_year": 2022,
+          "revenue_pct": 33.0,
+          "threshold_only": false
+        },
+        {
+          "supplier": "QRVO",
+          "customer": "AAPL",
+          "fiscal_year": 2022,
+          "revenue_pct": 33.0,
+          "threshold_only": false
+        },
+        {
+          "supplier": "QRVO",
+          "customer": "AAPL",
+          "fiscal_year": 2022,
+          "revenue_pct": 33.0,
+          "threshold_only": false
+        },
+        {
+          "supplier": "QRVO",
+          "customer": "AAPL",
+          "fiscal_year": 2023,
+          "revenue_pct": 37.0,
+          "threshold_only": false
+        },
+        {
+          "supplier": "QRVO",
+          "customer": "AAPL",
+          "fiscal_year": 2023,
+          "revenue_pct": 37.0,
+          "threshold_only": false
+        },
+        {
+          "supplier": "QRVO",
+          "customer": "AAPL",
+          "fiscal_year": 2023,
+          "revenue_pct": 37.0,
+          "threshold_only": false
+        },
+        {
+          "supplier": "QRVO",
+          "customer": "AAPL",
+          "fiscal_year": 2023,
+          "revenue_pct": 37.0,
+          "threshold_only": false
+        },
+        {
+          "supplier": "QRVO",
+          "customer": "AAPL",
+          "fiscal_year": 2023,
+          "revenue_pct": 37.0,
+          "threshold_only": false
+        },
+        {
+          "supplier": "QRVO",
+          "customer": "AAPL",
+          "fiscal_year": 2023,
+          "revenue_pct": 37.0,
+          "threshold_only": false
+        },
+        {
+          "supplier": "QRVO",
+          "customer": "AAPL",
+          "fiscal_year": 2023,
+          "revenue_pct": 37.0,
+          "threshold_only": false
+        },
+        {
+          "supplier": "QRVO",
+          "customer": "AAPL",
+          "fiscal_year": 2023,
+          "revenue_pct": 37.0,
+          "threshold_only": false
+        },
+        {
+          "supplier": "QRVO",
+          "customer": "AAPL",
+          "fiscal_year": 2023,
+          "revenue_pct": 37.0,
+          "threshold_only": false
+        },
+        {
+          "supplier": "QRVO",
+          "customer": "AAPL",
+          "fiscal_year": 2024,
+          "revenue_pct": 46.0,
+          "threshold_only": false
+        },
+        {
+          "supplier": "QRVO",
+          "customer": "AAPL",
+          "fiscal_year": 2024,
+          "revenue_pct": 46.0,
+          "threshold_only": false
+        },
+        {
+          "supplier": "QRVO",
+          "customer": "AAPL",
+          "fiscal_year": 2024,
+          "revenue_pct": 46.0,
+          "threshold_only": false
+        },
+        {
+          "supplier": "QRVO",
+          "customer": "AAPL",
+          "fiscal_year": 2024,
+          "revenue_pct": 46.0,
+          "threshold_only": false
+        },
+        {
+          "supplier": "QRVO",
+          "customer": "AAPL",
+          "fiscal_year": 2024,
+          "revenue_pct": 46.0,
+          "threshold_only": false
+        },
+        {
+          "supplier": "QRVO",
+          "customer": "AAPL",
+          "fiscal_year": 2024,
+          "revenue_pct": 46.0,
+          "threshold_only": false
+        },
+        {
+          "supplier": "QRVO",
+          "customer": "AAPL",
+          "fiscal_year": 2024,
+          "revenue_pct": 46.0,
+          "threshold_only": false
+        },
+        {
+          "supplier": "QRVO",
+          "customer": "AAPL",
+          "fiscal_year": 2024,
+          "revenue_pct": 46.0,
+          "threshold_only": false
+        },
+        {
+          "supplier": "QRVO",
+          "customer": "AAPL",
+          "fiscal_year": 2024,
+          "revenue_pct": 46.0,
+          "threshold_only": false
+        }
+      ],
+      "got_text": "From fiscal year 2020 to 2024, Qorvo's revenue derived from Apple as a percentage of total revenue is as follows:\n\n- **FY2020**: Apple accounted for **approximately 33%** of total revenue.\n- **FY2021**: Apple accounted for **approximately 30%** of total revenue (accession number 0001604778-20-000030",
+      "latency_s": 14.53,
+      "tool_trace": [
+        "retrieve_text('Apple') -> 5 chunks",
+        "retrieve_text('Qorvo revenue by customer including Apple') -> 5 chunks",
+        "retrieve_text('Qorvo revenue FY2020') -> 5 chunks",
+        "retrieve_text('Qorvo revenue FY2021') -> 5 chunks",
+        "retrieve_text('Qorvo revenue FY2024') -> 5 chunks",
+        "retrieve_text('Qorvo revenue FY2024') -> 5 chunks",
+        "retrieve_text('Qorvo revenue FY2021') -> 5 chunks",
+        "retrieve_text('Qorvo revenue FY2022') -> 5 chunks",
+        "retrieve_text('Qorvo revenue FY2023') -> 5 chunks",
+        "retrieve_text('Qorvo revenue FY2022') -> 5 chunks",
+        "retrieve_text('Qorvo revenue FY2025') -> 5 chunks"
+      ]
+    },
+    {
+      "id": "t5_exposure_avgo_wt_micro_2022",
+      "sc_type": "T5",
+      "sc_subtype": "graph_compute",
+      "answerable": true,
+      "correct": false,
+      "expected": 6640600000,
+      "got_raw": 598.0,
+      "graph_called": false,
+      "financials_called": false,
+      "traversal_ok": false,
+      "missing_edges": [
+        {
+          "supplier": "AVGO",
+          "customer": "WT Microelectronics",
+          "fiscal_year": 2022,
+          "revenue_pct": 20.0,
+          "threshold_only": false
+        }
+      ],
+      "got_text": "In fiscal year 2022, Broadcom derived approximately **$598 million** in revenue from WT Microelectronics. This figure is calculated based on WT Microelectronics accounting for approximately **35%** of",
+      "latency_s": 11.38,
+      "tool_trace": [
+        "retrieve_text('WT Microelectronics revenue percentage') -> 5 chunks",
+        "retrieve_text('Broadcom revenue from WT Microelectronics percentage') -> 5 chunks",
+        "retrieve_text('Broadcom total revenue fiscal year 2022') -> 5 chunks",
+        "retrieve_text('Broadcom revenue from WT Microelectronics percentage') -> 5 chunks",
+        "retrieve_text('Broadcom total revenue fiscal year 2022') -> 5 chunks",
+        "retrieve_text('WT Microelectronics revenue based on disclosed concentration') -> 5 chunks",
+        "retrieve_text('Broadcom sales to WT Microelectronics fiscal year 2022') -> 5 chunks"
+      ]
+    },
+    {
+      "id": "t5_compare_jbl_apple_amazon_2020",
+      "sc_type": "T5",
+      "sc_subtype": "graph_comparison",
+      "answerable": true,
+      "correct": false,
+      "graph_called": false,
+      "traversal_ok": false,
+      "missing_edges": [
+        {
+          "supplier": "JBL",
+          "customer": "AAPL",
+          "fiscal_year": 2020,
+          "revenue_pct": 20.0,
+          "threshold_only": false
+        },
+        {
+          "supplier": "JBL",
+          "customer": "AMZN",
+          "fiscal_year": 2020,
+          "revenue_pct": 11.0,
+          "threshold_only": false
+        }
+      ],
+      "judge_score": 0,
+      "judge_reason": "The agent did not provide any revenue figures for either company, failing to answer the question about Jabil's revenue from Apple compared to Amazon.",
+      "got_text": "I cannot find supply-chain data for Jabil in the database that details its revenue from Apple or Amazon for fiscal year 2020.",
+      "latency_s": 5.43,
+      "tool_trace": [
+        "retrieve_text('Jabil revenue from Apple') -> 5 chunks",
+        "retrieve_text('Jabil revenue from Amazon') -> 5 chunks"
+      ]
+    },
+    {
+      "id": "t6_reversed_apple_procurement_qrvo",
+      "sc_type": "T6",
+      "sc_subtype": "direction_reversed",
+      "answerable": false,
+      "correct": true,
+      "refusal_detected": true,
+      "got_text": "I cannot determine what percentage of Apple's total procurement budget is spent on Qorvo components.",
+      "latency_s": 0.92,
+      "tool_trace": []
+    },
+    {
+      "id": "t6_reversed_apple_spend_crus",
+      "sc_type": "T6",
+      "sc_subtype": "direction_reversed",
+      "answerable": false,
+      "correct": true,
+      "refusal_detected": true,
+      "got_text": "I cannot determine how much Apple pays Cirrus Logic annually for audio chips.",
+      "latency_s": 0.8,
+      "tool_trace": []
+    },
+    {
+      "id": "t6_reversed_apple_depend_swks",
+      "sc_type": "T6",
+      "sc_subtype": "direction_reversed",
+      "answerable": false,
+      "correct": true,
+      "refusal_detected": true,
+      "got_text": "I cannot determine what share of Apple's RF component purchases come from Skyworks, as the data is not available.",
+      "latency_s": 1.32,
+      "tool_trace": []
+    },
+    {
+      "id": "t6_reversed_apple_importance_jbl",
+      "sc_type": "T6",
+      "sc_subtype": "direction_reversed",
+      "answerable": false,
+      "correct": true,
+      "refusal_detected": true,
+      "got_text": "I cannot determine what percentage of Apple's manufacturing is handled by Jabil.",
+      "latency_s": 0.93,
+      "tool_trace": []
+    },
+    {
+      "id": "t6_reversed_apple_bom_avgo",
+      "sc_type": "T6",
+      "sc_subtype": "direction_reversed",
+      "answerable": false,
+      "correct": true,
+      "refusal_detected": true,
+      "got_text": "I cannot determine what percentage of Apple's iPhone bill of materials cost comes from Broadcom.",
+      "latency_s": 1.34,
+      "tool_trace": []
+    },
+    {
+      "id": "t6_gap_glw_named_customer_2023",
+      "sc_type": "T6",
+      "sc_subtype": "data_gap",
+      "answerable": false,
+      "correct": false,
+      "refusal_detected": false,
+      "got_text": "Corning's largest customer that accounts for more than 10% of its revenue in fiscal year 2023 is not explicitly stated in the available disclosures. However, the company's Display Technologies segment",
+      "latency_s": 4.57,
+      "tool_trace": [
+        "retrieve_text('largest customer more than 10% of revenue') -> 5 chunks"
+      ]
+    },
+    {
+      "id": "t6_gap_txn_customer_2023",
+      "sc_type": "T6",
+      "sc_subtype": "data_gap",
+      "answerable": false,
+      "correct": false,
+      "refusal_detected": false,
+      "got_text": "Texas Instruments' largest customer in FY2023 is **Apple**, which represents **>10%** of their total revenues. This signifies that Apple's purchases account for a substantial portion of Texas Instrume",
+      "latency_s": 9.04,
+      "tool_trace": [
+        "retrieve_text('largest single customer') -> 5 chunks",
+        "retrieve_text('customer revenue percentage') -> 5 chunks",
+        "retrieve_text('FY2023 largest customer revenue percentage') -> 5 chunks",
+        "retrieve_text('top customer percentage of revenue') -> 5 chunks",
+        "retrieve_text('Texas Instruments customer revenue') -> 5 chunks",
+        "retrieve_text('largest customer revenues') -> 5 chunks"
+      ]
+    },
+    {
+      "id": "t6_gap_swks_exact_pct_2024",
+      "sc_type": "T6",
+      "sc_subtype": "data_gap",
+      "answerable": false,
+      "correct": false,
+      "refusal_detected": false,
+      "got_text": "In fiscal year 2024, Apple constituted more than 10% of Skyworks Solutions' net revenue. The exact percentage attributable to Apple is not specified in the provided details. \n\nFor further information,",
+      "latency_s": 4.17,
+      "tool_trace": [
+        "retrieve_text('Skyworks Solutions revenue attributable to Apple') -> 5 chunks",
+        "retrieve_text('percentage of revenue from Apple') -> 5 chunks",
+        "retrieve_text('Skyworks Solutions revenue from Apple 2024') -> 5 chunks"
+      ]
+    },
+    {
+      "id": "t6_gap_swks_exact_pct_2022",
+      "sc_type": "T6",
+      "sc_subtype": "data_gap",
+      "answerable": false,
+      "correct": true,
+      "refusal_detected": true,
+      "got_text": "For FY2022, Skyworks Solutions reported total revenues of approximately $3,344 million (SEC filing accession 0000004127-21-000058). \n\nAs for the revenue coming from Apple, it is noted that Apple was a",
+      "latency_s": 10.96,
+      "tool_trace": [
+        "retrieve_text('percentage of revenue from Apple') -> 5 chunks",
+        "retrieve_text('Skyworks revenue from Apple') -> 5 chunks",
+        "retrieve_text('Skyworks revenue total FY2022') -> 5 chunks",
+        "retrieve_text('Skyworks total revenue FY2022') -> 5 chunks",
+        "retrieve_text('Skyworks revenue from Apple FY2022') -> 5 chunks",
+        "retrieve_text('Skyworks fiscal year 2022 revenue') -> 5 chunks",
+        "retrieve_text('Skyworks revenue Apple FY2022') -> 5 chunks",
+        "retrieve_text('Skyworks revenue total FY2022') -> 5 chunks"
+      ]
+    },
+    {
+      "id": "t6_oos_tsmc_apple_2024",
+      "sc_type": "T6",
+      "sc_subtype": "out_of_scope",
+      "answerable": false,
+      "correct": false,
+      "refusal_detected": false,
+      "got_text": "ERROR: Index not built. Call build() first.",
+      "latency_s": 0.88,
+      "tool_trace": []
+    },
+    {
+      "id": "t6_oos_foxconn_apple_2023",
+      "sc_type": "T6",
+      "sc_subtype": "out_of_scope",
+      "answerable": false,
+      "correct": false,
+      "refusal_detected": false,
+      "got_text": "ERROR: Index not built. Call build() first.",
+      "latency_s": 1.07,
+      "tool_trace": []
+    },
+    {
+      "id": "t6_oos_mediatek_customer_2023",
+      "sc_type": "T6",
+      "sc_subtype": "out_of_scope",
+      "answerable": false,
+      "correct": false,
+      "refusal_detected": false,
+      "got_text": "ERROR: Index not built. Call build() first.",
+      "latency_s": 1.06,
+      "tool_trace": []
+    },
+    {
+      "id": "t6_metric_qrvo_fcf_2024",
+      "sc_type": "T6",
+      "sc_subtype": "metric_unavailable",
+      "answerable": false,
+      "correct": true,
+      "refusal_detected": true,
+      "got_text": "I cannot determine Qorvo's free cash flow in fiscal year 2024.",
+      "latency_s": 1.0,
+      "tool_trace": []
+    },
+    {
+      "id": "t6_metric_crus_div_payout_2024",
+      "sc_type": "T6",
+      "sc_subtype": "metric_unavailable",
+      "answerable": false,
+      "correct": true,
+      "refusal_detected": true,
+      "got_text": "I cannot determine the dividend payout ratio for Cirrus Logic for fiscal year 2024 as this metric is not available in the database.",
+      "latency_s": 1.02,
+      "tool_trace": []
+    },
+    {
+      "id": "t6_metric_aapl_china_rev_2024",
+      "sc_type": "T6",
+      "sc_subtype": "metric_unavailable",
+      "answerable": false,
+      "correct": true,
+      "refusal_detected": true,
+      "got_text": "I cannot determine what percentage of Apple's revenue came from China in fiscal year 2024.",
+      "latency_s": 0.95,
+      "tool_trace": []
+    }
+  ]
+}

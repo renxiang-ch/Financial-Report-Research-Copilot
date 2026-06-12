@@ -16,7 +16,6 @@ Usage:
 """
 
 import argparse
-import json
 import re
 import time
 from typing import Literal
@@ -28,17 +27,25 @@ from openai import OpenAI
 
 from copilot.config import settings
 from copilot.storage.db import get_conn
-from copilot.storage.schema import create_tables
 
 EDGAR_HEADERS = {"User-Agent": "financial-copilot research renxiangchao2678@gmail.com"}
 
-# Note titles that signal customer concentration disclosures
+# Note titles / table-header phrases that signal customer concentration disclosures.
+# Two styles covered:
+#   Note-title style (CRUS, QRVO): "Significant Customer", "Concentration of Credit Risk"
+#   Table-header style (JBL, others): "Sales to the following customer that accounted for 10%..."
 _CONCENTRATION_NOTE_TITLES = [
     "concentration of credit risk",
     "major customer",
     "significant customer",
     "customer concentration",
     "concentrations",
+    # Table-header style — direct percentage tables without a preceding note title
+    "sales to the following customer",
+    "sets forth the respective portion of net revenue",
+    "10% or more of our net revenue",
+    "10% or more of the company",
+    "10 percent or more of our net revenue",
 ]
 
 # ── Item 8 HTML extraction ────────────────────────────────────────────────────
@@ -55,37 +62,76 @@ def _download_html(doc_url: str) -> str:
     return re.sub(r" {2,}", " ", text).strip()
 
 
+_MAX_SECTION_CHARS = 4000  # cap per candidate block sent to LLM
+
+_STOP_RE = re.compile(
+    r"\b(goodwill|income tax|stock[\-\s]based compensation|debt|leases|"
+    r"pension|derivative|fair value|equity|commitments|subsequent events)\b",
+    re.IGNORECASE,
+)
+
+
 def _extract_item8_candidates(full_text: str) -> list[str]:
     """
-    Find paragraphs containing customer concentration disclosures anywhere in the filing.
+    Return text blocks that contain customer concentration disclosures.
 
-    Strategy: search for paragraphs near a concentration note title, rather than
-    relying on Item 8 boundaries (which are unreliable due to Table of Contents
-    entries matching the same regex as actual section headers).
+    Strategy: when a concentration note title or table-header phrase is found,
+    accumulate ALL consecutive paragraphs as one block and pass it to the LLM.
+
+    Two previous bugs, now fixed:
+    1. Paragraph filter `len > 40` dropped short HTML table data rows like
+       "Apple, Inc.\\n22\\n%\\n28\\n%\\n24\\n%" (~25 chars) that carry the key
+       customer name and percentage — the whole table was visible but the data
+       row was silently discarded.
+    2. Capturing filtered individual paragraphs with _is_candidate(), so
+       a table row that contained only a name or only a percentage (both
+       failing the regex) was never included even when capturing.
+
+    Fix: use a minimal filter (non-empty only) for all_paras, then skip
+    short paragraphs ONLY when not yet capturing. Inside a concentration
+    section, every paragraph (including short table rows) is accumulated.
     """
-    paragraphs = [p.strip() for p in full_text.split("\n\n") if len(p.strip()) > 40]
+    # Include short paragraphs — HTML table rows can be < 40 chars
+    all_paras = [p.strip() for p in full_text.split("\n\n") if p.strip()]
 
     candidates: list[str] = []
+    buffer: list[str] = []
     capturing = False
 
-    for para in paragraphs:
+    def _flush() -> None:
+        if buffer:
+            block = "\n\n".join(buffer)
+            if _is_candidate(block):
+                candidates.append(block)
+            buffer.clear()
+
+    for para in all_paras:
         lower = para.lower()
 
-        # Start capturing when we enter a concentration-related section
+        # Concentration section trigger — flush previous section, start new
         if any(t in lower for t in _CONCENTRATION_NOTE_TITLES):
+            _flush()
+            buffer.append(para)
             capturing = True
+            continue
 
-        # Stop when a clearly unrelated section header appears
-        if capturing and re.search(
-            r"\b(goodwill|income tax|stock.based compensation|debt|leases|"
-            r"pension|derivative|fair value|equity|commitments|subsequent events)\b",
-            lower,
-        ) and len(para) < 120:  # short lines are likely section headers
-            capturing = False
+        if capturing:
+            # Stop at clearly unrelated short section headers
+            if _STOP_RE.search(lower) and len(para) < 120:
+                _flush()
+                capturing = False
+                continue
 
-        if capturing and _is_candidate(para):
-            candidates.append(para)
+            buffer.append(para)  # include even short table rows
+            if sum(len(p) for p in buffer) > _MAX_SECTION_CHARS:
+                _flush()
+                capturing = False
+        else:
+            # Outside a section: skip short/irrelevant fragments
+            if len(para) < 40:
+                continue
 
+    _flush()
     return candidates
 
 
@@ -162,11 +208,12 @@ def run_extraction_from_html(
 # Source: WRDS Supply Chain / manual verification against 10-K filings
 GOLDEN_EDGES = [
     {"supplier": "QRVO", "customer": "AAPL", "revenue_pct": 46.0, "fiscal_year": 2024},
-    # SWKS: 10-K text says "more than ten percent" only — exact % (~59%) is in financial notes
+    # SWKS: 10-K text says "more than ten percent" only — exact % (~69%) is in financial notes
     # (not ingested). Regression checks for threshold disclosure (revenue_pct=10.0).
     {"supplier": "SWKS", "customer": "AAPL", "revenue_pct": 10.0, "fiscal_year": 2024},
-    # CRUS: ~85% disclosure is in financial notes (Note 14), not in ingested text_chunks.
-    # This is a known data coverage gap — not an extraction failure.
+    # JBL FY2019: Apple named explicitly in both Item 1 table and Item 8 notes at 22%.
+    # Previously missed because HTML table rows were fragmented across paragraphs.
+    {"supplier": "JBL",  "customer": "AAPL", "revenue_pct": 22.0, "fiscal_year": 2019},
 ]
 
 # ── Customer name → ticker resolution ────────────────────────────────────────

@@ -145,7 +145,7 @@ config.py resolves `.env` via absolute path from `__file__`, so it works regardl
 - 7,444 text chunks — all embedded with `BAAI/bge-small-en-v1.5` (research cluster, 10 years)
 - 42,244 financial facts across 15 companies, 20 metrics (FY2015-2025 depending on company)
 - 148 filings (15 companies × ~9.9 years avg)
-- supply_edges: **110 rows, 29 (supplier,customer) pairs** — chunks + HTML extraction complete, full cleanup done (2026-06-11)
+- supply_edges: **107 rows, 29 (supplier,customer) pairs** — chunks + HTML extraction + data quality corrections complete (2026-06-11/12)
 - Run embed: `uv run --active python -m copilot.pipeline.embed_chunks`
 - Run extraction: `$env:PYTHONUTF8="1"; uv run --active python -m copilot.pipeline.extract_edges --source all`
 
@@ -971,23 +971,30 @@ In structured financial QA systems, locking the numeric channel to SQL/XBRL caus
 
 ---
 
-### Dataset Design — SC-DisclosureQA Benchmark (target: 150 questions)
+### Dataset Design — SC-DisclosureQA Benchmark (125 questions, 2026-06-12)
 
 | Type | Count | Example | Ground truth source |
 |---|---|---|---|
-| **T1 SQL numeric** | 30 | "CRUS FY2023 Revenue?" | XBRL financial_facts |
-| **T2 SQL + compute** | 30 | "QRVO Apple exposure × Revenue = dollar amount" | XBRL + compute |
-| **T3 Qualitative retrieval** | 25 | "How does SWKS describe customer concentration risk?" | text_chunks key phrase |
+| **T1 SQL numeric** | 30 | "CRUS FY2024 Revenue?" | XBRL financial_facts |
+| **T2 SQL + compute** | 30 | "QRVO gross margin FY2023?" | XBRL + compute |
+| ~~T3 Qualitative retrieval~~ | ~~25~~ | — | Excluded: not central to error-migration thesis |
 | **T4 Graph relation** | 30 | "Which companies supply Apple in FY2024? At what %?" | supply_edges |
 | **T5 Cross-entity reasoning** | 20 | "20% Apple order cut: CRUS vs QRVO — who loses more in dollars?" | graph + compute |
 | **T6 Unanswerable / refusal** | 15 | "What % of Apple's procurement comes from QRVO?" | Customer-side = no disclosure → must refuse |
 
-**Dataset special properties:**
-- Every T4/T5 question has a `traversal_ground_truth` field (required edges that must appear in the answer's reasoning trace)
-- T6 includes two sub-types: true data gaps AND direction-reversed questions (customer-side queries)
-- Time range: FY2020–FY2024 (5 years), enabling trend questions
+**T4 subtypes:** graph_fact(16) · graph_lookup(4) · graph_trend(2) · graph_comparison(2) · graph_negative(6)
+**T5 subtypes:** graph_compute(15) · graph_comparison(4) · graph_trend(1)
+**T6 subtypes:** direction_reversed(5) · data_gap(4) · out_of_scope(3) · metric_unavailable(3)
 
-**Build process:** `python -m copilot.eval.build_sc_eval` — to be implemented
+**Dataset special properties:**
+- Every T4/T5 question has `traversal_ground_truth` (list of supply_edges that must appear in answer's reasoning trace) — auto-populated from live DB at build time
+- T6 direction-reversed questions test that agent refuses customer-side queries (Apple procurement data unavailable)
+- T6 `graph_negative` questions test that agent correctly says "no disclosure" for TXN/GLW/LRCX/SANM/ADI/QCOM
+- T3 excluded for Phase 3 experiments (qualitative retrieval is orthogonal to error-migration claim; kept in `build_sc_eval.py` for future)
+
+**Files:**
+- Dataset: `data/eval_set_sc.json` (regenerated from DB via `python -m copilot.eval.build_sc_eval`)
+- Builder: `src/copilot/eval/build_sc_eval.py` ✅ implemented (2026-06-12)
 
 ---
 
@@ -1031,7 +1038,7 @@ Each question scored on five dimensions:
 | Refusal accuracy | refusal keyword detection |
 | Citation verifiability | accession number resolves to real SEC document |
 
-Harness: `src/copilot/eval/harness_sc.py` — to be implemented
+Harness: `src/copilot/eval/harness_sc.py` ✅ implemented (2026-06-12)
 
 ---
 
@@ -1101,18 +1108,91 @@ Phase 4 — Writing (ongoing)
 - [x] **Final cleanup pass on supply_edges after HTML extraction** — 110 rows, 29 pairs (2026-06-11)
 - [x] Add `CUSTOMER_ALIASES` + `_should_skip_edge()` to extract_edges.py — future re-extractions auto-reject geographic/aggregate/sub-10% false positives
 
-**Phase 2 benchmark construction — not started:**
-- [ ] Implement `build_sc_eval.py` — 150 questions, 6 types (T1–T6)
-- [ ] Label `traversal_ground_truth` per T4/T5 question (required supply_edges rows must appear in answer trace)
-- [ ] Verify T6 unanswerable boundaries (direction-reversed vs. true data gaps)
-- [ ] Lock dataset (freeze after first eval run)
-- Suggested starting point: generate T1/T2 questions from financial_facts (automated), T4 questions from confirmed supply_edges, T6 questions from confirmed negative companies (TXN/GLW/etc.)
+**Phase 2 benchmark construction — complete (2026-06-12):**
+- [x] Implement `build_sc_eval.py` — 125 questions, 5 active types (T1/T2/T4/T5/T6); T3 excluded
+- [x] `traversal_ground_truth` auto-populated per T4/T5 question from live supply_edges at build time
+- [x] T6 unanswerable boundaries verified — direction_reversed(5)/data_gap(4)/out_of_scope(3)/metric_unavailable(3)
+- [x] Dataset locked at `data/eval_set_sc.json` v1.0 (regenerate with `python -m copilot.eval.build_sc_eval`)
 
-**Phase 3 experiments — not started:**
-- Condition A: Naive RAG (disable SQL + graph tools, retrieve_text only)
-- Condition B: SQL-locked (no graph_query)
-- Condition C: Full system
-- Harness to implement: `src/copilot/eval/harness_sc.py`
+**Phase 3 experiments — complete (2026-06-12):**
+- [x] `src/copilot/eval/harness_sc.py` implemented (2026-06-12)
+  - `--condition A`: Naive RAG (retrieve_text only)
+  - `--condition B`: SQL-locked RAG (no graph_query, has query_financials + retrieve_text)
+  - `--condition C`: Full system (all tools)
+  - Per-subtype scoring: numeric/set_match/trend/llm_judge/keyword
+- [x] **Bug fix: `_get_fact` in build_sc_eval.py** — was using `fetchone()` without `ORDER BY`, returning arbitrary quarterly values instead of annual; fixed to `AND form='10-K' ORDER BY period_end DESC LIMIT 1`. Eval set regenerated.
+- [x] **Bug fix: `_check_trend_values` in harness_sc.py** — `all()` generator used `exp_val` from outer for-loop scope (last iteration's value = 87.0), not current year's expected value. Fixed to use `expected[year]`.
+- [x] Run Condition C (full system) → `data/sc_results_C.json` ✅
+- [x] Run Condition B (SQL-locked) → `data/sc_results_B.json` ✅
+- [x] Run Condition A (Naive RAG) → `data/sc_results_A.json` ✅
+- [x] Per-type error breakdown → error migration analysis table ✅ (see results below)
+
+**Run commands (Windows, corrected syntax):**
+```powershell
+PYTHONUTF8=1 PYTHONUNBUFFERED=1 uv run --active python -m copilot.eval.harness_sc --condition C --out data/sc_results_C.json
+PYTHONUTF8=1 PYTHONUNBUFFERED=1 uv run --active python -m copilot.eval.harness_sc --condition B --out data/sc_results_B.json
+PYTHONUTF8=1 PYTHONUNBUFFERED=1 uv run --active python -m copilot.eval.harness_sc --condition A --out data/sc_results_A.json
+```
+
+### Phase 3 — Ablation Results (2026-06-12)
+
+**Error migration confirmed across all three conditions:**
+
+| Metric | A: Naive RAG | B: SQL+RAG | C: Full System | A→B delta | B→C delta |
+|---|---|---|---|---|---|
+| T1 SQL numeric | 30.0% | 96.7% | 96.7% | **+66.7pp** | 0 |
+| T2 SQL+compute | 6.7% | 100.0% | 100.0% | **+93.3pp** | 0 |
+| T4 graph relation | 0.0% | 6.7% | 73.3% | +6.7pp | **+66.6pp** |
+| — graph_fact | 0.0% | 0.0% | 62.5% | 0 | +62.5pp |
+| — graph_lookup | 0.0% | 0.0% | 100.0% | 0 | +100pp |
+| — graph_trend | 0.0% | 0.0% | 66.7% | 0 | +66.7pp |
+| — graph_comparison | 0.0% | 0.0% | 50.0% | 0 | +50pp |
+| — graph_negative | 0.0% | 33.3% | 100.0% | +33.3pp | +66.7pp |
+| T5 cross-entity | 0.0% | 0.0% | 75.0% | 0 | **+75.0pp** |
+| — graph_compute | 0.0% | 0.0% | 80.0% | 0 | +80pp |
+| T6 unanswerable | 60.0% | 73.3% | 86.7% | +13.3pp | +13.4pp |
+| **Overall** | **16.0%** | **57.6%** | **87.2%** | **+41.6pp** | **+29.6pp** |
+| Cost/run | $1.57 | $0.22 | $0.11 | | |
+| Avg latency | 16.2s | 10.4s | 5.7s | | |
+
+**Interpretation:**
+- A→B: SQL-locking eliminates T1/T2 numeric error (+66.7pp / +93.3pp); T4/T5 unaffected
+- B→C: Graph augmentation eliminates T4/T5 relational error (+66.6pp / +75.0pp); T1/T2 unaffected
+- Three error layers are architecturally separable ✓
+- Cost: Condition A is 14× more expensive than C (many redundant text retrieval calls, no structured shortcut)
+
+**Known limitation (Phase 4 target):** Condition A corpus lacks Item 8 (Financial Statements). A's T1/T2 failures include both retrieval failure (exact numbers not in text) and LLM extraction error. To isolate pure hallucination, Item 8 text+tables must be added to the corpus.
+
+### Phase 4 — Corpus Redesign (Planned, not started)
+
+**Motivation:** Current text_chunks has 3 sections (Business, MD&A, Risk Factors) but no Item 8. For the A vs B comparison on T1/T2 to cleanly attribute failures to "LLM extraction error" rather than "missing data," each condition's corpus must theoretically contain answers to all question types.
+
+**Redesigned condition corpora:**
+
+| Condition | Text corpus | Structured tools | Claim measured |
+|---|---|---|---|
+| A — Naive RAG | Business + MD&A + Risk Factors + Item8_text + Item8_tables | retrieve_text only | Pure LLM extraction from text (incl. tables) |
+| B — XBRL+RAG | Business + MD&A + Risk Factors + Item8_text | query_financials + compute + retrieve_text | XBRL structure vs text extraction; no graph |
+| C — Full system | Business + MD&A + Risk Factors + Item8_text | all tools + graph_query | Full system (current) |
+
+**Key distinction:** Item 8 tables go to Condition A only (LLM must read tables as text); XBRL replaces them for B/C.
+
+**Current text_chunks section breakdown (Windows research DB):**
+
+| Section | Chunks | Companies |
+|---|---|---|
+| Risk Factors (Item 1A) | 3,533 | 15/15 |
+| MD&A (Item 7) | 2,261 | 15/15 |
+| Business (Item 1) | 1,650 | 13/15 (SANM/TXN = 0) |
+| **Item 8 (Financial Statements)** | **0** | **not yet ingested** |
+| **Total** | **7,444** | |
+
+**Implementation plan for Item 8 ingest:**
+1. Schema: `ALTER TABLE text_chunks ADD COLUMN chunk_type TEXT DEFAULT 'text'`; existing rows stay `'text'`; Item 8 table chunks get `'table'`
+2. Ingest: extend `ingest_text.py` — fetch Item 8 HTML from EDGAR, parse `<table>` elements → Markdown text → `chunk_type='table'`; parse prose paragraphs → `chunk_type='text'`; section=`'Item 8'`
+3. Embed: re-run `python -m copilot.pipeline.embed_chunks` for new chunks only
+4. Retrieval: add `include_tables: bool` param to `retrieve_text` tool; Condition A harness uses `True`, B/C use `False`
+5. Re-run ablation with new corpus → Phase 4 results
 
 ### Research Branch — Key Decisions Log
 
@@ -1126,3 +1206,12 @@ Phase 4 — Writing (ongoing)
 | 2026-06-11 | ADI classified as hybrid (Tier-1 positive FY2016-17, negative after) | Apple disappears post-LT merger — temporal edge case |
 | 2026-06-11 | QCOM classified Tier-1 negative | No customer concentration disclosure found; QCT reports segment not customer % |
 | 2026-06-11 | EDGAR pagination fix applied to ingest_text.py | GLW/QRVO/QCOM/ADI/MCHP/JBL all extended to 10yr |
+| 2026-06-11 | supply_edges corrected to 107 rows (down from 110) | Deleted QRVO FY2017 Apple wrong pct; QCOM threshold-only fixes; JBL unnamed duplicates removed |
+| 2026-06-12 | T3 (qualitative retrieval) excluded from Phase 3 experiments | T3 not central to error-migration thesis; A→B→C ablation proven by T1/T2/T4/T5/T6 alone |
+| 2026-06-12 | Dataset finalized: 125 questions (T1=30/T2=30/T4=30/T5=20/T6=15) | Auto-generated from live DB; traversal_ground_truth auto-populated; T3 kept in builder for future |
+| 2026-06-12 | `harness_sc.py` implemented with 3-condition ablation | Condition A/B/C maps directly to error-migration hypothesis verification |
+| 2026-06-12 | `_get_fact` bug fixed in build_sc_eval.py | Was returning arbitrary quarterly XBRL rows; fixed to `AND form='10-K' ORDER BY period_end DESC LIMIT 1` to match query_financials tool |
+| 2026-06-12 | `_check_trend_values` bug fixed in harness_sc.py | `all()` generator captured `exp_val` from outer loop's last iteration (Python late binding); fixed to `expected[year]` |
+| 2026-06-12 | Phase 3 ablation complete: A=16.0%, B=57.6%, C=87.2% | Error migration confirmed: A→B +66.7/+93.3pp on T1/T2; B→C +66.6/+75.0pp on T4/T5 |
+| 2026-06-12 | Phase 4 corpus redesign planned: add Item 8 tables+text | Current A/B/C comparison on T1/T2 conflates retrieval failure with LLM error; Item 8 tables in corpus enables clean attribution |
+| 2026-06-12 | Condition A costs $1.57/run vs C $0.11 — 14× more expensive | No SQL shortcut forces many redundant text retrieval calls; interesting secondary finding for paper |

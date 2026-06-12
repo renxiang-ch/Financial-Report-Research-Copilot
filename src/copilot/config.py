@@ -24,6 +24,10 @@ class Settings(BaseSettings):
     # API access key (empty = no auth required)
     api_key: str = ""
 
+    # WRDS credentials (for supply-chain validation scripts)
+    wrds_username: str = ""
+    wrds_password: str = ""
+
     # App
     log_level: str = "INFO"
 

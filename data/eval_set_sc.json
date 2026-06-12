@@ -1,0 +1,2859 @@
+{
+  "version": "1.0",
+  "built_at": "2026-06-12T14:59:45.462647Z",
+  "total": 125,
+  "counts": {
+    "T1": 30,
+    "T2": 30,
+    "T4": 30,
+    "T5": 20,
+    "T6": 15
+  },
+  "items": [
+    {
+      "id": "t1_aapl_revenue_2024",
+      "sc_type": "T1",
+      "question": "What was Apple's revenue in fiscal year 2024?",
+      "ticker": "AAPL",
+      "fiscal_year": 2024,
+      "metric": "Revenue",
+      "expected_value": 391035000000.0,
+      "expected_unit": "USD",
+      "tolerance_pct": 2.0,
+      "answerable": true
+    },
+    {
+      "id": "t1_aapl_netincome_2022",
+      "sc_type": "T1",
+      "question": "What was Apple's net income in fiscal year 2022?",
+      "ticker": "AAPL",
+      "fiscal_year": 2022,
+      "metric": "NetIncome",
+      "expected_value": 99803000000.0,
+      "expected_unit": "USD",
+      "tolerance_pct": 2.0,
+      "answerable": true
+    },
+    {
+      "id": "t1_crus_revenue_2024",
+      "sc_type": "T1",
+      "question": "What was Cirrus Logic's revenue in fiscal year 2024?",
+      "ticker": "CRUS",
+      "fiscal_year": 2024,
+      "metric": "Revenue",
+      "expected_value": 1788890000.0,
+      "expected_unit": "USD",
+      "tolerance_pct": 2.0,
+      "answerable": true
+    },
+    {
+      "id": "t1_crus_operatingincome_2023",
+      "sc_type": "T1",
+      "question": "What was Cirrus Logic's operating income in fiscal year 2023?",
+      "ticker": "CRUS",
+      "fiscal_year": 2023,
+      "metric": "OperatingIncome",
+      "expected_value": 249031000.0,
+      "expected_unit": "USD",
+      "tolerance_pct": 2.0,
+      "answerable": true
+    },
+    {
+      "id": "t1_qrvo_revenue_2023",
+      "sc_type": "T1",
+      "question": "What was Qorvo's revenue in fiscal year 2023?",
+      "ticker": "QRVO",
+      "fiscal_year": 2023,
+      "metric": "Revenue",
+      "expected_value": 3569399000.0,
+      "expected_unit": "USD",
+      "tolerance_pct": 2.0,
+      "answerable": true
+    },
+    {
+      "id": "t1_qrvo_grossprofit_2022",
+      "sc_type": "T1",
+      "question": "What was Qorvo's gross profit in fiscal year 2022?",
+      "ticker": "QRVO",
+      "fiscal_year": 2022,
+      "metric": "GrossProfit",
+      "expected_value": 2286168000.0,
+      "expected_unit": "USD",
+      "tolerance_pct": 2.0,
+      "answerable": true
+    },
+    {
+      "id": "t1_swks_revenue_2024",
+      "sc_type": "T1",
+      "question": "What was Skyworks's revenue in fiscal year 2024?",
+      "ticker": "SWKS",
+      "fiscal_year": 2024,
+      "metric": "Revenue",
+      "expected_value": 4178000000.0,
+      "expected_unit": "USD",
+      "tolerance_pct": 2.0,
+      "answerable": true
+    },
+    {
+      "id": "t1_swks_netincome_2023",
+      "sc_type": "T1",
+      "question": "What was Skyworks's net income in fiscal year 2023?",
+      "ticker": "SWKS",
+      "fiscal_year": 2023,
+      "metric": "NetIncome",
+      "expected_value": 982800000.0,
+      "expected_unit": "USD",
+      "tolerance_pct": 2.0,
+      "answerable": true
+    },
+    {
+      "id": "t1_avgo_revenue_2024",
+      "sc_type": "T1",
+      "question": "What was Broadcom's revenue in fiscal year 2024?",
+      "ticker": "AVGO",
+      "fiscal_year": 2024,
+      "metric": "Revenue",
+      "expected_value": 51574000000.0,
+      "expected_unit": "USD",
+      "tolerance_pct": 2.0,
+      "answerable": true
+    },
+    {
+      "id": "t1_avgo_rd_2023",
+      "sc_type": "T1",
+      "question": "What was Broadcom's R&D spending in fiscal year 2023?",
+      "ticker": "AVGO",
+      "fiscal_year": 2023,
+      "metric": "R&D",
+      "expected_value": 5253000000.0,
+      "expected_unit": "USD",
+      "tolerance_pct": 2.0,
+      "answerable": true
+    },
+    {
+      "id": "t1_qcom_revenue_2024",
+      "sc_type": "T1",
+      "question": "What was Qualcomm's revenue in fiscal year 2024?",
+      "ticker": "QCOM",
+      "fiscal_year": 2024,
+      "metric": "Revenue",
+      "expected_value": 38962000000.0,
+      "expected_unit": "USD",
+      "tolerance_pct": 2.0,
+      "answerable": true
+    },
+    {
+      "id": "t1_qcom_operatingincome_2023",
+      "sc_type": "T1",
+      "question": "What was Qualcomm's operating income in fiscal year 2023?",
+      "ticker": "QCOM",
+      "fiscal_year": 2023,
+      "metric": "OperatingIncome",
+      "expected_value": 7788000000.0,
+      "expected_unit": "USD",
+      "tolerance_pct": 2.0,
+      "answerable": true
+    },
+    {
+      "id": "t1_glw_revenue_2023",
+      "sc_type": "T1",
+      "question": "What was Corning's revenue in fiscal year 2023?",
+      "ticker": "GLW",
+      "fiscal_year": 2023,
+      "metric": "Revenue",
+      "expected_value": 12588000000.0,
+      "expected_unit": "USD",
+      "tolerance_pct": 2.0,
+      "answerable": true
+    },
+    {
+      "id": "t1_glw_netincome_2022",
+      "sc_type": "T1",
+      "question": "What was Corning's net income in fiscal year 2022?",
+      "ticker": "GLW",
+      "fiscal_year": 2022,
+      "metric": "NetIncome",
+      "expected_value": 1316000000.0,
+      "expected_unit": "USD",
+      "tolerance_pct": 2.0,
+      "answerable": true
+    },
+    {
+      "id": "t1_adi_revenue_2024",
+      "sc_type": "T1",
+      "question": "What was Analog Devices's revenue in fiscal year 2024?",
+      "ticker": "ADI",
+      "fiscal_year": 2024,
+      "metric": "Revenue",
+      "expected_value": 9427157000.0,
+      "expected_unit": "USD",
+      "tolerance_pct": 2.0,
+      "answerable": true
+    },
+    {
+      "id": "t1_adi_grossprofit_2023",
+      "sc_type": "T1",
+      "question": "What was Analog Devices's gross profit in fiscal year 2023?",
+      "ticker": "ADI",
+      "fiscal_year": 2023,
+      "metric": "GrossProfit",
+      "expected_value": 7877218000.0,
+      "expected_unit": "USD",
+      "tolerance_pct": 2.0,
+      "answerable": true
+    },
+    {
+      "id": "t1_txn_revenue_2023",
+      "sc_type": "T1",
+      "question": "What was Texas Instruments's revenue in fiscal year 2023?",
+      "ticker": "TXN",
+      "fiscal_year": 2023,
+      "metric": "Revenue",
+      "expected_value": 17519000000.0,
+      "expected_unit": "USD",
+      "tolerance_pct": 2.0,
+      "answerable": true
+    },
+    {
+      "id": "t1_txn_operatingincome_2022",
+      "sc_type": "T1",
+      "question": "What was Texas Instruments's operating income in fiscal year 2022?",
+      "ticker": "TXN",
+      "fiscal_year": 2022,
+      "metric": "OperatingIncome",
+      "expected_value": 10140000000.0,
+      "expected_unit": "USD",
+      "tolerance_pct": 2.0,
+      "answerable": true
+    },
+    {
+      "id": "t1_mchp_revenue_2024",
+      "sc_type": "T1",
+      "question": "What was Microchip Technology's revenue in fiscal year 2024?",
+      "ticker": "MCHP",
+      "fiscal_year": 2024,
+      "metric": "Revenue",
+      "expected_value": 7634400000.0,
+      "expected_unit": "USD",
+      "tolerance_pct": 2.0,
+      "answerable": true
+    },
+    {
+      "id": "t1_mchp_netincome_2023",
+      "sc_type": "T1",
+      "question": "What was Microchip Technology's net income in fiscal year 2023?",
+      "ticker": "MCHP",
+      "fiscal_year": 2023,
+      "metric": "NetIncome",
+      "expected_value": 2237700000.0,
+      "expected_unit": "USD",
+      "tolerance_pct": 2.0,
+      "answerable": true
+    },
+    {
+      "id": "t1_on_revenue_2023",
+      "sc_type": "T1",
+      "question": "What was onsemi's revenue in fiscal year 2023?",
+      "ticker": "ON",
+      "fiscal_year": 2023,
+      "metric": "Revenue",
+      "expected_value": 8253000000.0,
+      "expected_unit": "USD",
+      "tolerance_pct": 2.0,
+      "answerable": true
+    },
+    {
+      "id": "t1_on_grossprofit_2022",
+      "sc_type": "T1",
+      "question": "What was onsemi's gross profit in fiscal year 2022?",
+      "ticker": "ON",
+      "fiscal_year": 2022,
+      "metric": "GrossProfit",
+      "expected_value": 4077200000.0,
+      "expected_unit": "USD",
+      "tolerance_pct": 2.0,
+      "answerable": true
+    },
+    {
+      "id": "t1_lrcx_revenue_2024",
+      "sc_type": "T1",
+      "question": "What was Lam Research's revenue in fiscal year 2024?",
+      "ticker": "LRCX",
+      "fiscal_year": 2024,
+      "metric": "Revenue",
+      "expected_value": 14905386000.0,
+      "expected_unit": "USD",
+      "tolerance_pct": 2.0,
+      "answerable": true
+    },
+    {
+      "id": "t1_lrcx_operatingcashflow_2023",
+      "sc_type": "T1",
+      "question": "What was Lam Research's operating cash flow in fiscal year 2023?",
+      "ticker": "LRCX",
+      "fiscal_year": 2023,
+      "metric": "OperatingCashFlow",
+      "expected_value": 5178938000.0,
+      "expected_unit": "USD",
+      "tolerance_pct": 2.0,
+      "answerable": true
+    },
+    {
+      "id": "t1_aph_revenue_2024",
+      "sc_type": "T1",
+      "question": "What was Amphenol's revenue in fiscal year 2024?",
+      "ticker": "APH",
+      "fiscal_year": 2024,
+      "metric": "Revenue",
+      "expected_value": 15222700000.0,
+      "expected_unit": "USD",
+      "tolerance_pct": 2.0,
+      "answerable": true
+    },
+    {
+      "id": "t1_aph_netincome_2023",
+      "sc_type": "T1",
+      "question": "What was Amphenol's net income in fiscal year 2023?",
+      "ticker": "APH",
+      "fiscal_year": 2023,
+      "metric": "NetIncome",
+      "expected_value": 1928000000.0,
+      "expected_unit": "USD",
+      "tolerance_pct": 2.0,
+      "answerable": true
+    },
+    {
+      "id": "t1_jbl_revenue_2024",
+      "sc_type": "T1",
+      "question": "What was Jabil's revenue in fiscal year 2024?",
+      "ticker": "JBL",
+      "fiscal_year": 2024,
+      "metric": "Revenue",
+      "expected_value": 28883000000.0,
+      "expected_unit": "USD",
+      "tolerance_pct": 2.0,
+      "answerable": true
+    },
+    {
+      "id": "t1_jbl_grossprofit_2023",
+      "sc_type": "T1",
+      "question": "What was Jabil's gross profit in fiscal year 2023?",
+      "ticker": "JBL",
+      "fiscal_year": 2023,
+      "metric": "GrossProfit",
+      "expected_value": 2867000000.0,
+      "expected_unit": "USD",
+      "tolerance_pct": 2.0,
+      "answerable": true
+    },
+    {
+      "id": "t1_sanm_revenue_2024",
+      "sc_type": "T1",
+      "question": "What was Sanmina's revenue in fiscal year 2024?",
+      "ticker": "SANM",
+      "fiscal_year": 2024,
+      "metric": "Revenue",
+      "expected_value": 7568328000.0,
+      "expected_unit": "USD",
+      "tolerance_pct": 2.0,
+      "answerable": true
+    },
+    {
+      "id": "t1_sanm_netincome_2023",
+      "sc_type": "T1",
+      "question": "What was Sanmina's net income in fiscal year 2023?",
+      "ticker": "SANM",
+      "fiscal_year": 2023,
+      "metric": "NetIncome",
+      "expected_value": 309970000.0,
+      "expected_unit": "USD",
+      "tolerance_pct": 2.0,
+      "answerable": true
+    },
+    {
+      "id": "t2_aapl_gross_margin_2024",
+      "sc_type": "T2",
+      "question": "What was Apple's gross margin percentage in fiscal year 2024?",
+      "ticker": "AAPL",
+      "fiscal_year": 2024,
+      "expected_value": 46.2063,
+      "expected_unit": "%",
+      "tolerance_pct": 0.5,
+      "answerable": true,
+      "formula": "GrossProfit / Revenue * 100",
+      "input_values": {
+        "GrossProfit": 180683000000.0,
+        "Revenue": 391035000000.0
+      }
+    },
+    {
+      "id": "t2_qrvo_gross_margin_2023",
+      "sc_type": "T2",
+      "question": "What was Qorvo's gross margin percentage in fiscal year 2023?",
+      "ticker": "QRVO",
+      "fiscal_year": 2023,
+      "expected_value": 36.335,
+      "expected_unit": "%",
+      "tolerance_pct": 0.5,
+      "answerable": true,
+      "formula": "GrossProfit / Revenue * 100",
+      "input_values": {
+        "GrossProfit": 1296942000.0,
+        "Revenue": 3569399000.0
+      }
+    },
+    {
+      "id": "t2_crus_gross_margin_2024",
+      "sc_type": "T2",
+      "question": "What was Cirrus Logic's gross margin percentage in fiscal year 2024?",
+      "ticker": "CRUS",
+      "fiscal_year": 2024,
+      "expected_value": 51.209,
+      "expected_unit": "%",
+      "tolerance_pct": 0.5,
+      "answerable": true,
+      "formula": "GrossProfit / Revenue * 100",
+      "input_values": {
+        "GrossProfit": 916072000.0,
+        "Revenue": 1788890000.0
+      }
+    },
+    {
+      "id": "t2_avgo_gross_margin_2024",
+      "sc_type": "T2",
+      "question": "What was Broadcom's gross margin percentage in fiscal year 2024?",
+      "ticker": "AVGO",
+      "fiscal_year": 2024,
+      "expected_value": 63.0337,
+      "expected_unit": "%",
+      "tolerance_pct": 0.5,
+      "answerable": true,
+      "formula": "GrossProfit / Revenue * 100",
+      "input_values": {
+        "GrossProfit": 32509000000.0,
+        "Revenue": 51574000000.0
+      }
+    },
+    {
+      "id": "t2_swks_gross_margin_2023",
+      "sc_type": "T2",
+      "question": "What was Skyworks's gross margin percentage in fiscal year 2023?",
+      "ticker": "SWKS",
+      "fiscal_year": 2023,
+      "expected_value": 44.156,
+      "expected_unit": "%",
+      "tolerance_pct": 0.5,
+      "answerable": true,
+      "formula": "GrossProfit / Revenue * 100",
+      "input_values": {
+        "GrossProfit": 2107300000.0,
+        "Revenue": 4772400000.0
+      }
+    },
+    {
+      "id": "t2_jbl_gross_margin_2024",
+      "sc_type": "T2",
+      "question": "What was Jabil's gross margin percentage in fiscal year 2024?",
+      "ticker": "JBL",
+      "fiscal_year": 2024,
+      "expected_value": 9.265,
+      "expected_unit": "%",
+      "tolerance_pct": 0.5,
+      "answerable": true,
+      "formula": "GrossProfit / Revenue * 100",
+      "input_values": {
+        "GrossProfit": 2676000000.0,
+        "Revenue": 28883000000.0
+      }
+    },
+    {
+      "id": "t2_adi_gross_margin_2023",
+      "sc_type": "T2",
+      "question": "What was Analog Devices's gross margin percentage in fiscal year 2023?",
+      "ticker": "ADI",
+      "fiscal_year": 2023,
+      "expected_value": 64.0136,
+      "expected_unit": "%",
+      "tolerance_pct": 0.5,
+      "answerable": true,
+      "formula": "GrossProfit / Revenue * 100",
+      "input_values": {
+        "GrossProfit": 7877218000.0,
+        "Revenue": 12305539000.0
+      }
+    },
+    {
+      "id": "t2_txn_gross_margin_2023",
+      "sc_type": "T2",
+      "question": "What was Texas Instruments's gross margin percentage in fiscal year 2023?",
+      "ticker": "TXN",
+      "fiscal_year": 2023,
+      "expected_value": 62.8974,
+      "expected_unit": "%",
+      "tolerance_pct": 0.5,
+      "answerable": true,
+      "formula": "GrossProfit / Revenue * 100",
+      "input_values": {
+        "GrossProfit": 11019000000.0,
+        "Revenue": 17519000000.0
+      }
+    },
+    {
+      "id": "t2_on_gross_margin_2023",
+      "sc_type": "T2",
+      "question": "What was onsemi's gross margin percentage in fiscal year 2023?",
+      "ticker": "ON",
+      "fiscal_year": 2023,
+      "expected_value": 47.0556,
+      "expected_unit": "%",
+      "tolerance_pct": 0.5,
+      "answerable": true,
+      "formula": "GrossProfit / Revenue * 100",
+      "input_values": {
+        "GrossProfit": 3883500000.0,
+        "Revenue": 8253000000.0
+      }
+    },
+    {
+      "id": "t2_lrcx_gross_margin_2024",
+      "sc_type": "T2",
+      "question": "What was Lam Research's gross margin percentage in fiscal year 2024?",
+      "ticker": "LRCX",
+      "fiscal_year": 2024,
+      "expected_value": 47.3171,
+      "expected_unit": "%",
+      "tolerance_pct": 0.5,
+      "answerable": true,
+      "formula": "GrossProfit / Revenue * 100",
+      "input_values": {
+        "GrossProfit": 7052791000.0,
+        "Revenue": 14905386000.0
+      }
+    },
+    {
+      "id": "t2_qrvo_rd_intensity_2024",
+      "sc_type": "T2",
+      "question": "What was Qorvo's R&D spending as a percentage of revenue in fiscal year 2024?",
+      "ticker": "QRVO",
+      "fiscal_year": 2024,
+      "expected_value": 18.0992,
+      "expected_unit": "%",
+      "tolerance_pct": 0.5,
+      "answerable": true,
+      "formula": "R&D / Revenue * 100",
+      "input_values": {
+        "R&D": 682249000.0,
+        "Revenue": 3769506000.0
+      }
+    },
+    {
+      "id": "t2_crus_rd_intensity_2024",
+      "sc_type": "T2",
+      "question": "What was Cirrus Logic's R&D spending as a percentage of revenue in fiscal year 2024?",
+      "ticker": "CRUS",
+      "fiscal_year": 2024,
+      "expected_value": 23.8402,
+      "expected_unit": "%",
+      "tolerance_pct": 0.5,
+      "answerable": true,
+      "formula": "R&D / Revenue * 100",
+      "input_values": {
+        "R&D": 426475000.0,
+        "Revenue": 1788890000.0
+      }
+    },
+    {
+      "id": "t2_swks_rd_intensity_2023",
+      "sc_type": "T2",
+      "question": "What was Skyworks's R&D spending as a percentage of revenue in fiscal year 2023?",
+      "ticker": "SWKS",
+      "fiscal_year": 2023,
+      "expected_value": 12.7148,
+      "expected_unit": "%",
+      "tolerance_pct": 0.5,
+      "answerable": true,
+      "formula": "R&D / Revenue * 100",
+      "input_values": {
+        "R&D": 606800000.0,
+        "Revenue": 4772400000.0
+      }
+    },
+    {
+      "id": "t2_avgo_rd_intensity_2023",
+      "sc_type": "T2",
+      "question": "What was Broadcom's R&D spending as a percentage of revenue in fiscal year 2023?",
+      "ticker": "AVGO",
+      "fiscal_year": 2023,
+      "expected_value": 14.6654,
+      "expected_unit": "%",
+      "tolerance_pct": 0.5,
+      "answerable": true,
+      "formula": "R&D / Revenue * 100",
+      "input_values": {
+        "R&D": 5253000000.0,
+        "Revenue": 35819000000.0
+      }
+    },
+    {
+      "id": "t2_txn_rd_intensity_2024",
+      "sc_type": "T2",
+      "question": "What was Texas Instruments's R&D spending as a percentage of revenue in fiscal year 2024?",
+      "ticker": "TXN",
+      "fiscal_year": 2024,
+      "expected_value": 12.5248,
+      "expected_unit": "%",
+      "tolerance_pct": 0.5,
+      "answerable": true,
+      "formula": "R&D / Revenue * 100",
+      "input_values": {
+        "R&D": 1959000000.0,
+        "Revenue": 15641000000.0
+      }
+    },
+    {
+      "id": "t2_qcom_rd_intensity_2023",
+      "sc_type": "T2",
+      "question": "What was Qualcomm's R&D spending as a percentage of revenue in fiscal year 2023?",
+      "ticker": "QCOM",
+      "fiscal_year": 2023,
+      "expected_value": 24.6175,
+      "expected_unit": "%",
+      "tolerance_pct": 0.5,
+      "answerable": true,
+      "formula": "R&D / Revenue * 100",
+      "input_values": {
+        "R&D": 8818000000.0,
+        "Revenue": 35820000000.0
+      }
+    },
+    {
+      "id": "t2_adi_rd_intensity_2024",
+      "sc_type": "T2",
+      "question": "What was Analog Devices's R&D spending as a percentage of revenue in fiscal year 2024?",
+      "ticker": "ADI",
+      "fiscal_year": 2024,
+      "expected_value": 15.7827,
+      "expected_unit": "%",
+      "tolerance_pct": 0.5,
+      "answerable": true,
+      "formula": "R&D / Revenue * 100",
+      "input_values": {
+        "R&D": 1487863000.0,
+        "Revenue": 9427157000.0
+      }
+    },
+    {
+      "id": "t2_mchp_rd_intensity_2023",
+      "sc_type": "T2",
+      "question": "What was Microchip Technology's R&D spending as a percentage of revenue in fiscal year 2023?",
+      "ticker": "MCHP",
+      "fiscal_year": 2023,
+      "expected_value": 13.252,
+      "expected_unit": "%",
+      "tolerance_pct": 0.5,
+      "answerable": true,
+      "formula": "R&D / Revenue * 100",
+      "input_values": {
+        "R&D": 1118300000.0,
+        "Revenue": 8438700000.0
+      }
+    },
+    {
+      "id": "t2_qrvo_revenue_yoy_2022_2023",
+      "sc_type": "T2",
+      "question": "By what percentage did Qorvo's revenue change from fiscal year 2022 to 2023?",
+      "ticker": "QRVO",
+      "fiscal_year": 2023,
+      "expected_value": -23.1679,
+      "expected_unit": "%",
+      "tolerance_pct": 0.5,
+      "answerable": true,
+      "formula": "(Revenue_2023 - Revenue_2022) / Revenue_2022 * 100",
+      "input_values": {
+        "Revenue_2023": 3569399000.0,
+        "Revenue_2022": 4645714000.0
+      }
+    },
+    {
+      "id": "t2_crus_revenue_yoy_2022_2023",
+      "sc_type": "T2",
+      "question": "By what percentage did Cirrus Logic's revenue change from fiscal year 2022 to 2023?",
+      "ticker": "CRUS",
+      "fiscal_year": 2023,
+      "expected_value": 6.5203,
+      "expected_unit": "%",
+      "tolerance_pct": 0.5,
+      "answerable": true,
+      "formula": "(Revenue_2023 - Revenue_2022) / Revenue_2022 * 100",
+      "input_values": {
+        "Revenue_2023": 1897617000.0,
+        "Revenue_2022": 1781460000.0
+      }
+    },
+    {
+      "id": "t2_jbl_revenue_yoy_2022_2023",
+      "sc_type": "T2",
+      "question": "By what percentage did Jabil's revenue change from fiscal year 2022 to 2023?",
+      "ticker": "JBL",
+      "fiscal_year": 2023,
+      "expected_value": 3.6561,
+      "expected_unit": "%",
+      "tolerance_pct": 0.5,
+      "answerable": true,
+      "formula": "(Revenue_2023 - Revenue_2022) / Revenue_2022 * 100",
+      "input_values": {
+        "Revenue_2023": 34702000000.0,
+        "Revenue_2022": 33478000000.0
+      }
+    },
+    {
+      "id": "t2_aapl_revenue_yoy_2023_2024",
+      "sc_type": "T2",
+      "question": "By what percentage did Apple's revenue change from fiscal year 2023 to 2024?",
+      "ticker": "AAPL",
+      "fiscal_year": 2024,
+      "expected_value": 2.022,
+      "expected_unit": "%",
+      "tolerance_pct": 0.5,
+      "answerable": true,
+      "formula": "(Revenue_2024 - Revenue_2023) / Revenue_2023 * 100",
+      "input_values": {
+        "Revenue_2024": 391035000000.0,
+        "Revenue_2023": 383285000000.0
+      }
+    },
+    {
+      "id": "t2_swks_revenue_yoy_2022_2023",
+      "sc_type": "T2",
+      "question": "By what percentage did Skyworks's revenue change from fiscal year 2022 to 2023?",
+      "ticker": "SWKS",
+      "fiscal_year": 2023,
+      "expected_value": -12.9997,
+      "expected_unit": "%",
+      "tolerance_pct": 0.5,
+      "answerable": true,
+      "formula": "(Revenue_2023 - Revenue_2022) / Revenue_2022 * 100",
+      "input_values": {
+        "Revenue_2023": 4772400000.0,
+        "Revenue_2022": 5485500000.0
+      }
+    },
+    {
+      "id": "t2_on_revenue_yoy_2021_2022",
+      "sc_type": "T2",
+      "question": "By what percentage did onsemi's revenue change from fiscal year 2021 to 2022?",
+      "ticker": "ON",
+      "fiscal_year": 2022,
+      "expected_value": 23.5378,
+      "expected_unit": "%",
+      "tolerance_pct": 0.5,
+      "answerable": true,
+      "formula": "(Revenue_2022 - Revenue_2021) / Revenue_2021 * 100",
+      "input_values": {
+        "Revenue_2022": 8326200000.0,
+        "Revenue_2021": 6739800000.0
+      }
+    },
+    {
+      "id": "t2_lrcx_revenue_yoy_2023_2024",
+      "sc_type": "T2",
+      "question": "By what percentage did Lam Research's revenue change from fiscal year 2023 to 2024?",
+      "ticker": "LRCX",
+      "fiscal_year": 2024,
+      "expected_value": -14.477,
+      "expected_unit": "%",
+      "tolerance_pct": 0.5,
+      "answerable": true,
+      "formula": "(Revenue_2024 - Revenue_2023) / Revenue_2023 * 100",
+      "input_values": {
+        "Revenue_2024": 14905386000.0,
+        "Revenue_2023": 17428516000.0
+      }
+    },
+    {
+      "id": "t2_aapl_operating_margin_2023",
+      "sc_type": "T2",
+      "question": "What was Apple's operating margin percentage in fiscal year 2023?",
+      "ticker": "AAPL",
+      "fiscal_year": 2023,
+      "expected_value": 29.8214,
+      "expected_unit": "%",
+      "tolerance_pct": 0.5,
+      "answerable": true,
+      "formula": "OperatingIncome / Revenue * 100",
+      "input_values": {
+        "OperatingIncome": 114301000000.0,
+        "Revenue": 383285000000.0
+      }
+    },
+    {
+      "id": "t2_qcom_operating_margin_2022",
+      "sc_type": "T2",
+      "question": "What was Qualcomm's operating margin percentage in fiscal year 2022?",
+      "ticker": "QCOM",
+      "fiscal_year": 2022,
+      "expected_value": 35.8824,
+      "expected_unit": "%",
+      "tolerance_pct": 0.5,
+      "answerable": true,
+      "formula": "OperatingIncome / Revenue * 100",
+      "input_values": {
+        "OperatingIncome": 15860000000.0,
+        "Revenue": 44200000000.0
+      }
+    },
+    {
+      "id": "t2_glw_operating_margin_2023",
+      "sc_type": "T2",
+      "question": "What was Corning's operating margin percentage in fiscal year 2023?",
+      "ticker": "GLW",
+      "fiscal_year": 2023,
+      "expected_value": 7.0702,
+      "expected_unit": "%",
+      "tolerance_pct": 0.5,
+      "answerable": true,
+      "formula": "OperatingIncome / Revenue * 100",
+      "input_values": {
+        "OperatingIncome": 890000000.0,
+        "Revenue": 12588000000.0
+      }
+    },
+    {
+      "id": "t2_txn_operating_margin_2022",
+      "sc_type": "T2",
+      "question": "What was Texas Instruments's operating margin percentage in fiscal year 2022?",
+      "ticker": "TXN",
+      "fiscal_year": 2022,
+      "expected_value": 50.6291,
+      "expected_unit": "%",
+      "tolerance_pct": 0.5,
+      "answerable": true,
+      "formula": "OperatingIncome / Revenue * 100",
+      "input_values": {
+        "OperatingIncome": 10140000000.0,
+        "Revenue": 20028000000.0
+      }
+    },
+    {
+      "id": "t2_sanm_operating_margin_2024",
+      "sc_type": "T2",
+      "question": "What was Sanmina's operating margin percentage in fiscal year 2024?",
+      "ticker": "SANM",
+      "fiscal_year": 2024,
+      "expected_value": 4.4329,
+      "expected_unit": "%",
+      "tolerance_pct": 0.5,
+      "answerable": true,
+      "formula": "OperatingIncome / Revenue * 100",
+      "input_values": {
+        "OperatingIncome": 335494000.0,
+        "Revenue": 7568328000.0
+      }
+    },
+    {
+      "id": "t4_fact_crus_aapl_2024",
+      "sc_type": "T4",
+      "sc_subtype": "graph_fact",
+      "question": "What percentage of Cirrus Logic's revenue came from Apple in fiscal year 2024?",
+      "supplier": "CRUS",
+      "customer": "AAPL",
+      "fiscal_year": 2024,
+      "expected_value": 87.0,
+      "threshold_only": false,
+      "expected_unit": "%",
+      "tolerance_pct": 2.0,
+      "answerable": true,
+      "traversal_ground_truth": [
+        {
+          "supplier": "CRUS",
+          "customer": "AAPL",
+          "fiscal_year": 2024,
+          "revenue_pct": 87.0,
+          "threshold_only": false
+        }
+      ]
+    },
+    {
+      "id": "t4_fact_qrvo_aapl_2024",
+      "sc_type": "T4",
+      "sc_subtype": "graph_fact",
+      "question": "What percentage of Qorvo's revenue came from Apple in fiscal year 2024?",
+      "supplier": "QRVO",
+      "customer": "AAPL",
+      "fiscal_year": 2024,
+      "expected_value": 46.0,
+      "threshold_only": false,
+      "expected_unit": "%",
+      "tolerance_pct": 2.0,
+      "answerable": true,
+      "traversal_ground_truth": [
+        {
+          "supplier": "QRVO",
+          "customer": "AAPL",
+          "fiscal_year": 2024,
+          "revenue_pct": 46.0,
+          "threshold_only": false
+        }
+      ]
+    },
+    {
+      "id": "t4_fact_jbl_aapl_2023",
+      "sc_type": "T4",
+      "sc_subtype": "graph_fact",
+      "question": "What percentage of Jabil's revenue came from Apple in fiscal year 2023?",
+      "supplier": "JBL",
+      "customer": "AAPL",
+      "fiscal_year": 2023,
+      "expected_value": 17.0,
+      "threshold_only": false,
+      "expected_unit": "%",
+      "tolerance_pct": 2.0,
+      "answerable": true,
+      "traversal_ground_truth": [
+        {
+          "supplier": "JBL",
+          "customer": "AAPL",
+          "fiscal_year": 2023,
+          "revenue_pct": 17.0,
+          "threshold_only": false
+        }
+      ]
+    },
+    {
+      "id": "t4_fact_avgo_aapl_2022",
+      "sc_type": "T4",
+      "sc_subtype": "graph_fact",
+      "question": "What percentage of Broadcom's revenue came from Apple in fiscal year 2022?",
+      "supplier": "AVGO",
+      "customer": "AAPL",
+      "fiscal_year": 2022,
+      "expected_value": 20.0,
+      "threshold_only": false,
+      "expected_unit": "%",
+      "tolerance_pct": 2.0,
+      "answerable": true,
+      "traversal_ground_truth": [
+        {
+          "supplier": "AVGO",
+          "customer": "AAPL",
+          "fiscal_year": 2022,
+          "revenue_pct": 20.0,
+          "threshold_only": false
+        }
+      ]
+    },
+    {
+      "id": "t4_fact_crus_aapl_2022",
+      "sc_type": "T4",
+      "sc_subtype": "graph_fact",
+      "question": "What percentage of Cirrus Logic's revenue came from Apple in fiscal year 2022?",
+      "supplier": "CRUS",
+      "customer": "AAPL",
+      "fiscal_year": 2022,
+      "expected_value": 79.0,
+      "threshold_only": false,
+      "expected_unit": "%",
+      "tolerance_pct": 2.0,
+      "answerable": true,
+      "traversal_ground_truth": [
+        {
+          "supplier": "CRUS",
+          "customer": "AAPL",
+          "fiscal_year": 2022,
+          "revenue_pct": 79.0,
+          "threshold_only": false
+        }
+      ]
+    },
+    {
+      "id": "t4_fact_qrvo_aapl_2022",
+      "sc_type": "T4",
+      "sc_subtype": "graph_fact",
+      "question": "What percentage of Qorvo's revenue came from Apple in fiscal year 2022?",
+      "supplier": "QRVO",
+      "customer": "AAPL",
+      "fiscal_year": 2022,
+      "expected_value": 33.0,
+      "threshold_only": false,
+      "expected_unit": "%",
+      "tolerance_pct": 2.0,
+      "answerable": true,
+      "traversal_ground_truth": [
+        {
+          "supplier": "QRVO",
+          "customer": "AAPL",
+          "fiscal_year": 2022,
+          "revenue_pct": 33.0,
+          "threshold_only": false
+        }
+      ]
+    },
+    {
+      "id": "t4_fact_jbl_aapl_2021",
+      "sc_type": "T4",
+      "sc_subtype": "graph_fact",
+      "question": "What percentage of Jabil's revenue came from Apple in fiscal year 2021?",
+      "supplier": "JBL",
+      "customer": "AAPL",
+      "fiscal_year": 2021,
+      "expected_value": 22.0,
+      "threshold_only": false,
+      "expected_unit": "%",
+      "tolerance_pct": 2.0,
+      "answerable": true,
+      "traversal_ground_truth": [
+        {
+          "supplier": "JBL",
+          "customer": "AAPL",
+          "fiscal_year": 2021,
+          "revenue_pct": 22.0,
+          "threshold_only": false
+        }
+      ]
+    },
+    {
+      "id": "t4_fact_avgo_aapl_2021",
+      "sc_type": "T4",
+      "sc_subtype": "graph_fact",
+      "question": "What percentage of Broadcom's revenue came from Apple in fiscal year 2021?",
+      "supplier": "AVGO",
+      "customer": "AAPL",
+      "fiscal_year": 2021,
+      "expected_value": 20.0,
+      "threshold_only": false,
+      "expected_unit": "%",
+      "tolerance_pct": 2.0,
+      "answerable": true,
+      "traversal_ground_truth": [
+        {
+          "supplier": "AVGO",
+          "customer": "AAPL",
+          "fiscal_year": 2021,
+          "revenue_pct": 20.0,
+          "threshold_only": false
+        }
+      ]
+    },
+    {
+      "id": "t4_fact_adi_aapl_2017",
+      "sc_type": "T4",
+      "sc_subtype": "graph_fact",
+      "question": "What percentage of Analog Devices' revenue came from Apple in fiscal year 2017?",
+      "supplier": "ADI",
+      "customer": "AAPL",
+      "fiscal_year": 2017,
+      "expected_value": 14.0,
+      "threshold_only": false,
+      "expected_unit": "%",
+      "tolerance_pct": 2.0,
+      "answerable": true,
+      "traversal_ground_truth": [
+        {
+          "supplier": "ADI",
+          "customer": "AAPL",
+          "fiscal_year": 2017,
+          "revenue_pct": 14.0,
+          "threshold_only": false
+        }
+      ]
+    },
+    {
+      "id": "t4_fact_qrvo_aapl_2020",
+      "sc_type": "T4",
+      "sc_subtype": "graph_fact",
+      "question": "What percentage of Qorvo's revenue came from Apple in fiscal year 2020?",
+      "supplier": "QRVO",
+      "customer": "AAPL",
+      "fiscal_year": 2020,
+      "expected_value": 33.0,
+      "threshold_only": false,
+      "expected_unit": "%",
+      "tolerance_pct": 2.0,
+      "answerable": true,
+      "traversal_ground_truth": [
+        {
+          "supplier": "QRVO",
+          "customer": "AAPL",
+          "fiscal_year": 2020,
+          "revenue_pct": 33.0,
+          "threshold_only": false
+        }
+      ]
+    },
+    {
+      "id": "t4_fact_qrvo_huawei_2019",
+      "sc_type": "T4",
+      "sc_subtype": "graph_fact",
+      "question": "What percentage of Qorvo's revenue came from Huawei in fiscal year 2019?",
+      "supplier": "QRVO",
+      "customer": "Huawei",
+      "fiscal_year": 2019,
+      "expected_value": 13.0,
+      "threshold_only": false,
+      "expected_unit": "%",
+      "tolerance_pct": 2.0,
+      "answerable": true,
+      "traversal_ground_truth": [
+        {
+          "supplier": "QRVO",
+          "customer": "Huawei",
+          "fiscal_year": 2019,
+          "revenue_pct": 13.0,
+          "threshold_only": false
+        }
+      ]
+    },
+    {
+      "id": "t4_fact_avgo_wt_microelectronics_2022",
+      "sc_type": "T4",
+      "sc_subtype": "graph_fact",
+      "question": "What percentage of Broadcom's revenue came from WT Microelectronics in fiscal year 2022?",
+      "supplier": "AVGO",
+      "customer": "WT Microelectronics",
+      "fiscal_year": 2022,
+      "expected_value": 20.0,
+      "threshold_only": false,
+      "expected_unit": "%",
+      "tolerance_pct": 2.0,
+      "answerable": true,
+      "traversal_ground_truth": [
+        {
+          "supplier": "AVGO",
+          "customer": "WT Microelectronics",
+          "fiscal_year": 2022,
+          "revenue_pct": 20.0,
+          "threshold_only": false
+        }
+      ]
+    },
+    {
+      "id": "t4_fact_qrvo_005930.ks_2022",
+      "sc_type": "T4",
+      "sc_subtype": "graph_fact",
+      "question": "What percentage of Qorvo's revenue came from Samsung in fiscal year 2022?",
+      "supplier": "QRVO",
+      "customer": "005930.KS",
+      "fiscal_year": 2022,
+      "expected_value": 11.0,
+      "threshold_only": false,
+      "expected_unit": "%",
+      "tolerance_pct": 2.0,
+      "answerable": true,
+      "traversal_ground_truth": [
+        {
+          "supplier": "QRVO",
+          "customer": "005930.KS",
+          "fiscal_year": 2022,
+          "revenue_pct": 11.0,
+          "threshold_only": false
+        }
+      ]
+    },
+    {
+      "id": "t4_fact_qrvo_005930.ks_2023",
+      "sc_type": "T4",
+      "sc_subtype": "graph_fact",
+      "question": "What percentage of Qorvo's revenue came from Samsung in fiscal year 2023?",
+      "supplier": "QRVO",
+      "customer": "005930.KS",
+      "fiscal_year": 2023,
+      "expected_value": 12.0,
+      "threshold_only": false,
+      "expected_unit": "%",
+      "tolerance_pct": 2.0,
+      "answerable": true,
+      "traversal_ground_truth": [
+        {
+          "supplier": "QRVO",
+          "customer": "005930.KS",
+          "fiscal_year": 2023,
+          "revenue_pct": 12.0,
+          "threshold_only": false
+        }
+      ]
+    },
+    {
+      "id": "t4_fact_qrvo_005930.ks_2024",
+      "sc_type": "T4",
+      "sc_subtype": "graph_fact",
+      "question": "What percentage of Qorvo's revenue came from Samsung in fiscal year 2024?",
+      "supplier": "QRVO",
+      "customer": "005930.KS",
+      "fiscal_year": 2024,
+      "expected_value": 12.0,
+      "threshold_only": false,
+      "expected_unit": "%",
+      "tolerance_pct": 2.0,
+      "answerable": true,
+      "traversal_ground_truth": [
+        {
+          "supplier": "QRVO",
+          "customer": "005930.KS",
+          "fiscal_year": 2024,
+          "revenue_pct": 12.0,
+          "threshold_only": false
+        }
+      ]
+    },
+    {
+      "id": "t4_fact_avgo_wt_microelectronics_2021",
+      "sc_type": "T4",
+      "sc_subtype": "graph_fact",
+      "question": "What percentage of Broadcom's revenue came from WT Microelectronics in fiscal year 2021?",
+      "supplier": "AVGO",
+      "customer": "WT Microelectronics",
+      "fiscal_year": 2021,
+      "expected_value": 18.0,
+      "threshold_only": false,
+      "expected_unit": "%",
+      "tolerance_pct": 2.0,
+      "answerable": true,
+      "traversal_ground_truth": [
+        {
+          "supplier": "AVGO",
+          "customer": "WT Microelectronics",
+          "fiscal_year": 2021,
+          "revenue_pct": 18.0,
+          "threshold_only": false
+        }
+      ]
+    },
+    {
+      "id": "t4_lookup_apple_suppliers_2021",
+      "sc_type": "T4",
+      "sc_subtype": "graph_lookup",
+      "question": "Which companies in the dataset disclosed Apple as a significant (>10%) revenue customer in fiscal year 2021?",
+      "customer": "AAPL",
+      "fiscal_year": 2021,
+      "expected_value": [
+        "CRUS",
+        "QRVO",
+        "JBL",
+        "AVGO",
+        "SWKS"
+      ],
+      "expected_unit": "ticker_list",
+      "tolerance_pct": null,
+      "answerable": true,
+      "traversal_ground_truth": [
+        {
+          "supplier": "CRUS",
+          "customer": "AAPL",
+          "fiscal_year": 2021,
+          "revenue_pct": 83.0,
+          "threshold_only": false
+        },
+        {
+          "supplier": "QRVO",
+          "customer": "AAPL",
+          "fiscal_year": 2021,
+          "revenue_pct": 30.0,
+          "threshold_only": false
+        },
+        {
+          "supplier": "JBL",
+          "customer": "AAPL",
+          "fiscal_year": 2021,
+          "revenue_pct": 22.0,
+          "threshold_only": false
+        },
+        {
+          "supplier": "AVGO",
+          "customer": "AAPL",
+          "fiscal_year": 2021,
+          "revenue_pct": 20.0,
+          "threshold_only": false
+        },
+        {
+          "supplier": "SWKS",
+          "customer": "AAPL",
+          "fiscal_year": 2021,
+          "revenue_pct": 10.0,
+          "threshold_only": true
+        }
+      ],
+      "scoring": "set_match"
+    },
+    {
+      "id": "t4_lookup_apple_suppliers_2022",
+      "sc_type": "T4",
+      "sc_subtype": "graph_lookup",
+      "question": "Which companies in the dataset disclosed Apple as a significant (>10%) revenue customer in fiscal year 2022?",
+      "customer": "AAPL",
+      "fiscal_year": 2022,
+      "expected_value": [
+        "CRUS",
+        "QRVO",
+        "AVGO",
+        "JBL",
+        "SWKS"
+      ],
+      "expected_unit": "ticker_list",
+      "tolerance_pct": null,
+      "answerable": true,
+      "traversal_ground_truth": [
+        {
+          "supplier": "CRUS",
+          "customer": "AAPL",
+          "fiscal_year": 2022,
+          "revenue_pct": 79.0,
+          "threshold_only": false
+        },
+        {
+          "supplier": "QRVO",
+          "customer": "AAPL",
+          "fiscal_year": 2022,
+          "revenue_pct": 33.0,
+          "threshold_only": false
+        },
+        {
+          "supplier": "AVGO",
+          "customer": "AAPL",
+          "fiscal_year": 2022,
+          "revenue_pct": 20.0,
+          "threshold_only": false
+        },
+        {
+          "supplier": "JBL",
+          "customer": "AAPL",
+          "fiscal_year": 2022,
+          "revenue_pct": 19.0,
+          "threshold_only": false
+        },
+        {
+          "supplier": "SWKS",
+          "customer": "AAPL",
+          "fiscal_year": 2022,
+          "revenue_pct": 10.0,
+          "threshold_only": true
+        }
+      ],
+      "scoring": "set_match"
+    },
+    {
+      "id": "t4_lookup_apple_suppliers_2023",
+      "sc_type": "T4",
+      "sc_subtype": "graph_lookup",
+      "question": "Which companies in the dataset disclosed Apple as a significant (>10%) revenue customer in fiscal year 2023?",
+      "customer": "AAPL",
+      "fiscal_year": 2023,
+      "expected_value": [
+        "CRUS",
+        "QRVO",
+        "AVGO",
+        "JBL",
+        "SWKS"
+      ],
+      "expected_unit": "ticker_list",
+      "tolerance_pct": null,
+      "answerable": true,
+      "traversal_ground_truth": [
+        {
+          "supplier": "CRUS",
+          "customer": "AAPL",
+          "fiscal_year": 2023,
+          "revenue_pct": 83.0,
+          "threshold_only": false
+        },
+        {
+          "supplier": "QRVO",
+          "customer": "AAPL",
+          "fiscal_year": 2023,
+          "revenue_pct": 37.0,
+          "threshold_only": false
+        },
+        {
+          "supplier": "AVGO",
+          "customer": "AAPL",
+          "fiscal_year": 2023,
+          "revenue_pct": 20.0,
+          "threshold_only": false
+        },
+        {
+          "supplier": "JBL",
+          "customer": "AAPL",
+          "fiscal_year": 2023,
+          "revenue_pct": 17.0,
+          "threshold_only": false
+        },
+        {
+          "supplier": "SWKS",
+          "customer": "AAPL",
+          "fiscal_year": 2023,
+          "revenue_pct": 10.0,
+          "threshold_only": true
+        }
+      ],
+      "scoring": "set_match"
+    },
+    {
+      "id": "t4_lookup_apple_suppliers_2024",
+      "sc_type": "T4",
+      "sc_subtype": "graph_lookup",
+      "question": "Which companies in the dataset disclosed Apple as a significant (>10%) revenue customer in fiscal year 2024?",
+      "customer": "AAPL",
+      "fiscal_year": 2024,
+      "expected_value": [
+        "CRUS",
+        "QRVO",
+        "JBL",
+        "SWKS"
+      ],
+      "expected_unit": "ticker_list",
+      "tolerance_pct": null,
+      "answerable": true,
+      "traversal_ground_truth": [
+        {
+          "supplier": "CRUS",
+          "customer": "AAPL",
+          "fiscal_year": 2024,
+          "revenue_pct": 87.0,
+          "threshold_only": false
+        },
+        {
+          "supplier": "QRVO",
+          "customer": "AAPL",
+          "fiscal_year": 2024,
+          "revenue_pct": 46.0,
+          "threshold_only": false
+        },
+        {
+          "supplier": "JBL",
+          "customer": "AAPL",
+          "fiscal_year": 2024,
+          "revenue_pct": 11.0,
+          "threshold_only": false
+        },
+        {
+          "supplier": "SWKS",
+          "customer": "AAPL",
+          "fiscal_year": 2024,
+          "revenue_pct": 10.0,
+          "threshold_only": true
+        }
+      ],
+      "scoring": "set_match"
+    },
+    {
+      "id": "t4_trend_crus_apple_2020_2024",
+      "sc_type": "T4",
+      "sc_subtype": "graph_trend",
+      "question": "How has Cirrus Logic's revenue concentration from Apple changed from fiscal year 2020 to 2024? Provide the percentage for each year.",
+      "supplier": "CRUS",
+      "customer": "AAPL",
+      "fiscal_year": "2020-2024",
+      "expected_value": {
+        "2020": 79.0,
+        "2021": 83.0,
+        "2022": 79.0,
+        "2023": 83.0,
+        "2024": 87.0
+      },
+      "expected_unit": "%_by_year",
+      "tolerance_pct": 2.0,
+      "answerable": true,
+      "traversal_ground_truth": [
+        {
+          "supplier": "CRUS",
+          "customer": "AAPL",
+          "fiscal_year": 2020,
+          "revenue_pct": 79.0,
+          "threshold_only": false
+        },
+        {
+          "supplier": "CRUS",
+          "customer": "AAPL",
+          "fiscal_year": 2021,
+          "revenue_pct": 83.0,
+          "threshold_only": false
+        },
+        {
+          "supplier": "CRUS",
+          "customer": "AAPL",
+          "fiscal_year": 2022,
+          "revenue_pct": 79.0,
+          "threshold_only": false
+        },
+        {
+          "supplier": "CRUS",
+          "customer": "AAPL",
+          "fiscal_year": 2023,
+          "revenue_pct": 83.0,
+          "threshold_only": false
+        },
+        {
+          "supplier": "CRUS",
+          "customer": "AAPL",
+          "fiscal_year": 2024,
+          "revenue_pct": 87.0,
+          "threshold_only": false
+        }
+      ],
+      "scoring": "trend"
+    },
+    {
+      "id": "t4_trend_qrvo_apple_2020_2024",
+      "sc_type": "T4",
+      "sc_subtype": "graph_trend",
+      "question": "How has Qorvo's revenue concentration from Apple changed from fiscal year 2020 to 2024? Provide the percentage for each year.",
+      "supplier": "QRVO",
+      "customer": "AAPL",
+      "fiscal_year": "2020-2024",
+      "expected_value": {
+        "2020": 33.0,
+        "2021": 30.0,
+        "2022": 33.0,
+        "2023": 37.0,
+        "2024": 46.0
+      },
+      "expected_unit": "%_by_year",
+      "tolerance_pct": 2.0,
+      "answerable": true,
+      "traversal_ground_truth": [
+        {
+          "supplier": "QRVO",
+          "customer": "AAPL",
+          "fiscal_year": 2020,
+          "revenue_pct": 33.0,
+          "threshold_only": false
+        },
+        {
+          "supplier": "QRVO",
+          "customer": "AAPL",
+          "fiscal_year": 2021,
+          "revenue_pct": 30.0,
+          "threshold_only": false
+        },
+        {
+          "supplier": "QRVO",
+          "customer": "AAPL",
+          "fiscal_year": 2022,
+          "revenue_pct": 33.0,
+          "threshold_only": false
+        },
+        {
+          "supplier": "QRVO",
+          "customer": "AAPL",
+          "fiscal_year": 2023,
+          "revenue_pct": 37.0,
+          "threshold_only": false
+        },
+        {
+          "supplier": "QRVO",
+          "customer": "AAPL",
+          "fiscal_year": 2024,
+          "revenue_pct": 46.0,
+          "threshold_only": false
+        }
+      ],
+      "scoring": "trend"
+    },
+    {
+      "id": "t4_compare_highest_apple_2022",
+      "sc_type": "T4",
+      "sc_subtype": "graph_comparison",
+      "question": "Which company had the highest Apple revenue concentration in fiscal year 2022: Cirrus Logic, Qorvo, Jabil, or Broadcom?",
+      "customer": "AAPL",
+      "fiscal_year": 2022,
+      "expected_value": "CRUS",
+      "expected_unit": "ticker",
+      "tolerance_pct": null,
+      "answerable": true,
+      "traversal_ground_truth": [
+        {
+          "supplier": "CRUS",
+          "customer": "AAPL",
+          "fiscal_year": 2022,
+          "revenue_pct": 79.0,
+          "threshold_only": false
+        },
+        {
+          "supplier": "QRVO",
+          "customer": "AAPL",
+          "fiscal_year": 2022,
+          "revenue_pct": 33.0,
+          "threshold_only": false
+        },
+        {
+          "supplier": "JBL",
+          "customer": "AAPL",
+          "fiscal_year": 2022,
+          "revenue_pct": 19.0,
+          "threshold_only": false
+        },
+        {
+          "supplier": "AVGO",
+          "customer": "AAPL",
+          "fiscal_year": 2022,
+          "revenue_pct": 20.0,
+          "threshold_only": false
+        },
+        {
+          "supplier": "SWKS",
+          "customer": "AAPL",
+          "fiscal_year": 2022,
+          "revenue_pct": 10.0,
+          "threshold_only": true
+        }
+      ],
+      "scoring": "llm_judge"
+    },
+    {
+      "id": "t4_compare_highest_apple_2024",
+      "sc_type": "T4",
+      "sc_subtype": "graph_comparison",
+      "question": "Which company had the highest Apple revenue concentration in fiscal year 2024: Cirrus Logic, Qorvo, Jabil, or Broadcom?",
+      "customer": "AAPL",
+      "fiscal_year": 2024,
+      "expected_value": "CRUS",
+      "expected_unit": "ticker",
+      "tolerance_pct": null,
+      "answerable": true,
+      "traversal_ground_truth": [
+        {
+          "supplier": "CRUS",
+          "customer": "AAPL",
+          "fiscal_year": 2024,
+          "revenue_pct": 87.0,
+          "threshold_only": false
+        },
+        {
+          "supplier": "QRVO",
+          "customer": "AAPL",
+          "fiscal_year": 2024,
+          "revenue_pct": 46.0,
+          "threshold_only": false
+        },
+        {
+          "supplier": "JBL",
+          "customer": "AAPL",
+          "fiscal_year": 2024,
+          "revenue_pct": 11.0,
+          "threshold_only": false
+        },
+        {
+          "supplier": "SWKS",
+          "customer": "AAPL",
+          "fiscal_year": 2024,
+          "revenue_pct": 10.0,
+          "threshold_only": true
+        }
+      ],
+      "scoring": "llm_judge"
+    },
+    {
+      "id": "t4_negative_txn_2023",
+      "sc_type": "T4",
+      "sc_subtype": "graph_negative",
+      "question": "Did Texas Instruments disclose any single customer accounting for more than 10% of revenue in fiscal year 2023?",
+      "supplier": "TXN",
+      "customer": "AAPL",
+      "fiscal_year": 2023,
+      "expected_value": false,
+      "expected_unit": "boolean",
+      "tolerance_pct": null,
+      "answerable": true,
+      "traversal_ground_truth": [],
+      "scoring": "keyword"
+    },
+    {
+      "id": "t4_negative_glw_2022",
+      "sc_type": "T4",
+      "sc_subtype": "graph_negative",
+      "question": "Did Corning name any specific customer accounting for more than 10% of revenue in fiscal year 2022?",
+      "supplier": "GLW",
+      "customer": "AAPL",
+      "fiscal_year": 2022,
+      "expected_value": false,
+      "expected_unit": "boolean",
+      "tolerance_pct": null,
+      "answerable": true,
+      "traversal_ground_truth": [],
+      "scoring": "keyword"
+    },
+    {
+      "id": "t4_negative_lrcx_2023",
+      "sc_type": "T4",
+      "sc_subtype": "graph_negative",
+      "question": "Did Lam Research disclose a named customer accounting for more than 10% of revenue in fiscal year 2023?",
+      "supplier": "LRCX",
+      "customer": "AAPL",
+      "fiscal_year": 2023,
+      "expected_value": false,
+      "expected_unit": "boolean",
+      "tolerance_pct": null,
+      "answerable": true,
+      "traversal_ground_truth": [],
+      "scoring": "keyword"
+    },
+    {
+      "id": "t4_negative_sanm_2023",
+      "sc_type": "T4",
+      "sc_subtype": "graph_negative",
+      "question": "Did Sanmina disclose any single named customer accounting for more than 10% of revenue in fiscal year 2023?",
+      "supplier": "SANM",
+      "customer": "AAPL",
+      "fiscal_year": 2023,
+      "expected_value": false,
+      "expected_unit": "boolean",
+      "tolerance_pct": null,
+      "answerable": true,
+      "traversal_ground_truth": [],
+      "scoring": "keyword"
+    },
+    {
+      "id": "t4_negative_adi_2022",
+      "sc_type": "T4",
+      "sc_subtype": "graph_negative",
+      "question": "Did Analog Devices disclose Apple as a customer accounting for more than 10% of revenue in fiscal year 2022?",
+      "supplier": "ADI",
+      "customer": "AAPL",
+      "fiscal_year": 2022,
+      "expected_value": false,
+      "expected_unit": "boolean",
+      "tolerance_pct": null,
+      "answerable": true,
+      "traversal_ground_truth": [],
+      "scoring": "keyword"
+    },
+    {
+      "id": "t4_negative_qcom_2022",
+      "sc_type": "T4",
+      "sc_subtype": "graph_negative",
+      "question": "Did Qualcomm disclose Apple as a direct customer accounting for more than 10% of consolidated revenues in fiscal year 2022?",
+      "supplier": "QCOM",
+      "customer": "AAPL",
+      "fiscal_year": 2022,
+      "expected_value": false,
+      "expected_unit": "boolean",
+      "tolerance_pct": null,
+      "answerable": true,
+      "traversal_ground_truth": [],
+      "scoring": "keyword"
+    },
+    {
+      "id": "t5_exposure_qrvo_apple_2024",
+      "sc_type": "T5",
+      "sc_subtype": "graph_compute",
+      "question": "How much revenue (in dollars) did Qorvo derive from Apple channels in fiscal year 2024, based on its disclosed concentration percentage?",
+      "supplier": "QRVO",
+      "customer": "AAPL",
+      "fiscal_year": 2024,
+      "expected_value": 1733972760,
+      "expected_unit": "USD",
+      "tolerance_pct": 2.0,
+      "answerable": true,
+      "formula": "Revenue * apple_pct / 100",
+      "input_values": {
+        "Revenue": 3769506000.0,
+        "apple_pct": 46.0
+      },
+      "traversal_ground_truth": [
+        {
+          "supplier": "QRVO",
+          "customer": "AAPL",
+          "fiscal_year": 2024,
+          "revenue_pct": 46.0,
+          "threshold_only": false
+        }
+      ],
+      "scoring": "numeric"
+    },
+    {
+      "id": "t5_exposure_crus_apple_2024",
+      "sc_type": "T5",
+      "sc_subtype": "graph_compute",
+      "question": "How much revenue (in dollars) did Cirrus Logic derive from Apple in fiscal year 2024, based on its disclosed concentration percentage?",
+      "supplier": "CRUS",
+      "customer": "AAPL",
+      "fiscal_year": 2024,
+      "expected_value": 1556334300,
+      "expected_unit": "USD",
+      "tolerance_pct": 2.0,
+      "answerable": true,
+      "formula": "Revenue * apple_pct / 100",
+      "input_values": {
+        "Revenue": 1788890000.0,
+        "apple_pct": 87.0
+      },
+      "traversal_ground_truth": [
+        {
+          "supplier": "CRUS",
+          "customer": "AAPL",
+          "fiscal_year": 2024,
+          "revenue_pct": 87.0,
+          "threshold_only": false
+        }
+      ],
+      "scoring": "numeric"
+    },
+    {
+      "id": "t5_exposure_jbl_apple_2023",
+      "sc_type": "T5",
+      "sc_subtype": "graph_compute",
+      "question": "How much revenue (in dollars) did Jabil derive from Apple in fiscal year 2023, based on its disclosed concentration percentage?",
+      "supplier": "JBL",
+      "customer": "AAPL",
+      "fiscal_year": 2023,
+      "expected_value": 5899340000,
+      "expected_unit": "USD",
+      "tolerance_pct": 2.0,
+      "answerable": true,
+      "formula": "Revenue * apple_pct / 100",
+      "input_values": {
+        "Revenue": 34702000000.0,
+        "apple_pct": 17.0
+      },
+      "traversal_ground_truth": [
+        {
+          "supplier": "JBL",
+          "customer": "AAPL",
+          "fiscal_year": 2023,
+          "revenue_pct": 17.0,
+          "threshold_only": false
+        }
+      ],
+      "scoring": "numeric"
+    },
+    {
+      "id": "t5_exposure_avgo_apple_2022",
+      "sc_type": "T5",
+      "sc_subtype": "graph_compute",
+      "question": "How much revenue (in dollars) did Broadcom derive from Apple in fiscal year 2022, based on its disclosed concentration percentage?",
+      "supplier": "AVGO",
+      "customer": "AAPL",
+      "fiscal_year": 2022,
+      "expected_value": 6640600000,
+      "expected_unit": "USD",
+      "tolerance_pct": 2.0,
+      "answerable": true,
+      "formula": "Revenue * apple_pct / 100",
+      "input_values": {
+        "Revenue": 33203000000.0,
+        "apple_pct": 20.0
+      },
+      "traversal_ground_truth": [
+        {
+          "supplier": "AVGO",
+          "customer": "AAPL",
+          "fiscal_year": 2022,
+          "revenue_pct": 20.0,
+          "threshold_only": false
+        }
+      ],
+      "scoring": "numeric"
+    },
+    {
+      "id": "t5_exposure_qrvo_apple_2022",
+      "sc_type": "T5",
+      "sc_subtype": "graph_compute",
+      "question": "How much revenue (in dollars) did Qorvo derive from Apple channels in fiscal year 2022?",
+      "supplier": "QRVO",
+      "customer": "AAPL",
+      "fiscal_year": 2022,
+      "expected_value": 1533085620,
+      "expected_unit": "USD",
+      "tolerance_pct": 2.0,
+      "answerable": true,
+      "formula": "Revenue * apple_pct / 100",
+      "input_values": {
+        "Revenue": 4645714000.0,
+        "apple_pct": 33.0
+      },
+      "traversal_ground_truth": [
+        {
+          "supplier": "QRVO",
+          "customer": "AAPL",
+          "fiscal_year": 2022,
+          "revenue_pct": 33.0,
+          "threshold_only": false
+        }
+      ],
+      "scoring": "numeric"
+    },
+    {
+      "id": "t5_exposure_crus_apple_2022",
+      "sc_type": "T5",
+      "sc_subtype": "graph_compute",
+      "question": "How much revenue (in dollars) did Cirrus Logic derive from Apple in fiscal year 2022?",
+      "supplier": "CRUS",
+      "customer": "AAPL",
+      "fiscal_year": 2022,
+      "expected_value": 1407353400,
+      "expected_unit": "USD",
+      "tolerance_pct": 2.0,
+      "answerable": true,
+      "formula": "Revenue * apple_pct / 100",
+      "input_values": {
+        "Revenue": 1781460000.0,
+        "apple_pct": 79.0
+      },
+      "traversal_ground_truth": [
+        {
+          "supplier": "CRUS",
+          "customer": "AAPL",
+          "fiscal_year": 2022,
+          "revenue_pct": 79.0,
+          "threshold_only": false
+        }
+      ],
+      "scoring": "numeric"
+    },
+    {
+      "id": "t5_exposure_jbl_apple_2021",
+      "sc_type": "T5",
+      "sc_subtype": "graph_compute",
+      "question": "How much revenue (in dollars) did Jabil derive from Apple in fiscal year 2021?",
+      "supplier": "JBL",
+      "customer": "AAPL",
+      "fiscal_year": 2021,
+      "expected_value": 6442700000,
+      "expected_unit": "USD",
+      "tolerance_pct": 2.0,
+      "answerable": true,
+      "formula": "Revenue * apple_pct / 100",
+      "input_values": {
+        "Revenue": 29285000000.0,
+        "apple_pct": 22.0
+      },
+      "traversal_ground_truth": [
+        {
+          "supplier": "JBL",
+          "customer": "AAPL",
+          "fiscal_year": 2021,
+          "revenue_pct": 22.0,
+          "threshold_only": false
+        }
+      ],
+      "scoring": "numeric"
+    },
+    {
+      "id": "t5_exposure_crus_apple_2023",
+      "sc_type": "T5",
+      "sc_subtype": "graph_compute",
+      "question": "How much revenue (in dollars) did Cirrus Logic derive from Apple in fiscal year 2023?",
+      "supplier": "CRUS",
+      "customer": "AAPL",
+      "fiscal_year": 2023,
+      "expected_value": 1575022110,
+      "expected_unit": "USD",
+      "tolerance_pct": 2.0,
+      "answerable": true,
+      "formula": "Revenue * apple_pct / 100",
+      "input_values": {
+        "Revenue": 1897617000.0,
+        "apple_pct": 83.0
+      },
+      "traversal_ground_truth": [
+        {
+          "supplier": "CRUS",
+          "customer": "AAPL",
+          "fiscal_year": 2023,
+          "revenue_pct": 83.0,
+          "threshold_only": false
+        }
+      ],
+      "scoring": "numeric"
+    },
+    {
+      "id": "t5_exposure_avgo_apple_2020",
+      "sc_type": "T5",
+      "sc_subtype": "graph_compute",
+      "question": "How much revenue (in dollars) did Broadcom derive from Apple in fiscal year 2020, based on its disclosed concentration percentage?",
+      "supplier": "AVGO",
+      "customer": "AAPL",
+      "fiscal_year": 2020,
+      "expected_value": 3583200000,
+      "expected_unit": "USD",
+      "tolerance_pct": 2.0,
+      "answerable": true,
+      "formula": "Revenue * apple_pct / 100",
+      "input_values": {
+        "Revenue": 23888000000.0,
+        "apple_pct": 15.0
+      },
+      "traversal_ground_truth": [
+        {
+          "supplier": "AVGO",
+          "customer": "AAPL",
+          "fiscal_year": 2020,
+          "revenue_pct": 15.0,
+          "threshold_only": false
+        }
+      ],
+      "scoring": "numeric"
+    },
+    {
+      "id": "t5_cut_qrvo_apple_20pct_2024",
+      "sc_type": "T5",
+      "sc_subtype": "graph_compute",
+      "question": "If Apple reduced its orders by 20%, how much revenue would Qorvo lose in fiscal year 2024, based on its disclosed Apple concentration?",
+      "supplier": "QRVO",
+      "customer": "AAPL",
+      "fiscal_year": 2024,
+      "expected_value": 346794552,
+      "expected_unit": "USD",
+      "tolerance_pct": 2.0,
+      "answerable": true,
+      "formula": "Revenue * apple_pct / 100 * 20 / 100",
+      "input_values": {
+        "Revenue": 3769506000.0,
+        "apple_pct": 46.0,
+        "cut_pct": 20
+      },
+      "traversal_ground_truth": [
+        {
+          "supplier": "QRVO",
+          "customer": "AAPL",
+          "fiscal_year": 2024,
+          "revenue_pct": 46.0,
+          "threshold_only": false
+        }
+      ],
+      "scoring": "numeric"
+    },
+    {
+      "id": "t5_cut_crus_apple_20pct_2024",
+      "sc_type": "T5",
+      "sc_subtype": "graph_compute",
+      "question": "If Apple reduced its orders by 20%, how much revenue would Cirrus Logic lose in fiscal year 2024?",
+      "supplier": "CRUS",
+      "customer": "AAPL",
+      "fiscal_year": 2024,
+      "expected_value": 311266860,
+      "expected_unit": "USD",
+      "tolerance_pct": 2.0,
+      "answerable": true,
+      "formula": "Revenue * apple_pct / 100 * 20 / 100",
+      "input_values": {
+        "Revenue": 1788890000.0,
+        "apple_pct": 87.0,
+        "cut_pct": 20
+      },
+      "traversal_ground_truth": [
+        {
+          "supplier": "CRUS",
+          "customer": "AAPL",
+          "fiscal_year": 2024,
+          "revenue_pct": 87.0,
+          "threshold_only": false
+        }
+      ],
+      "scoring": "numeric"
+    },
+    {
+      "id": "t5_cut_jbl_apple_10pct_2022",
+      "sc_type": "T5",
+      "sc_subtype": "graph_compute",
+      "question": "If Apple reduced its orders by 10%, how much revenue would Jabil lose based on its fiscal year 2022 data?",
+      "supplier": "JBL",
+      "customer": "AAPL",
+      "fiscal_year": 2022,
+      "expected_value": 636082000,
+      "expected_unit": "USD",
+      "tolerance_pct": 2.0,
+      "answerable": true,
+      "formula": "Revenue * apple_pct / 100 * 10 / 100",
+      "input_values": {
+        "Revenue": 33478000000.0,
+        "apple_pct": 19.0,
+        "cut_pct": 10
+      },
+      "traversal_ground_truth": [
+        {
+          "supplier": "JBL",
+          "customer": "AAPL",
+          "fiscal_year": 2022,
+          "revenue_pct": 19.0,
+          "threshold_only": false
+        }
+      ],
+      "scoring": "numeric"
+    },
+    {
+      "id": "t5_cut_avgo_apple_15pct_2022",
+      "sc_type": "T5",
+      "sc_subtype": "graph_compute",
+      "question": "If Apple reduced its orders by 15%, how much revenue would Broadcom lose based on its fiscal year 2022 Apple concentration?",
+      "supplier": "AVGO",
+      "customer": "AAPL",
+      "fiscal_year": 2022,
+      "expected_value": 996090000,
+      "expected_unit": "USD",
+      "tolerance_pct": 2.0,
+      "answerable": true,
+      "formula": "Revenue * apple_pct / 100 * 15 / 100",
+      "input_values": {
+        "Revenue": 33203000000.0,
+        "apple_pct": 20.0,
+        "cut_pct": 15
+      },
+      "traversal_ground_truth": [
+        {
+          "supplier": "AVGO",
+          "customer": "AAPL",
+          "fiscal_year": 2022,
+          "revenue_pct": 20.0,
+          "threshold_only": false
+        }
+      ],
+      "scoring": "numeric"
+    },
+    {
+      "id": "t5_cut_qrvo_apple_20pct_2022",
+      "sc_type": "T5",
+      "sc_subtype": "graph_compute",
+      "question": "If Apple reduced its orders by 20%, how much revenue would Qorvo lose in fiscal year 2022?",
+      "supplier": "QRVO",
+      "customer": "AAPL",
+      "fiscal_year": 2022,
+      "expected_value": 306617124,
+      "expected_unit": "USD",
+      "tolerance_pct": 2.0,
+      "answerable": true,
+      "formula": "Revenue * apple_pct / 100 * 20 / 100",
+      "input_values": {
+        "Revenue": 4645714000.0,
+        "apple_pct": 33.0,
+        "cut_pct": 20
+      },
+      "traversal_ground_truth": [
+        {
+          "supplier": "QRVO",
+          "customer": "AAPL",
+          "fiscal_year": 2022,
+          "revenue_pct": 33.0,
+          "threshold_only": false
+        }
+      ],
+      "scoring": "numeric"
+    },
+    {
+      "id": "t5_compare_crus_qrvo_2023",
+      "sc_type": "T5",
+      "sc_subtype": "graph_comparison",
+      "question": "Which company stands to lose more revenue from a 20% Apple order cut in fiscal year 2023: Cirrus Logic or Qorvo? Provide the dollar impact for each.",
+      "suppliers": [
+        "CRUS",
+        "QRVO"
+      ],
+      "customer": "AAPL",
+      "fiscal_year": 2023,
+      "expected_value": {
+        "CRUS": 1575022110,
+        "QRVO": 1320677630
+      },
+      "expected_unit": "USD_by_supplier",
+      "tolerance_pct": 2.0,
+      "answerable": true,
+      "traversal_ground_truth": [
+        {
+          "supplier": "CRUS",
+          "customer": "AAPL",
+          "fiscal_year": 2023,
+          "revenue_pct": 83.0,
+          "threshold_only": false
+        },
+        {
+          "supplier": "QRVO",
+          "customer": "AAPL",
+          "fiscal_year": 2023,
+          "revenue_pct": 37.0,
+          "threshold_only": false
+        }
+      ],
+      "scoring": "llm_judge"
+    },
+    {
+      "id": "t5_compare_crus_qrvo_jbl_2022",
+      "sc_type": "T5",
+      "sc_subtype": "graph_comparison",
+      "question": "Rank Cirrus Logic, Qorvo, and Jabil by their dollar exposure to Apple in fiscal year 2022, from highest to lowest.",
+      "suppliers": [
+        "CRUS",
+        "QRVO",
+        "JBL"
+      ],
+      "customer": "AAPL",
+      "fiscal_year": 2022,
+      "expected_value": {
+        "CRUS": 1407353400,
+        "QRVO": 1533085620,
+        "JBL": 6360820000
+      },
+      "expected_unit": "USD_by_supplier",
+      "tolerance_pct": 2.0,
+      "answerable": true,
+      "traversal_ground_truth": [
+        {
+          "supplier": "CRUS",
+          "customer": "AAPL",
+          "fiscal_year": 2022,
+          "revenue_pct": 79.0,
+          "threshold_only": false
+        },
+        {
+          "supplier": "QRVO",
+          "customer": "AAPL",
+          "fiscal_year": 2022,
+          "revenue_pct": 33.0,
+          "threshold_only": false
+        },
+        {
+          "supplier": "JBL",
+          "customer": "AAPL",
+          "fiscal_year": 2022,
+          "revenue_pct": 19.0,
+          "threshold_only": false
+        }
+      ],
+      "scoring": "llm_judge"
+    },
+    {
+      "id": "t5_compare_qrvo_crus_2024",
+      "sc_type": "T5",
+      "sc_subtype": "graph_comparison",
+      "question": "Compare Cirrus Logic and Qorvo's Apple revenue exposure in fiscal year 2024. Which is more concentrated and which has more absolute dollar exposure?",
+      "suppliers": [
+        "QRVO",
+        "CRUS"
+      ],
+      "customer": "AAPL",
+      "fiscal_year": 2024,
+      "expected_value": {
+        "QRVO": 1733972760,
+        "CRUS": 1556334300
+      },
+      "expected_unit": "USD_by_supplier",
+      "tolerance_pct": 2.0,
+      "answerable": true,
+      "traversal_ground_truth": [
+        {
+          "supplier": "QRVO",
+          "customer": "AAPL",
+          "fiscal_year": 2024,
+          "revenue_pct": 46.0,
+          "threshold_only": false
+        },
+        {
+          "supplier": "CRUS",
+          "customer": "AAPL",
+          "fiscal_year": 2024,
+          "revenue_pct": 87.0,
+          "threshold_only": false
+        }
+      ],
+      "scoring": "llm_judge"
+    },
+    {
+      "id": "t5_trend_qrvo_apple_exposure_2020_2024",
+      "sc_type": "T5",
+      "sc_subtype": "graph_trend",
+      "question": "How has Qorvo's absolute dollar exposure to Apple changed from fiscal year 2020 to 2024? Provide the revenue derived from Apple for each year.",
+      "supplier": "QRVO",
+      "customer": "AAPL",
+      "fiscal_year": "2020-2024",
+      "expected_value": {
+        "2020": 266210340,
+        "2021": 1204592100,
+        "2022": 780647670,
+        "2023": 1320677630,
+        "2024": 299535440
+      },
+      "expected_unit": "USD_by_year",
+      "tolerance_pct": 2.0,
+      "answerable": true,
+      "traversal_ground_truth": [
+        {
+          "supplier": "QRVO",
+          "customer": "AAPL",
+          "fiscal_year": 2020,
+          "revenue_pct": 33.0,
+          "threshold_only": false
+        },
+        {
+          "supplier": "QRVO",
+          "customer": "AAPL",
+          "fiscal_year": 2020,
+          "revenue_pct": 33.0,
+          "threshold_only": false
+        },
+        {
+          "supplier": "QRVO",
+          "customer": "AAPL",
+          "fiscal_year": 2020,
+          "revenue_pct": 33.0,
+          "threshold_only": false
+        },
+        {
+          "supplier": "QRVO",
+          "customer": "AAPL",
+          "fiscal_year": 2020,
+          "revenue_pct": 33.0,
+          "threshold_only": false
+        },
+        {
+          "supplier": "QRVO",
+          "customer": "AAPL",
+          "fiscal_year": 2020,
+          "revenue_pct": 33.0,
+          "threshold_only": false
+        },
+        {
+          "supplier": "QRVO",
+          "customer": "AAPL",
+          "fiscal_year": 2020,
+          "revenue_pct": 33.0,
+          "threshold_only": false
+        },
+        {
+          "supplier": "QRVO",
+          "customer": "AAPL",
+          "fiscal_year": 2020,
+          "revenue_pct": 33.0,
+          "threshold_only": false
+        },
+        {
+          "supplier": "QRVO",
+          "customer": "AAPL",
+          "fiscal_year": 2020,
+          "revenue_pct": 33.0,
+          "threshold_only": false
+        },
+        {
+          "supplier": "QRVO",
+          "customer": "AAPL",
+          "fiscal_year": 2020,
+          "revenue_pct": 33.0,
+          "threshold_only": false
+        },
+        {
+          "supplier": "QRVO",
+          "customer": "AAPL",
+          "fiscal_year": 2020,
+          "revenue_pct": 33.0,
+          "threshold_only": false
+        },
+        {
+          "supplier": "QRVO",
+          "customer": "AAPL",
+          "fiscal_year": 2020,
+          "revenue_pct": 33.0,
+          "threshold_only": false
+        },
+        {
+          "supplier": "QRVO",
+          "customer": "AAPL",
+          "fiscal_year": 2020,
+          "revenue_pct": 33.0,
+          "threshold_only": false
+        },
+        {
+          "supplier": "QRVO",
+          "customer": "AAPL",
+          "fiscal_year": 2020,
+          "revenue_pct": 33.0,
+          "threshold_only": false
+        },
+        {
+          "supplier": "QRVO",
+          "customer": "AAPL",
+          "fiscal_year": 2020,
+          "revenue_pct": 33.0,
+          "threshold_only": false
+        },
+        {
+          "supplier": "QRVO",
+          "customer": "AAPL",
+          "fiscal_year": 2020,
+          "revenue_pct": 33.0,
+          "threshold_only": false
+        },
+        {
+          "supplier": "QRVO",
+          "customer": "AAPL",
+          "fiscal_year": 2021,
+          "revenue_pct": 30.0,
+          "threshold_only": false
+        },
+        {
+          "supplier": "QRVO",
+          "customer": "AAPL",
+          "fiscal_year": 2021,
+          "revenue_pct": 30.0,
+          "threshold_only": false
+        },
+        {
+          "supplier": "QRVO",
+          "customer": "AAPL",
+          "fiscal_year": 2021,
+          "revenue_pct": 30.0,
+          "threshold_only": false
+        },
+        {
+          "supplier": "QRVO",
+          "customer": "AAPL",
+          "fiscal_year": 2021,
+          "revenue_pct": 30.0,
+          "threshold_only": false
+        },
+        {
+          "supplier": "QRVO",
+          "customer": "AAPL",
+          "fiscal_year": 2021,
+          "revenue_pct": 30.0,
+          "threshold_only": false
+        },
+        {
+          "supplier": "QRVO",
+          "customer": "AAPL",
+          "fiscal_year": 2021,
+          "revenue_pct": 30.0,
+          "threshold_only": false
+        },
+        {
+          "supplier": "QRVO",
+          "customer": "AAPL",
+          "fiscal_year": 2021,
+          "revenue_pct": 30.0,
+          "threshold_only": false
+        },
+        {
+          "supplier": "QRVO",
+          "customer": "AAPL",
+          "fiscal_year": 2021,
+          "revenue_pct": 30.0,
+          "threshold_only": false
+        },
+        {
+          "supplier": "QRVO",
+          "customer": "AAPL",
+          "fiscal_year": 2021,
+          "revenue_pct": 30.0,
+          "threshold_only": false
+        },
+        {
+          "supplier": "QRVO",
+          "customer": "AAPL",
+          "fiscal_year": 2022,
+          "revenue_pct": 33.0,
+          "threshold_only": false
+        },
+        {
+          "supplier": "QRVO",
+          "customer": "AAPL",
+          "fiscal_year": 2022,
+          "revenue_pct": 33.0,
+          "threshold_only": false
+        },
+        {
+          "supplier": "QRVO",
+          "customer": "AAPL",
+          "fiscal_year": 2022,
+          "revenue_pct": 33.0,
+          "threshold_only": false
+        },
+        {
+          "supplier": "QRVO",
+          "customer": "AAPL",
+          "fiscal_year": 2022,
+          "revenue_pct": 33.0,
+          "threshold_only": false
+        },
+        {
+          "supplier": "QRVO",
+          "customer": "AAPL",
+          "fiscal_year": 2022,
+          "revenue_pct": 33.0,
+          "threshold_only": false
+        },
+        {
+          "supplier": "QRVO",
+          "customer": "AAPL",
+          "fiscal_year": 2022,
+          "revenue_pct": 33.0,
+          "threshold_only": false
+        },
+        {
+          "supplier": "QRVO",
+          "customer": "AAPL",
+          "fiscal_year": 2022,
+          "revenue_pct": 33.0,
+          "threshold_only": false
+        },
+        {
+          "supplier": "QRVO",
+          "customer": "AAPL",
+          "fiscal_year": 2022,
+          "revenue_pct": 33.0,
+          "threshold_only": false
+        },
+        {
+          "supplier": "QRVO",
+          "customer": "AAPL",
+          "fiscal_year": 2022,
+          "revenue_pct": 33.0,
+          "threshold_only": false
+        },
+        {
+          "supplier": "QRVO",
+          "customer": "AAPL",
+          "fiscal_year": 2023,
+          "revenue_pct": 37.0,
+          "threshold_only": false
+        },
+        {
+          "supplier": "QRVO",
+          "customer": "AAPL",
+          "fiscal_year": 2023,
+          "revenue_pct": 37.0,
+          "threshold_only": false
+        },
+        {
+          "supplier": "QRVO",
+          "customer": "AAPL",
+          "fiscal_year": 2023,
+          "revenue_pct": 37.0,
+          "threshold_only": false
+        },
+        {
+          "supplier": "QRVO",
+          "customer": "AAPL",
+          "fiscal_year": 2023,
+          "revenue_pct": 37.0,
+          "threshold_only": false
+        },
+        {
+          "supplier": "QRVO",
+          "customer": "AAPL",
+          "fiscal_year": 2023,
+          "revenue_pct": 37.0,
+          "threshold_only": false
+        },
+        {
+          "supplier": "QRVO",
+          "customer": "AAPL",
+          "fiscal_year": 2023,
+          "revenue_pct": 37.0,
+          "threshold_only": false
+        },
+        {
+          "supplier": "QRVO",
+          "customer": "AAPL",
+          "fiscal_year": 2023,
+          "revenue_pct": 37.0,
+          "threshold_only": false
+        },
+        {
+          "supplier": "QRVO",
+          "customer": "AAPL",
+          "fiscal_year": 2023,
+          "revenue_pct": 37.0,
+          "threshold_only": false
+        },
+        {
+          "supplier": "QRVO",
+          "customer": "AAPL",
+          "fiscal_year": 2023,
+          "revenue_pct": 37.0,
+          "threshold_only": false
+        },
+        {
+          "supplier": "QRVO",
+          "customer": "AAPL",
+          "fiscal_year": 2024,
+          "revenue_pct": 46.0,
+          "threshold_only": false
+        },
+        {
+          "supplier": "QRVO",
+          "customer": "AAPL",
+          "fiscal_year": 2024,
+          "revenue_pct": 46.0,
+          "threshold_only": false
+        },
+        {
+          "supplier": "QRVO",
+          "customer": "AAPL",
+          "fiscal_year": 2024,
+          "revenue_pct": 46.0,
+          "threshold_only": false
+        },
+        {
+          "supplier": "QRVO",
+          "customer": "AAPL",
+          "fiscal_year": 2024,
+          "revenue_pct": 46.0,
+          "threshold_only": false
+        },
+        {
+          "supplier": "QRVO",
+          "customer": "AAPL",
+          "fiscal_year": 2024,
+          "revenue_pct": 46.0,
+          "threshold_only": false
+        },
+        {
+          "supplier": "QRVO",
+          "customer": "AAPL",
+          "fiscal_year": 2024,
+          "revenue_pct": 46.0,
+          "threshold_only": false
+        },
+        {
+          "supplier": "QRVO",
+          "customer": "AAPL",
+          "fiscal_year": 2024,
+          "revenue_pct": 46.0,
+          "threshold_only": false
+        },
+        {
+          "supplier": "QRVO",
+          "customer": "AAPL",
+          "fiscal_year": 2024,
+          "revenue_pct": 46.0,
+          "threshold_only": false
+        },
+        {
+          "supplier": "QRVO",
+          "customer": "AAPL",
+          "fiscal_year": 2024,
+          "revenue_pct": 46.0,
+          "threshold_only": false
+        }
+      ],
+      "scoring": "trend"
+    },
+    {
+      "id": "t5_exposure_avgo_wt_micro_2022",
+      "sc_type": "T5",
+      "sc_subtype": "graph_compute",
+      "question": "How much revenue did Broadcom derive from WT Microelectronics in fiscal year 2022, based on its disclosed concentration percentage?",
+      "supplier": "AVGO",
+      "customer": "WT Microelectronics",
+      "fiscal_year": 2022,
+      "expected_value": 6640600000,
+      "expected_unit": "USD",
+      "tolerance_pct": 2.0,
+      "answerable": true,
+      "formula": "Revenue * wt_pct / 100",
+      "input_values": {
+        "Revenue": 33203000000.0,
+        "wt_pct": 20.0
+      },
+      "traversal_ground_truth": [
+        {
+          "supplier": "AVGO",
+          "customer": "WT Microelectronics",
+          "fiscal_year": 2022,
+          "revenue_pct": 20.0,
+          "threshold_only": false
+        }
+      ],
+      "scoring": "numeric"
+    },
+    {
+      "id": "t5_compare_jbl_apple_amazon_2020",
+      "sc_type": "T5",
+      "sc_subtype": "graph_comparison",
+      "question": "In fiscal year 2020, how did Jabil's revenue from Apple compare to its revenue from Amazon in absolute dollar terms? Which was larger?",
+      "supplier": "JBL",
+      "fiscal_year": 2020,
+      "expected_value": {
+        "AAPL": 5453287600,
+        "AMZN": 2999308180
+      },
+      "expected_unit": "USD_by_customer",
+      "tolerance_pct": 2.0,
+      "answerable": true,
+      "traversal_ground_truth": [
+        {
+          "supplier": "JBL",
+          "customer": "AAPL",
+          "fiscal_year": 2020,
+          "revenue_pct": 20.0,
+          "threshold_only": false
+        },
+        {
+          "supplier": "JBL",
+          "customer": "AMZN",
+          "fiscal_year": 2020,
+          "revenue_pct": 11.0,
+          "threshold_only": false
+        }
+      ],
+      "scoring": "llm_judge"
+    },
+    {
+      "id": "t6_reversed_apple_procurement_qrvo",
+      "sc_type": "T6",
+      "sc_subtype": "direction_reversed",
+      "question": "What percentage of Apple's total procurement budget is spent on Qorvo components?",
+      "answerable": false,
+      "expected_value": null,
+      "expected_unit": null,
+      "tolerance_pct": null,
+      "refusal_reason": "Apple's 10-K does not disclose supplier-level procurement percentages; data only exists from the supplier side."
+    },
+    {
+      "id": "t6_reversed_apple_spend_crus",
+      "sc_type": "T6",
+      "sc_subtype": "direction_reversed",
+      "question": "How much does Apple pay Cirrus Logic annually for audio chips?",
+      "answerable": false,
+      "expected_value": null,
+      "expected_unit": null,
+      "tolerance_pct": null,
+      "refusal_reason": "Apple does not disclose supplier-level spend. Only CRUS's perspective (% of CRUS revenue from Apple) is available."
+    },
+    {
+      "id": "t6_reversed_apple_depend_swks",
+      "sc_type": "T6",
+      "sc_subtype": "direction_reversed",
+      "question": "What share of Apple's RF component purchases come from Skyworks?",
+      "answerable": false,
+      "expected_value": null,
+      "expected_unit": null,
+      "tolerance_pct": null,
+      "refusal_reason": "Customer-side procurement data is not disclosed in EDGAR filings."
+    },
+    {
+      "id": "t6_reversed_apple_importance_jbl",
+      "sc_type": "T6",
+      "sc_subtype": "direction_reversed",
+      "question": "How critical is Jabil to Apple's supply chain — what % of Apple's manufacturing is handled by Jabil?",
+      "answerable": false,
+      "expected_value": null,
+      "expected_unit": null,
+      "tolerance_pct": null,
+      "refusal_reason": "Apple does not disclose its reliance on specific suppliers in its 10-K."
+    },
+    {
+      "id": "t6_reversed_apple_bom_avgo",
+      "sc_type": "T6",
+      "sc_subtype": "direction_reversed",
+      "question": "What percentage of Apple's iPhone bill of materials cost comes from Broadcom?",
+      "answerable": false,
+      "expected_value": null,
+      "expected_unit": null,
+      "tolerance_pct": null,
+      "refusal_reason": "BOM-level data is proprietary and not disclosed in any EDGAR filing."
+    },
+    {
+      "id": "t6_gap_glw_named_customer_2023",
+      "sc_type": "T6",
+      "sc_subtype": "data_gap",
+      "question": "Which specific company is Corning's largest customer that accounts for more than 10% of its revenue in fiscal year 2023?",
+      "answerable": false,
+      "expected_value": null,
+      "expected_unit": null,
+      "tolerance_pct": null,
+      "refusal_reason": "Corning's 10-K discloses the threshold (>10%) but does not name the customer. The customer identity cannot be verified from EDGAR."
+    },
+    {
+      "id": "t6_gap_txn_customer_2023",
+      "sc_type": "T6",
+      "sc_subtype": "data_gap",
+      "question": "Who is Texas Instruments' largest single customer and what percentage of revenue do they represent in FY2023?",
+      "answerable": false,
+      "expected_value": null,
+      "expected_unit": null,
+      "tolerance_pct": null,
+      "refusal_reason": "Texas Instruments does not disclose any single customer exceeding 10% of revenue in its 10-K."
+    },
+    {
+      "id": "t6_gap_swks_exact_pct_2024",
+      "sc_type": "T6",
+      "sc_subtype": "data_gap",
+      "question": "What is the exact percentage of Skyworks Solutions' revenue attributable to Apple in fiscal year 2024?",
+      "answerable": false,
+      "expected_value": null,
+      "expected_unit": null,
+      "tolerance_pct": null,
+      "refusal_reason": "Skyworks' 10-K states only that Apple 'constituted more than ten percent' — no exact figure is disclosed. The exact percentage is not available from EDGAR."
+    },
+    {
+      "id": "t6_gap_swks_exact_pct_2022",
+      "sc_type": "T6",
+      "sc_subtype": "data_gap",
+      "question": "What exact percentage of Skyworks' FY2022 revenue came from Apple?",
+      "answerable": false,
+      "expected_value": null,
+      "expected_unit": null,
+      "tolerance_pct": null,
+      "refusal_reason": "Skyworks only discloses a threshold (>10%) for Apple in its 10-K filings from FY2019 onwards."
+    },
+    {
+      "id": "t6_oos_tsmc_apple_2024",
+      "sc_type": "T6",
+      "sc_subtype": "out_of_scope",
+      "question": "What percentage of TSMC's revenue comes from Apple in fiscal year 2024?",
+      "answerable": false,
+      "expected_value": null,
+      "expected_unit": null,
+      "tolerance_pct": null,
+      "refusal_reason": "TSMC files a 20-F (foreign private issuer) with the SEC, not a 10-K. It is not in the dataset."
+    },
+    {
+      "id": "t6_oos_foxconn_apple_2023",
+      "sc_type": "T6",
+      "sc_subtype": "out_of_scope",
+      "question": "How dependent is Foxconn on Apple as a customer in fiscal year 2023?",
+      "answerable": false,
+      "expected_value": null,
+      "expected_unit": null,
+      "tolerance_pct": null,
+      "refusal_reason": "Foxconn (Hon Hai) is a foreign private issuer and does not file 10-K EDGAR disclosures. Not in dataset."
+    },
+    {
+      "id": "t6_oos_mediatek_customer_2023",
+      "sc_type": "T6",
+      "sc_subtype": "out_of_scope",
+      "question": "Does MediaTek have Apple as a major customer in fiscal year 2023?",
+      "answerable": false,
+      "expected_value": null,
+      "expected_unit": null,
+      "tolerance_pct": null,
+      "refusal_reason": "MediaTek is a Taiwanese company that does not file with the SEC. Not in dataset."
+    },
+    {
+      "id": "t6_metric_qrvo_fcf_2024",
+      "sc_type": "T6",
+      "sc_subtype": "metric_unavailable",
+      "question": "What was Qorvo's free cash flow in fiscal year 2024?",
+      "answerable": false,
+      "ticker": "QRVO",
+      "fiscal_year": 2024,
+      "expected_value": null,
+      "expected_unit": null,
+      "tolerance_pct": null,
+      "refusal_reason": "Free cash flow is not a reported XBRL metric and is not stored in the database."
+    },
+    {
+      "id": "t6_metric_crus_div_payout_2024",
+      "sc_type": "T6",
+      "sc_subtype": "metric_unavailable",
+      "question": "What is Cirrus Logic's dividend payout ratio for fiscal year 2024?",
+      "answerable": false,
+      "ticker": "CRUS",
+      "fiscal_year": 2024,
+      "expected_value": null,
+      "expected_unit": null,
+      "tolerance_pct": null,
+      "refusal_reason": "Cirrus Logic does not pay dividends. Payout ratio is undefined."
+    },
+    {
+      "id": "t6_metric_aapl_china_rev_2024",
+      "sc_type": "T6",
+      "sc_subtype": "metric_unavailable",
+      "question": "What percentage of Apple's revenue came from China in fiscal year 2024?",
+      "answerable": false,
+      "ticker": "AAPL",
+      "fiscal_year": 2024,
+      "expected_value": null,
+      "expected_unit": null,
+      "tolerance_pct": null,
+      "refusal_reason": "Geographic revenue splits are not stored as XBRL metrics in this database."
+    }
+  ]
+}
