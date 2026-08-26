@@ -1,0 +1,39 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+dist/
+build/
+
+# Env
+.env
+
+# Data (raw filings can be large)
+data/raw/
+data/cache/
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Claude Code local skills (third-party, not project code)
+.claude/
+
+# Ad-hoc local debug/validation scripts — not part of the maintained pipeline
+/check_edges.py
+/check_concentration.py
+/validate_wrds.py
+
+# Local DB dumps
+*.dump
+
+# Eval console capture logs (the JSON result files are the real artifact)
+data/results/_*.log

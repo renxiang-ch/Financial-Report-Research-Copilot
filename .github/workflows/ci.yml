@@ -1,0 +1,76 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  lint-and-test:
+    runs-on: ubuntu-latest
+
+    # A real database, not a dummy URL. A dummy URL is why this workflow last
+    # went red only in the imagination: most of this project's tests read the
+    # `companies` table to build the slot parser's index, resolve tickers, seed
+    # the clarification menu's drift assertions -- against a dummy URL, running
+    # the current suite locally scores 59 failed / 61 passed / 6 errors. It
+    # never showed here because this workflow only triggers on `main`, and
+    # `main` had not moved since June.
+    services:
+      postgres:
+        image: pgvector/pgvector:pg17
+        env:
+          POSTGRES_PASSWORD: ci
+          POSTGRES_DB: copilot
+        ports: ["5432:5432"]
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+
+    env:
+      OPENAI_API_KEY: ""       # empty -> mock mode, no real calls, no cost
+      DATABASE_URL: "postgresql://postgres:ci@localhost:5432/copilot"
+      API_KEY: ""
+      SKIP_PRELOAD: "1"
+      PYTHONUNBUFFERED: "1"
+      PYTHONUTF8: "1"
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: astral-sh/setup-uv@v3
+
+      - name: Set up Python
+        run: uv python install 3.11
+
+      # sentence-transformers pulls torch, which nothing here needs: every test
+      # mocks the module out (tests/conftest.py) before it can be imported, and
+      # embed_chunks is a separate offline step this workflow does not run.
+      # Installing it anyway would spend several minutes fetching a dependency
+      # the test run then never touches.
+      - name: Install dependencies
+        run: uv sync --no-install-package sentence-transformers
+
+      # The database this project's tests actually depend on: a fresh schema,
+      # then the 9MB snapshot every published result was measured against.
+      # Loading it here is also the fastest available check that create_tables
+      # is idempotent and the seed loader still works against a schema nobody
+      # has touched by hand.
+      - name: Load database seed
+        run: uv run --no-sync python -m copilot.pipeline.seed --load
+
+      - name: Lint (tests)
+        run: uv run --no-sync ruff check tests
+
+      # src/ is not fully clean yet (line-length only -- see docs/simplification-audit.md),
+      # so this checks the class of error that is never cosmetic: unused imports and
+      # variables, which are exactly the shape the "F401 create_tables" bug that
+      # prompted this rewrite belonged to.
+      - name: Lint (src, correctness only)
+        run: uv run --no-sync ruff check src --select F
+
+      - name: Test
+        run: uv run --no-sync pytest tests/ -v
