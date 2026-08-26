@@ -172,8 +172,8 @@ def migrate_add_embedding_v1(conn) -> None:
 def migrate_add_period_start(conn) -> None:
     """Add period_start column to financial_facts (needed to validate duration
     facts are actually annual, not a quarterly slice under an annual-looking
-    tag -- see the development archive's engineering log, 2026-07-30 XBRL
-    data-source investigation). Safe to re-run."""
+    tag -- see ingest_financial_facts.py's module docstring for the full
+    duration-mismatch defect this column exists to catch). Safe to re-run."""
     with conn.cursor() as cur:
         cur.execute(MIGRATE_ADD_PERIOD_START_SQL)
     conn.commit()

@@ -589,9 +589,11 @@ def audit_existing_edges(conn, include_unnamed: bool = False) -> dict:
     unnamed row can never reach a user-facing view regardless of what's in
     revenue_pct/source_text. Flagging them as "suspicious" here is pure audit
     noise unless you're specifically reviewing unnamed/segment-level rows
-    (e.g. GLW's 4 segment-scoped disclosures — see the development archive's
-    engineering log, "GLW segment-level disclosure" note). Pass
-    include_unnamed=True to see them.
+    (e.g. GLW's 4 segment-scoped disclosures, where the customer is never
+    named and the percentage is scoped to one business segment rather than
+    total revenue — audited and left in place deliberately, since named
+    downstream consumers never see them). Pass include_unnamed=True to see
+    them.
 
     Returns {"clean": [...], "suspicious": [...]} — each entry is a dict with
     id/supplier/customer/fiscal_year/revenue_pct/reason (reason empty if clean).
