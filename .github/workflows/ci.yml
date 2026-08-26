@@ -51,8 +51,12 @@ jobs:
       # embed_chunks is a separate offline step this workflow does not run.
       # Installing it anyway would spend several minutes fetching a dependency
       # the test run then never touches.
+      # --extra dev is load-bearing: ruff and pytest live in the dev extra, and
+      # plain `uv sync` does not install extras -- without it, every step below
+      # fails with "command not found" (exactly how this workflow's first-ever
+      # cloud run went red).
       - name: Install dependencies
-        run: uv sync --no-install-package sentence-transformers
+        run: uv sync --extra dev --no-install-package sentence-transformers
 
       # The database this project's tests actually depend on: a fresh schema,
       # then the 9MB snapshot every published result was measured against.
