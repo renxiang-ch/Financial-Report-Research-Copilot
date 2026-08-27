@@ -376,6 +376,10 @@ def retrieve_text(query: str, ticker: str | None = None, k: int = 5,
     scoped anyway -- see `_year_scope` -- and the returned record says to what
     and why.
     """
+    ticker, bad = _resolve_ticker(ticker)
+    if bad:
+        return {**bad, "query": query}
+
     year, why = _year_scope(query, ticker, fiscal_year)
     results = _retrieve(query, ticker=ticker, k=k, fiscal_year=year)
 

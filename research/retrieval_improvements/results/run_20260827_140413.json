@@ -1,0 +1,65 @@
+{
+  "timestamp": "2026-08-27T14:04:13",
+  "summaries": [
+    {
+      "arm": "baseline (production retrieve_text)",
+      "hit5": 6,
+      "n": 7,
+      "mrr": 0.6786,
+      "per_item": {
+        "ret_swks_apple_concentration_2024": null,
+        "ret_swks_markets_served_2024": 2,
+        "ret_avgo_vmware_acquisition": 1,
+        "ret_aapl_product_categories": 4,
+        "ret_aapl_applecare_description": 1,
+        "ret_qrvo_customer_risk": 1,
+        "ret_glw_business_segments": 1
+      }
+    },
+    {
+      "arm": "+ name expansion",
+      "hit5": 5,
+      "n": 7,
+      "mrr": 0.6429,
+      "per_item": {
+        "ret_swks_apple_concentration_2024": null,
+        "ret_swks_markets_served_2024": 1,
+        "ret_avgo_vmware_acquisition": 1,
+        "ret_aapl_product_categories": null,
+        "ret_aapl_applecare_description": 1,
+        "ret_qrvo_customer_risk": 2,
+        "ret_glw_business_segments": 1
+      }
+    },
+    {
+      "arm": "+ HyDE",
+      "hit5": 6,
+      "n": 7,
+      "mrr": 0.6905,
+      "per_item": {
+        "ret_swks_apple_concentration_2024": 3,
+        "ret_swks_markets_served_2024": 1,
+        "ret_avgo_vmware_acquisition": 1,
+        "ret_aapl_product_categories": 2,
+        "ret_aapl_applecare_description": 1,
+        "ret_qrvo_customer_risk": null,
+        "ret_glw_business_segments": 1
+      }
+    },
+    {
+      "arm": "+ multi-query (name+HyDE+raw union)",
+      "hit5": 7,
+      "n": 7,
+      "mrr": 0.7143,
+      "per_item": {
+        "ret_swks_apple_concentration_2024": 4,
+        "ret_swks_markets_served_2024": 2,
+        "ret_avgo_vmware_acquisition": 1,
+        "ret_aapl_product_categories": 4,
+        "ret_aapl_applecare_description": 1,
+        "ret_qrvo_customer_risk": 1,
+        "ret_glw_business_segments": 1
+      }
+    }
+  ]
+}

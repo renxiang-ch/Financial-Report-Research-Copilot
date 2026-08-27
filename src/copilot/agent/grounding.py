@@ -215,6 +215,7 @@ REFUSAL_STRICT = (
 
 REFUSAL_BROAD = (
     "cannot determine", "can't determine", "unable to determine",
+    "cannot be determined", "can't be determined",
     "cannot answer", "unable to answer", "cannot find",
     "do not have", "don't have", "not available", "no data",
     "not found", "not tracked", "not in our database",

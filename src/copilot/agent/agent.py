@@ -273,12 +273,16 @@ TOOL_SCHEMAS = [
                 "Search 10-K filing text for qualitative questions: risk factors, MD&A commentary, "
                 "business description, competitive position, strategy. "
                 "Use this for 'why', 'how', 'what does the company say about' questions. "
-                "Never use for numeric data — use query_financials for numbers."
+                "Never use for numeric data — use query_financials for numbers. "
+                "The search text is the user's own question, sent verbatim -- there is no "
+                "query parameter to fill in. A compressed keyword rewrite measurably hurts "
+                "recall here (6/6 vs 3/6 on a held-out probe: the words dropped in "
+                "compression, usually the company name, are often the only terms that "
+                "overlap the disclosure's actual wording). Just pass ticker and fiscal_year."
             ),
             "parameters": {
                 "type": "object",
                 "properties": {
-                    "query":  {"type": "string", "description": "Natural language search query"},
                     "ticker": {"type": "string", "description": "Optional: restrict to one company e.g. AAPL"},
                     "k":      {"type": "integer", "description": "Number of passages to return (default 5)"},
                     "fiscal_year": {
@@ -292,7 +296,7 @@ TOOL_SCHEMAS = [
                                        "result says which one.",
                     },
                 },
-                "required": ["query"],
+                "required": [],
             },
         },
     },
@@ -595,6 +599,17 @@ def _ask_openai(question: str, model: str, route: dict,
         def _exec(tc):
             name  = tc.function.name
             inp   = json.loads(tc.function.arguments)
+            if name == "retrieve_text":
+                # The model no longer controls the search text (see TOOL_SCHEMAS):
+                # a compressed keyword rewrite measurably hurts recall (6/6 vs 3/6
+                # on a held-out probe), almost always because the words it drops
+                # -- typically the company name -- are the only ones that overlap
+                # the disclosure's actual wording. `query` isn't in the schema
+                # any more, but overwrite it unconditionally rather than only
+                # filling it in when absent: a model that includes an unlisted
+                # field anyway must not win out over the question it was actually
+                # asked.
+                inp["query"] = question
             out   = _run_tool(name, inp)
             return tc, name, inp, out
 

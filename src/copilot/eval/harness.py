@@ -118,14 +118,30 @@ def _is_refusal(text: str) -> bool:
 
 def _check_key_phrase(steps: list[dict], golden_citations: list[dict]) -> bool:
     """
-    Scan all retrieve_text output chunks in agent steps.
-    Return True if any golden key_phrase appears in any retrieved chunk.
+    Scan every tool step's own text evidence for a golden key_phrase.
+
+    Originally scanned retrieve_text chunks only. That missed a real case:
+    a supply-chain dependency question the agent correctly answers via
+    graph_query instead, whose edges carry the same disclosure sentence in
+    `source_text` -- e.g. ret_swks_apple_concentration_2024's golden phrase
+    ("constituted more than ten percent of our net revenue") is present
+    verbatim in the graph_query edge's source_text, not in any retrieve_text
+    chunk, because the agent correctly reached for the more precise tool.
+    Scoring that as a miss punished the better tool choice. This does not
+    relax what counts as evidence -- source_text is the same SEC-filing
+    sentence a retrieve_text chunk would have been -- it only widens where
+    the check looks for it.
     """
     retrieved_texts: list[str] = []
     for step in steps:
         if step.get("tool") == "retrieve_text":
             for r in step.get("output", {}).get("results", []):
                 retrieved_texts.append(r.get("text", ""))
+        elif step.get("tool") == "graph_query":
+            for edge in step.get("output", {}).get("edges", []):
+                st = edge.get("source_text")
+                if st:
+                    retrieved_texts.append(st)
 
     for gc in golden_citations:
         key_phrase = gc.get("key_phrase", "")
