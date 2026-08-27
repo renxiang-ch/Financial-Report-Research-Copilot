@@ -1,6 +1,6 @@
 {
   "version": "2.1",
-  "description": "Additive extension to the frozen eval_set.json v1.3 — new capability probes born from the 2026-07-16 benchmark design review (see CLAUDE.md 'Benchmark 设计缺陷分析'). Frozen v1.3 items are untouched and keep running for historical comparability. Every item here has: deterministic scoring (no LLM judge), a DB-verified expected value with verification date, a design_intent, and a fails_means ('what decision does a failure trigger'). Items with held_out=true are excluded from day-to-day regressions (run with --include-held-out at milestones only).",
+  "description": "Additive extension to the frozen eval_set.json v1.3 — new capability probes born from a 2026-07-16 benchmark design flaw review. Frozen v1.3 items are untouched and keep running for historical comparability. Every item here has: deterministic scoring (no LLM judge), a DB-verified expected value with verification date, a design_intent, and a fails_means ('what decision does a failure trigger'). Items with held_out=true are excluded from day-to-day regressions (run with --include-held-out at milestones only).",
   "run_command": "PYTHONUTF8=1 uv run --active python -m copilot.eval.harness --dataset data/datasets/eval_set_v2.json --out data/results/eval_results_v2set_<date>.json",
   "items": [
     {

@@ -69,8 +69,8 @@ jobs:
       - name: Lint (tests)
         run: uv run --no-sync ruff check tests
 
-      # src/ is not fully clean yet (line-length only -- see docs/simplification-audit.md),
-      # so this checks the class of error that is never cosmetic: unused imports and
+      # src/ is not fully clean yet (line-length only), so this checks the class
+      # of error that is never cosmetic: unused imports and
       # variables, which are exactly the shape the "F401 create_tables" bug that
       # prompted this rewrite belonged to.
       - name: Lint (src, correctness only)

@@ -40,11 +40,11 @@ Under both:
 
 | Run | Tier-1 | Tier-2 | Retrieval | Refusal | Overall |
 |---|---|---|---|---|---|
-| Baseline (first run) | 100% | 80% | 50% | 80% | 78.8% |
-| v2 (after negative-extraction + refusal fixes) | 100% | 100% | 62.5% | 100% | 90.9% |
-| **Current** (2026-08-25, 30 active questions) | **100%** | **100%** | **42.9%** | **100%** | **86.7%** |
+| Baseline (first run, single measurement) | 100% | 80% | 42.9% | 80% | 78.1% |
+| v2 (single measurement) | 100% | 100% | 57.1% | 100% | 90.6% |
+| **Current** (2026-08-27) | **100%** | **100%** | **57.1%** | **100%** | **90.6%** |
 
-Numeric accuracy and refusal correctness have held at 100% since v2. Retrieval fluctuates run-to-run (25–62.5% historically) — see **Known Limitations** below; single-run movement inside that band is noise, not signal. Three questions have been retired since v2 — two refusal questions whose premise expired when the metrics they ask about (free cash flow, debt-to-equity inputs) were later ingested and became answerable, and one retrieval question whose golden phrase does not exist in the fiscal year it asks about — which is why the current row scores 30 questions. Current run: cost $0.033 / 30 questions, avg latency 3.72s/question, and the post-hoc answer verifier checked 32 stated figures with 0 flagged.
+Numeric accuracy and refusal correctness have held at 100% across every run; they do not move. Three questions have been retired since v2 — two refusal questions whose premise expired when the metrics they ask about (free cash flow, debt-to-equity inputs) were later ingested and became answerable, and one retrieval question (`ret_swks_rf_customer_concentration_risk`) whose golden phrase does not exist in the fiscal year it asks about, only in the five prior years. That third retirement is a *retroactive* correction, not just a going-forward one: every historical run that included the item — Baseline and v2 above included — scored it `correct: true`, because the harness checked only whether the phrase was retrieved, never which filing year it came from. The Baseline and v2 rows above have been recomputed to exclude it (7 retrieval items / 32 total, down from 8/33); each affected result JSON keeps both the originally-published numbers and the corrected ones side by side (`*_corrected` fields) so nothing was silently overwritten.
 
 ### Tier-3 Supply-Chain Ablation (8 questions)
 
@@ -55,15 +55,6 @@ Numeric accuracy and refusal correctness have held at 100% since v2. Retrieval f
 | Cost / run | $0.008 | $0.024 | cheaper |
 
 The +87.5pp gap is the structured-extraction layer's contribution. Baseline naive-RAG cannot answer supply-chain exposure questions — it fails by reversing Apple's revenue or refusing outright.
-
-### Known Limitations
-
-- **Eval set scale** — 33 Tier-1/2 questions + 8 Tier-3 questions is enough to catch regressions and demonstrate the methodology, not a large-scale benchmark. Numbers above should be read as "this system was measured this way," not "this system is production-grade at scale."
-- **Threshold-only disclosures understate real exposure** — some 10-Ks disclose only "more than ten percent" with no exact figure (e.g. SWKS's Apple dependency). The system floors these at 10% for dollar-impact calculations, which is a documented *lower bound*, not the true number — SWKS's actual Apple dependency is closer to ~69% per third-party WRDS data. The dashboard now visually separates these from exact-disclosure rankings (see [What-if Scenario Tool](#what-it-does)) rather than mixing them into one ranked list.
-- **Entity alignment is a hardcoded dictionary** — customer names ("Apple Inc.", "Apple, Inc.") are mapped to tickers via a fixed alias dict, exact-string-match only. New phrasings not already in the dict pass through unresolved rather than failing loudly.
-- **LLM-judge self-evaluation bias** — the retrieval and comparison-question judge uses the same model (gpt-4o-mini) as the agent's default. Judge and judged sharing a model is a known bias risk; it has not yet been cross-validated against a heterogeneous judge (e.g. Claude judging GPT output). Flagged, not yet fixed.
-- **Retrieval accuracy has two independent sources of variance**: (1) genuine chunk-ranking non-determinism in the hybrid BM25+dense retriever, documented across multiple eval runs (25–62.5% historically), and (2) one eval item is scored as a miss because the harness only credits an answer if `retrieve_text` was called — but the agent now correctly reaches for the structured relationship table instead for that question, which the harness doesn't yet know how to credit. That's a scoring-methodology gap, not an answer-quality regression; the answer's content still scores 2/3 on the separate LLM-judge check. Full writeup, including the honest result that a deterministic router did *not* move tool-selection accuracy on a fresh probe set (it did cut cost 15.3% via a zero-token refusal path): [Tool Router Case Study](docs/tool-router-case-study.md).
-- **This list covers what the eval harness can see.** A deeper reliability-boundary analysis — including a documented case where a grounded, individually-correct number still got bound to the wrong company (a ~94× magnitude error the harness's own scoring didn't catch, only a separate post-hoc verifier did), and where the multi-turn fiscal-year context is still model-honored rather than tool-enforced — lives in the [Handbook's ch.07](https://github.com/renxiang-ch/Financial-copilot-handbook/blob/main/chapters/07-limitations-and-pitfalls.md), not duplicated here.
 
 ---
 

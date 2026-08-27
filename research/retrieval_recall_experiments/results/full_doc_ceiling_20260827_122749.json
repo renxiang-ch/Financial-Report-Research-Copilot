@@ -1,0 +1,46 @@
+{
+  "timestamp": "2026-08-27T12:27:49",
+  "cost_usd": 0.0189,
+  "results": [
+    {
+      "id": "ret_swks_markets_served_2024",
+      "literal_hit": true,
+      "judge_score": 2,
+      "judge_reason": "The generated answer captures the main markets and applications served by Skyworks Solutions but introduces some additional market segments that are not explicitly mentioned in the reference answer.",
+      "answer": "Skyworks Solutions serves numerous markets and applications, including \"aerospace, automotive, broadband, cellular infrastructure, connected home, defense, entertainment and gaming, industrial, medical, smartphone, tablet, and wearables.\" Additionally, the company is expanding into high-growth market segments like \"electric and hybrid vehicles, industrial and motor control, power supply, 5G wireless infrastructure, optical data communication, data center, automotive, smart home, and several other applications.\"",
+      "input_tokens": 21798,
+      "output_tokens": 92,
+      "latency_s": 2.8
+    },
+    {
+      "id": "ret_qrvo_customer_risk",
+      "literal_hit": false,
+      "judge_score": 2,
+      "judge_reason": "The answer captures the main point about Apple Inc. and its revenue contribution but omits specific details about the percentage for the previous year and the mention of Samsung.",
+      "answer": "Qorvo's 10-K filing discusses customer concentration risk as follows: \"A substantial portion of our revenue comes from several large customers... If demand for their products increases, our results are favorably impacted, while if demand for their products decreases, they may reduce their purchases of, or stop purchasing our products and our operating results would suffer.\" Specifically, it notes that \"our largest end customer, Apple Inc., through sales to multiple contract manufacturers, accounted for approximately 46% of total revenue in fiscal year 2024.\"",
+      "input_tokens": 46962,
+      "output_tokens": 106,
+      "latency_s": 3.28
+    },
+    {
+      "id": "ret_aapl_product_categories",
+      "literal_hit": false,
+      "judge_score": 2,
+      "judge_reason": "The answer mostly captures the key product and service categories but includes additional details not in the reference and omits mention of 'App Store' and 'Apple Fitness+' under Digital Content.",
+      "answer": "Apple reports revenue from the following product and service categories in its 10-K:\n\n1. **Products**:\n   - **iPhone**: \"The iPhone line includes iPhone 16 Pro, iPhone 16, iPhone 15, iPhone 14 and iPhone SE.\"\n   - **Mac**: \"The Mac line includes laptops MacBook Air and MacBook Pro, as well as desktops iMac, Mac mini, Mac Studio and Mac Pro.\"\n   - **iPad**: \"The iPad line includes iPad Pro, iPad Air, iPad and iPad mini.\"\n   - **Wearables, Home and Accessories**: \"Wearables includes smartwatches, wireless headphones and spatial computers... Home includes Apple TV and HomePod... Accessories includes Apple-branded and third-party accessories.\"\n\n2. **Services**:\n   - **Advertising**: \"The Company\u2019s advertising services include third-party licensing arrangements and the Company\u2019s own advertising platforms.\"\n   - **AppleCare**: \"The Company offers a portfolio of fee-based service and support products under the AppleCare brand.\"\n   - **Cloud Services**: \"The Company\u2019s cloud services store and keep customers content up-to-date and available across multiple Apple devices and Windows personal computers.\"\n   - **Digital Content**: \"The Company operates various platforms, including the App Store, that allow customers to discover and download applications and digital content, such as books, music, video, games, and podcasts.\"\n   - **Payment Services**: \"The Company offers payment services, including Apple Card, a co-branded credit card, and Apple Pay, a cashless payment service.\"",
+      "input_tokens": 28501,
+      "output_tokens": 335,
+      "latency_s": 5.98
+    },
+    {
+      "id": "ret_glw_business_segments",
+      "literal_hit": false,
+      "judge_score": 2,
+      "judge_reason": "The generated answer captures the main segments but omits key details about each segment's focus and operations.",
+      "answer": "Corning operates in five reportable segments: \"Optical Communications, Display Technologies, Specialty Materials, Environmental Technologies and Life Sciences.\"",
+      "input_tokens": 26505,
+      "output_tokens": 26,
+      "latency_s": 1.52
+    }
+  ]
+}

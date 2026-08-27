@@ -1889,5 +1889,12 @@
         "retrieve_text('risk factors related to reliance on a small number of customers', ticker=SWKS) \u2192 5 chunks: [SWKS:Risk Factors score=0.717, SWKS:Risk Factors score=23.035, SWKS:Risk Factors score=22.089, SWKS:Risk Factors score=21.930, SWKS:Risk Factors score=21.408]"
       ]
     }
-  ]
+  ],
+  "retroactive_correction_note": "Retroactive correction (2026-08-27): this run counted ret_swks_rf_customer_concentration_risk as correct in its retrieval_accuracy/overall_accuracy/avg_judge_score. That item was retired 2026-08-24 (see data/datasets/eval_set.json, field retired_reason) because its golden key_phrase does not exist in the FY2024 filing it claims to test -- only in FY2016-2023, where Skyworks used that wording. Every run in this repo that included the item scored it correct=true, because the harness checked whether the phrase was retrieved at all, never which fiscal year it came from -- a structural false positive, not a fluke of this particular run. The *_corrected fields below recompute the summary over the other 7 retrieval items / 32 total questions, with that one item excluded from both numerator and denominator. Original fields above are left untouched -- both views are preserved for audit.",
+  "n_total_corrected": 32,
+  "n_retrieval_corrected": 7,
+  "retrieval_accuracy_corrected": 28.6,
+  "passage_hit_accuracy_corrected": 28.6,
+  "avg_judge_score_corrected": 2.14,
+  "overall_accuracy_corrected": 84.4
 }
