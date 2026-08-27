@@ -1,4 +1,4 @@
-Write-Host "Starting Verifiable Supply-Chain Risk Copilot..."
+Write-Host "Starting Financial-Report Research Copilot..."
 
 function Stop-Port($port) {
     $lines = netstat -ano | Select-String ":$port\s.*LISTENING"

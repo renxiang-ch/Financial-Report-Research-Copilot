@@ -1,4 +1,4 @@
-# Verifiable Supply-Chain Risk Copilot
+# Financial-Report Research Copilot
 
 A trustworthy risk-analysis tool for Apple's supply chain: every number is backed by SQL/XBRL, every supplier relationship is backed by structured extraction from 10-K disclosures with per-edge provenance, and every conclusion traces back to a specific SEC filing.
 
